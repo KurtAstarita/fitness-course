@@ -1,3 +1,20 @@
+// Get references to the cover page and app container
+const coverPage = document.getElementById('cover-page');
+const appContainer = document.getElementById('app-container');
+const startButton = document.getElementById('start-course-btn');
+
+// Add an event listener to the start button
+startButton.addEventListener('click', () => {
+    // Hide the cover page
+    coverPage.style.display = 'none';
+    // Show the main app container
+    appContainer.style.display = 'block'; // Or 'flex', 'grid', depending on your #app-container CSS display property
+
+    // Now, load the first lesson of your course
+    renderLesson();
+});
+
+
 // This array will hold all your course content, slide by slide.
 // Each object represents a "slide" or a "lesson segment".
 // 'type': 'lesson' for content, 'quiz' for a quiz.
