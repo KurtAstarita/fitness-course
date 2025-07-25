@@ -242,23 +242,117 @@ const courseContent = [
         correctAnswer: 1, // Index of 'Adequate hydration and a balance of essential vitamins and minerals'
         duration: 1
     },
-    {
+{
         type: 'lesson',
         title: 'Carbohydrates: Simple vs. Complex',
-        content: `<h3>Choosing the Right Carbs</h3><p>Not all carbohydrates are created equal. <b>Simple carbohydrates</b> (sugars) provide quick energy but can lead to energy crashes. They are found in fruits, dairy, and added sugars. <b>Complex carbohydrates</b> (starches and fiber) offer sustained energy, are rich in nutrients, and support digestive health. Prioritize whole grains, vegetables, and legumes for complex carbs.</p>`,
-        duration: 1
+        content: `
+            <h3>Choosing the Right Carbohydrates for Optimal Energy and Health</h3>
+            <p>Understanding the distinction between simple and complex carbohydrates is crucial for managing your energy levels, supporting your fitness goals, and maintaining overall health. Not all carbs are created equal in terms of how they impact your body.</p>
+            
+            <h4>Simple Carbohydrates: Quick Energy, Quick Crash?</h4>
+            <p>Simple carbohydrates are composed of one or two sugar molecules (monosaccharides or disaccharides). Because of their simple structure, they are very quickly digested and absorbed into the bloodstream, leading to a rapid rise in blood sugar levels. This provides a fast burst of energy, but often results in a subsequent energy "crash" as blood sugar levels drop rapidly.</p>
+            <ul>
+                <li><strong>Naturally Occurring:</strong> Found in fruits (fructose), milk (lactose), and some vegetables. These often come with beneficial fiber, vitamins, and minerals.</li>
+                <li><strong>Added Sugars:</strong> Sugars added to processed foods, sodas, candies, and many desserts. These provide "empty calories" with little to no nutritional value and should be limited. Examples include sucrose, high-fructose corn syrup, and glucose.</li>
+            </ul>
+
+            <h4>Complex Carbohydrates: Sustained Energy and Nutrient Powerhouses</h4>
+            <p>Complex carbohydrates are made up of long chains of sugar molecules (polysaccharides) and often contain fiber. Their complex structure means they take longer to digest and absorb, leading to a more gradual and sustained release of glucose into the bloodstream. This provides stable energy levels, prevents drastic blood sugar fluctuations, and helps maintain satiety.</p>
+            <ul>
+                <li><strong>Starches:</strong> Found in grains, potatoes, corn, and peas. They are broken down into glucose for energy.</li>
+                <li><strong>Fiber:</strong> A type of complex carbohydrate that the body cannot digest. It adds bulk to your diet, aids digestive health, helps regulate blood sugar, and can contribute to feelings of fullness. Fiber is found abundantly in whole grains, fruits, vegetables, legumes, and nuts.</li>
+            </ul>
+            <p><strong>Prioritize:</strong> For consistent energy, better blood sugar control, and a richer nutrient intake, prioritize complex carbohydrates like whole grains (e.g., oats, brown rice, quinoa, whole-wheat bread), starchy and non-starchy vegetables, and legumes (beans, lentils). They are your allies in a sustainable fitness journey.</p>
+        `,
+        duration: 3 // Increased duration to reflect more comprehensive content
     },
-    {
+{
         type: 'lesson',
-        title: 'Protein Quality and Timing',
-        content: `<h3>Maximizing Muscle Support</h3><p>Protein sources vary in quality based on their amino acid profile. <b>Complete proteins</b> (found in animal products like meat, eggs, and dairy) contain all essential amino acids. <b>Incomplete proteins</b> (found in most plant sources) lack one or more. Combining incomplete proteins (e.g., rice and beans) can create a complete profile. Consuming protein strategically throughout the day, especially post-workout, aids muscle recovery and growth.</p>`,
-        duration: 1
+        title: 'Protein Quality and Timing: Maximizing Muscle Support',
+        content: `
+            <h3>Optimizing Your Protein Intake for Growth and Recovery</h3>
+            <p>To truly maximize the benefits of protein for muscle growth, repair, and overall health, it's not just about how much you eat, but also the quality of the protein and when you consume it.</p>
+            
+            <h4>Protein Quality: Understanding Amino Acid Profiles</h4>
+            <p>Proteins are made up of smaller units called amino acids. There are 20 different amino acids, nine of which are considered "essential" because your body cannot produce them and must obtain them through your diet. Protein quality is determined by its amino acid profile:</p>
+            <ul>
+                <li>
+                    <strong>Complete Proteins:</strong> These sources provide all nine essential amino acids in sufficient quantities. They are typically derived from animal sources.
+                    <p>Examples: Meat, poultry, fish, eggs, dairy (milk, yogurt, cheese, whey protein).</p>
+                </li>
+                <li>
+                    <strong>Incomplete Proteins:</strong> These sources lack one or more of the essential amino acids, or have them in very limited quantities. Most plant-based proteins fall into this category.
+                    <p>Examples: Legumes (beans, lentils), grains (rice, wheat), nuts, seeds, and most vegetables.</p>
+                    <p><strong>Complementary Proteins:</strong> Vegetarians and vegans can still get all essential amino acids by combining different incomplete protein sources within the same day (e.g., rice and beans, peanut butter on whole-wheat toast) to form a complete protein profile.</p>
+                </li>
+            </ul>
+
+            <h4>Protein Timing: When to Fuel Your Muscles</h4>
+            <p>While the concept of a very narrow "anabolic window" immediately post-workout has been broadened, strategic protein timing can still optimize muscle protein synthesis and recovery.</p>
+            <ul>
+                <li>
+                    <strong>Consistent Daily Intake:</strong> The most crucial aspect is meeting your total daily protein needs. Aim to spread your protein intake relatively evenly throughout the day across 3-5 meals or snacks.</li>
+                <li>
+                    <strong>Pre-Workout:</strong> Consuming some protein (along with carbohydrates) before a workout can prime your muscles for growth and reduce muscle breakdown during exercise.</li>
+                <li>
+                    <strong>Post-Workout:</strong> This is still a critical time. Consuming 20-40 grams of high-quality protein within a few hours after resistance training helps to kickstart muscle repair and recovery.</li>
+                <li>
+                    <strong>Before Bed:</strong> A slow-digesting protein (like casein from dairy or a plant-based blend) before sleep can help provide a sustained release of amino acids overnight, supporting recovery while you rest.</li>
+                <li>
+                    <strong>General Recommendations:</strong> For active individuals, a common guideline is 1.6-2.2 grams of protein per kilogram of body weight per day (or 0.7-1.0 grams per pound). Individual needs vary based on activity level, age, and goals.
+                </li>
+            </ul>
+            <p>By focusing on both the quality and strategic timing of your protein intake, you can significantly enhance your body's ability to build and maintain lean muscle mass, improve recovery, and support overall metabolic health.</p>
+        `,
+        duration: 4 // Increased duration to reflect more comprehensive content
     },
-    {
+{
         type: 'lesson',
         title: 'Types of Fats: A Deeper Look',
-        content: `<h3>Understanding Saturated, Unsaturated, and Trans Fats</h3><p>Delve deeper into fats: <b>Saturated fats</b> (found in animal fats, butter) should be consumed in moderation. <b>Unsaturated fats</b> (monounsaturated in avocados/nuts, polyunsaturated in fish/seeds) are generally heart-healthy. Pay special attention to <b>Omega-3 fatty acids</b> (from fatty fish, flaxseed), which are crucial for brain health and reducing inflammation. Avoid artificial <b>trans fats</b> found in many processed foods due to their negative health impacts.</p>`,
-        duration: 1
+        content: `
+            <h3>Diving Deeper into Dietary Fats: Saturated, Unsaturated, and Trans Fats</h3>
+            <p>Fats are often the most misunderstood macronutrient, but they are absolutely essential for optimal health, not just energy. Understanding the different types of fats and their distinct impacts on your body is key to making informed dietary choices. Fats play crucial roles in hormone production, nutrient absorption, cellular health, and providing concentrated energy.</p>
+            
+            <h4>1. Saturated Fats: Consume in Moderation</h4>
+            <p>Saturated fats are typically solid at room temperature and are primarily found in animal-based foods. While a necessary part of a balanced diet in moderation, high intake can contribute to elevated LDL ("bad") cholesterol levels, which may increase the risk of heart disease.</p>
+            <ul>
+                <li><strong>Sources:</strong> Fatty cuts of red meat, poultry skin, full-fat dairy products (butter, cheese, cream), and tropical oils like coconut oil and palm oil.</li>
+                <li><strong>Role:</strong> Provide energy, support cell membranes, and aid in the absorption of fat-soluble vitamins.</li>
+            </ul>
+
+            <h4>2. Unsaturated Fats: The Heart-Healthy Choices</h4>
+            <p>Unsaturated fats are generally liquid at room temperature and are widely considered beneficial for cardiovascular health. They can help lower LDL cholesterol levels and provide essential fatty acids that the body cannot produce.</p>
+            <ul>
+                <li>
+                    <strong>Monounsaturated Fats (MUFAs):</strong>
+                    <p>These fats can help reduce LDL cholesterol levels and are a staple of the Mediterranean diet. They are known for their anti-inflammatory properties.</p>
+                    <p><strong>Sources:</strong> Olive oil, avocado, almonds, cashews, pecans, and peanuts.</p>
+                </li>
+                <li>
+                    <strong>Polyunsaturated Fats (PUFAs):</strong>
+                    <p>This category includes essential fatty acids that the body needs for brain function, cell growth, and inflammation control. The two main types are Omega-3 and Omega-6 fatty acids.</p>
+                    <ul>
+                        <li>
+                            <strong>Omega-3 Fatty Acids:</strong> These are incredibly important for reducing inflammation, supporting brain and cognitive function, improving heart health, and potentially boosting mood.
+                            <p><strong>Sources:</strong> Fatty fish (salmon, mackerel, sardines, tuna), flaxseeds, chia seeds, walnuts, and flaxseed oil.</p>
+                        </li>
+                        <li>
+                            <strong>Omega-6 Fatty Acids:</strong> Also essential, but typically consumed in higher amounts in modern diets. While necessary, an imbalance (too much Omega-6 relative to Omega-3) can promote inflammation.
+                            <p><strong>Sources:</strong> Vegetable oils (soybean, corn, sunflower), most nuts and seeds.</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>3. Trans Fats: The Fats to Avoid</h4>
+            <p>Trans fats are largely artificial fats created through a process called hydrogenation, which turns liquid oils into solid fats to extend shelf life and enhance texture in processed foods. They are widely recognized as the most harmful type of fat, as they simultaneously raise LDL ("bad") cholesterol and lower HDL ("good") cholesterol, significantly increasing the risk of heart disease and other health issues.</p>
+            <ul>
+                <li><strong>Sources:</strong> Found in many fried foods, baked goods (pastries, cookies, cakes), stick margarines, and some processed snacks. Always check nutrition labels for "partially hydrogenated oil."</li>
+                <li><strong>Recommendation:</strong> It is strongly advised to eliminate artificial trans fats from your diet entirely.</li>
+            </ul>
+            <p>By prioritizing healthy unsaturated fats, consuming saturated fats in moderation, and strictly avoiding trans fats, you will significantly support your long-term health, energy levels, and overall fitness journey.</p>
+        `,
+        duration: 4 // Increased duration to reflect comprehensive content
     },
     {
         type: 'quiz',
@@ -268,17 +362,62 @@ const courseContent = [
         correctAnswer: 1, // Complex Carbohydates
         duration: 1
     },
-    {
-        type: 'lesson',
-        title: 'Introduction to Fitness Supplementation',
-        content: `<h3>Do You Need Supplements?</h3><p>Supplements are intended to 'supplement' a healthy diet, not replace it. Common supplements include protein powders (for convenience), creatine (for strength/power), and multivitamins (to fill nutrient gaps). Always research thoroughly, prioritize whole foods, and consult a healthcare professional before adding supplements to your regimen. Quality and purity can vary greatly.</p>`,
+{
+        type: 'quiz',
+        title: 'Quiz: Advanced Macronutrients Application', // Adjusted title for clarity
+        question: 'An individual aims to improve cardiovascular health and reduce systemic inflammation. Based on the detailed understanding of dietary fats, which specific fat-related dietary change would be most effective?',
+        options: [
+            'Increasing consumption of artificial trans fats found in processed snacks.',
+            'Prioritizing high intake of saturated fats from animal products like butter and fatty meats.',
+            'Substituting saturated and trans fats with an emphasis on Omega-3 rich polyunsaturated fats and monounsaturated fats.',
+            'Eliminating all dietary fats to minimize calorie intake.'
+        ],
+        correctAnswer: 2, // Index of 'Substituting saturated and trans fats with an emphasis on Omega-3 rich polyunsaturated fats and monounsaturated fats.'
         duration: 1
     },
-    {
+{
         type: 'lesson',
         title: 'Strategic Eating Habits: Timing & Frequency',
-        content: `<h3>Optimizing Your Meals for Energy and Performance</h3><p>Beyond *what* you eat, *when* and *how often* you eat can impact your energy and recovery. While individual needs vary, consuming balanced meals every 3-4 hours can help maintain stable blood sugar and energy levels. Pre-workout meals provide fuel, and post-workout meals are critical for nutrient replenishment and muscle repair. Listen to your body's hunger cues.</p>`,
-        duration: 1
+        content: `
+            <h3>Optimizing Your Meals for Sustained Energy, Performance, and Recovery</h3>
+            <p>Beyond the quality and quantity of your food, *when* and *how often* you eat plays a significant role in your energy levels, athletic performance, and recovery. Strategic eating habits can help maintain stable blood sugar, support muscle growth, and improve overall well-being.</p>
+            
+            <h4>Meal Frequency: Finding Your Rhythm</h4>
+            <p>There's no single magic number for meal frequency, as individual preferences, schedules, and goals vary. However, consistency is key.</p>
+            <ul>
+                <li>
+                    <strong>Traditional 3 Meals a Day:</strong> For many, three balanced meals spaced throughout the day work well for satiety and nutrient intake.
+                </li>
+                <li>
+                    <strong>Frequent Smaller Meals (5-6 per day):</strong> Some individuals find that eating smaller, more frequent meals (every 2-4 hours) helps manage hunger, maintain stable blood sugar levels, and ensures a steady supply of nutrients, particularly useful for those with higher caloric needs or specific athletic goals.
+                </li>
+            </ul>
+            <p>Ultimately, the best frequency is one you can consistently adhere to that supports your energy needs and helps you feel your best.</p>
+
+            <h4>Meal Timing Around Exercise: Fuel, Perform, Recover</h4>
+            <p>Strategically timing your meals and snacks around your workouts can significantly impact your performance and recovery.</p>
+            <ul>
+                <li>
+                    <strong>Pre-Workout (1-3 hours before):</strong>
+                    <p>Focus on easily digestible carbohydrates to provide readily available energy for your workout. A moderate amount of protein can also be beneficial, while high fat or fiber intake right before exercise might cause digestive discomfort.</p>
+                    <p>Examples: Banana with a small handful of nuts, oatmeal with berries, whole-wheat toast with a little peanut butter.</p>
+                </li>
+                <li>
+                    <strong>During Workout (for longer/intense sessions):</strong>
+                    <p>For workouts lasting longer than 60-90 minutes or very high-intensity sessions, consuming easily digestible carbohydrates (e.g., sports drink, fruit, energy gel) can help maintain energy levels and prevent fatigue.</p>
+                </li>
+                <li>
+                    <strong>Post-Workout (within 1-2 hours):</strong>
+                    <p>This is a crucial window for recovery. Aim for a combination of carbohydrates to replenish glycogen stores and high-quality protein to initiate muscle repair and growth. This combination aids in faster recovery and better adaptation to training.</p>
+                    <p>Examples: Chicken and rice, a protein shake with fruit, Greek yogurt with granola.</p>
+                </li>
+            </ul>
+
+            <h4>Listen to Your Body: Hunger, Satiety, and Individual Needs</h4>
+            <p>While guidelines are helpful, truly optimizing your eating habits means paying attention to your body's unique signals. Learn to recognize genuine hunger and satiety cues. Your activity level, metabolism, and personal preferences will dictate your optimal meal timing and frequency.</p>
+            <p>The goal is to provide your body with consistent, high-quality fuel to support your energy levels, maximize your performance during workouts, and facilitate efficient recovery, all while enjoying your food.</p>
+        `,
+        duration: 4 // Increased duration to reflect comprehensive content
     },
     {
         type: 'quiz',
