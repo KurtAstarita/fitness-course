@@ -436,16 +436,43 @@ const courseContent = [
     // --- Module 2: Core Training Principles (Detailed) ---
     {
         type: 'lesson',
-        title: 'Basic Strength Training Principles', // Original generic, but kept for flow
+        title: 'Foundational Strength Training Principles',
         content: `
-            <h3>Progressive Overload and Consistency</h3>
-            <p>To build strength and muscle, you need to apply two key principles:</p>
+            <h3>Unlocking Your Potential: Core Principles of Strength Training</h3>
+            <p>Building strength, muscle, and improving overall physical capacity isn't just about lifting weights; it's about intelligently applying foundational training principles that guide your body's adaptation. These principles ensure your efforts lead to consistent progress and help prevent plateaus and injuries.</p>
+
+            <h4>1. Progressive Overload: The Engine of Growth</h4>
+            [cite_start]<p>To continuously build strength and muscle, you must gradually increase the demands placed on your body over time[cite: 793, 3753]. Your body adapts to stress, so to keep adapting, the stress must continually increase. This doesn't just mean lifting heavier, though that's a primary method. Methods of achieving progressive overload include:</p>
             <ul>
-                <li><strong>Progressive Overload:</strong> Gradually increasing the demands on your body (e.g., lifting heavier, doing more reps).</li>
-                <li><strong>Consistency:</strong> Showing up regularly and sticking to your plan is more important than perfect workouts.</li>
+                <li><strong>Increasing Resistance:</strong> Lifting heavier weights.</li>
+                <li><strong>Increasing Volume:</strong> Doing more repetitions or more sets.</li>
+                <li><strong>Decreasing Rest Periods:</strong> Reducing the time between sets.</li>
+                <li><strong>Increasing Frequency:</strong> Training a muscle group more often.</li>
+                <li><strong>Improving Technique/Form:</strong> Performing the exercise with stricter form, which often makes it harder.</li>
+                <li><strong>Increasing Time Under Tension:</strong> Slowing down the eccentric (lowering) or concentric (lifting) phase of an exercise.</li>
+                [cite_start]<li><strong>Using More Difficult Variations:</strong> Progressing to exercises that require more strength or stability (e.g., knee push-ups to standard push-ups, or bodyweight squats to pistol squats)[cite: 3526].</li>
             </ul>
+            <p>It's crucial to apply this principle safely, especially for beginners. [cite_start]Avoid training to failure in the initial months to perfect movement patterns and prevent injuries[cite: 3751].</p>
+
+            <h4>2. Consistency: The Non-Negotiable Foundation</h4>
+            [cite_start]<p>Showing up regularly and adhering to your training plan is arguably the most critical factor for long-term success[cite: 793, 3685]. Sporadic, intense workouts are far less effective than consistent, well-structured sessions. Your body needs regular stimuli to adapt and grow. [cite_start]The best program is the one you can consistently stick to and that allows for ongoing progress[cite: 3616].</p>
+
+            <h4>3. Specificity: Train What You Want to Gain</h4>
+            [cite_start]<p>The adaptations your body makes are highly specific to the type of training you perform[cite: 793]. If you want to get stronger at squats, you need to squat. If you want to improve endurance, you need to train endurance. This principle means that your training should directly reflect your goals.</p>
+
+            <h4>4. Individuality: Your Unique Blueprint</h4>
+            [cite_start]<p>Everyone responds differently to training due to genetics, training history, lifestyle, and recovery capacity[cite: 793, 3616]. What works perfectly for one person may not work for another. [cite_start]It's essential to listen to your body, track your progress, and adjust your program to suit your unique needs and how you recover[cite: 3616].</p>
+
+            <h4>5. Recovery: Where Growth Happens</h4>
+            <p>Training breaks down muscle tissue; recovery builds it back stronger. Without adequate rest, sleep, and proper nutrition, your body cannot adapt to the training stimulus, leading to fatigue, poor performance, and increased injury risk. [cite_start]"Most athletes are not over-training, they are under-recovering." [cite: 3619] [cite_start]Ensure you allow sufficient time for muscle groups to recover (e.g., 24-48 hours after strength training for specific muscle groups)[cite: 3525].</p>
+
+            <h4>6. Periodization: Strategic Planning for Peak Performance</h4>
+            [cite_start]<p>Periodization is the systematic planning of training to achieve specific goals over time, often involving varying intensity, volume, and exercise selection in cycles (e.g., macrocycles, mesocycles, microcycles)[cite: 793, 3617]. This helps prevent overtraining, reduce injury risk, and ensures continuous progress by strategically incorporating phases of higher intensity, higher volume, and recovery. [cite_start]Different methods like linear, undulating, and block periodization exist, offering various ways to structure your training[cite: 3618].</p>
+
+            <h4>7. Reversibility: Use It or Lose It</h4>
+            [cite_start]<p>The "use it or lose it" principle states that if you stop training, the adaptations you've gained will gradually diminish[cite: 793]. Consistency helps mitigate this, but prolonged breaks will lead to a loss of strength and fitness. This highlights the importance of maintaining an active lifestyle even during periods of reduced training intensity.</p>
         `,
-        duration: 1
+        duration: 8 // Increased duration to reflect comprehensive content
     },
     {
         type: 'lesson',
