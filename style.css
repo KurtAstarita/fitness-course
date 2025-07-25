@@ -4,19 +4,31 @@
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh; /* Changed from height: 100%; to allow content to extend beyond viewport */
-    overflow-y: auto; /* Add this to enable vertical scrolling if content overflows */
+    height: 100%; /* Use height: 100% here, not min-height */
     background: linear-gradient(to bottom right, #f0f4f8, #c8d9e6); /* Light gradient background */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Center content vertically */
+    align-items: center;   /* Center content horizontally */
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
     z-index: 1000; /* Ensure it's on top */
     color: #333;
     font-family: Arial, sans-serif;
+    /* REMOVE overflow-y: auto; from here */
+}
+
+/* NEW: Styling for the inner wrapper that will handle scrolling */
+#cover-content-wrapper {
+    max-height: 100%; /* This is crucial: limits the wrapper's height to its parent's height */
+    overflow-y: auto; /* This enables vertical scrolling ONLY on this inner wrapper */
+    padding: 10px; /* Add some internal padding for readability */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    /* Optional: Add a max-width to prevent content from spreading too wide on very large screens */
+    max-width: 800px;
+    width: 100%; /* Ensure it takes available width */
+    flex-shrink: 0; /* Prevent content from shrinking too much if it doesn't fit */
 }
 
 #cover-page h1 {
