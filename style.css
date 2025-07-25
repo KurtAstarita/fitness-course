@@ -267,6 +267,15 @@ body {
     color: #000;
 }
 
+#certificateCanvas {
+    border: 1px solid #d4edda;
+    background-color: #fff;
+}
+
+#downloadCertBtn {
+    margin-top: 15px;
+}
+
 /* --- Responsive Design / Mobile-Friendly Styles --- */
 
 /* For screens smaller than 768px (common breakpoint for tablets and smaller) */
