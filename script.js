@@ -1,20 +1,3 @@
-// Get references to the cover page and app container
-const coverPage = document.getElementById('cover-page');
-const appContainer = document.getElementById('app-container');
-const startButton = document.getElementById('start-course-btn');
-
-// Add an event listener to the start button
-startButton.addEventListener('click', () => {
-    // Hide the cover page
-    coverPage.style.display = 'none';
-    // Show the main app container
-    appContainer.style.display = 'block'; // Or 'flex', 'grid', depending on your #app-container CSS display property
-
-    // Now, load the first lesson of your course
-    renderLesson();
-});
-
-
 // This array will hold all your course content, slide by slide.
 // Each object represents a "slide" or a "lesson segment".
 // 'type': 'lesson' for content, 'quiz' for a quiz.
@@ -31,7 +14,7 @@ const courseContent = [
             <p>We'll cover core principles, practical techniques, and how to maintain consistency.</p>
             <img src="https://via.placeholder.com/400x200?text=Fitness+Intro" alt="Fitness Introduction" style="max-width:100%;">
         `,
-        duration: 15
+        duration: 45
     },
     {
         type: 'lesson',
@@ -53,6 +36,7 @@ const courseContent = [
         question: 'Which macronutrient is primarily responsible for muscle repair and growth?',
         options: ['Carbohydrates', 'Proteins', 'Fats', 'Vitamins'],
         correctAnswer: 1, // Index of 'Proteins'
+        duration: 45
     },
 
     // --- Module 1: Advanced Nutrition Fundamentals (Detailed) ---
@@ -74,13 +58,12 @@ const courseContent = [
         content: `<h3>Good Fats vs. Bad Fats</h3><p>Fats are vital for hormone production, nutrient absorption, and maintaining cell health. They also provide a concentrated source of energy. Understand the difference between healthy fats (monounsaturated, polyunsaturated, Omega-3s) found in avocados, nuts, and fatty fish, and less healthy fats (trans fats, excessive saturated fats).</p>`,
         duration: 45
     },
-        {
+    {
         type: 'lesson',
         title: 'Hydration & Micronutrients: The Unsung Heroes',
         content: `<h3>Fueling Your Body with Water and Essential Elements</h3><p>Water is essential for nearly every bodily function, including nutrient transport, temperature regulation, and joint lubrication. Dehydration can significantly impair performance. Micronutrients like vitamins and minerals, while needed in smaller amounts, play critical roles in metabolism, immune function, and overall health. Don't neglect them!</p>`,
         duration: 45
     },
-    
     {
         type: 'quiz',
         title: 'Quiz: Macronutrient Mastery',
@@ -89,7 +72,6 @@ const courseContent = [
         correctAnswer: 2, // Proteins
         duration: 45
     },
-    // --- Module 1: Advanced Nutrition Fundamentals (Detailed) - EXPANSION ---
     {
         type: 'lesson',
         title: 'Carbohydrates: Simple vs. Complex',
@@ -136,9 +118,6 @@ const courseContent = [
         correctAnswer: 2, // Omega-3 Fatty Acids
         duration: 45
     },
-
-
-    
 
     // --- Module 2: Core Training Principles (Detailed) ---
     {
@@ -174,54 +153,46 @@ const courseContent = [
         correctAnswer: 2, // Specificity
         duration: 45
     },
-    // --- Module 1: Advanced Nutrition Fundamentals (Detailed) - EXPANSION ---
     {
         type: 'lesson',
-        title: 'Carbohydrates: Simple vs. Complex',
-        content: `<h3>Choosing the Right Carbs</h3><p>Not all carbohydrates are created equal. <b>Simple carbohydrates</b> (sugars) provide quick energy but can lead to energy crashes. They are found in fruits, dairy, and added sugars. <b>Complex carbohydrates</b> (starches and fiber) offer sustained energy, are rich in nutrients, and support digestive health. Prioritize whole grains, vegetables, and legumes for complex carbs.</p>`,
+        title: 'Energy Systems: Fueling Your Workouts',
+        content: `<h3>How Your Body Powers Movement</h3><p>Your body uses three main energy systems depending on the intensity and duration of your activity:</p><ul><li><b>ATP-PC System:</b> For very short, explosive efforts (e.g., a single heavy lift, sprint).</li><li><b>Glycolytic System:</b> For moderate-duration, high-intensity efforts (e.g., a set of 8-12 reps, a 400m sprint).</li><li><b>Oxidative System:</b> For long-duration, low-to-moderate intensity activities (e.g., marathon running, extended cardio).</li></ul><p>Understanding these helps you tailor your training to your energy demands.</p>`,
         duration: 45
     },
     {
         type: 'lesson',
-        title: 'Protein Quality and Timing',
-        content: `<h3>Maximizing Muscle Support</h3><p>Protein sources vary in quality based on their amino acid profile. <b>Complete proteins</b> (found in animal products like meat, eggs, and dairy) contain all essential amino acids. <b>Incomplete proteins</b> (found in most plant sources) lack one or more. Combining incomplete proteins (e.g., rice and beans) can create a complete profile. Consuming protein strategically throughout the day, especially post-workout, aids muscle recovery and growth.</p>`,
-        duration: 45
-    },
-    {
-        type: 'lesson',
-        title: 'Types of Fats: A Deeper Look',
-        content: `<h3>Understanding Saturated, Unsaturated, and Trans Fats</h3><p>Delve deeper into fats: <b>Saturated fats</b> (found in animal fats, butter) should be consumed in moderation. <b>Unsaturated fats</b> (monounsaturated in avocados/nuts, polyunsaturated in fish/seeds) are generally heart-healthy. Pay special attention to <b>Omega-3 fatty acids</b> (from fatty fish, flaxseed), which are crucial for brain health and reducing inflammation. Avoid artificial <b>trans fats</b> found in many processed foods due to their negative health impacts.</p>`,
+        title: 'Rep Ranges and Training Goals',
+        content: `<h3>Tailoring Reps for Strength, Hypertrophy, or Endurance</h3><p>The number of repetitions (reps) you perform significantly impacts your training outcome:</p><ul><li><b>Strength (1-5 reps):</b> Focus on lifting heavy weights for pure strength gains.</li><li><b>Hypertrophy (6-12 reps):</b> Ideal for muscle growth and size.</li><li><b>Endurance (12+ reps):</b> Improves muscular stamina and cardiovascular fitness.</li></ul><p>Varying your rep ranges can help achieve different aspects of fitness.</p>`,
         duration: 45
     },
     {
         type: 'quiz',
-        title: 'Quiz: Advanced Macronutrients',
-        question: 'Which type of carbohydrate provides sustained energy release and is rich in fiber?',
-        options: ['Simple Carbohydrates', 'Complex Carbohydrates', 'Sugars', 'Fructose'],
-        correctAnswer: 1, // Complex Carbohydrates
+        title: 'Quiz: Energy Systems & Reps',
+        question: 'Which energy system is primarily used for very short, explosive efforts like a single heavy lift?',
+        options: ['Glycolytic System', 'Oxidative System', 'ATP-PC System', 'Anaerobic System'],
+        correctAnswer: 2, // ATP-PC System
         duration: 45
     },
     {
         type: 'lesson',
-        title: 'Introduction to Fitness Supplementation',
-        content: `<h3>Do You Need Supplements?</h3><p>Supplements are intended to 'supplement' a healthy diet, not replace it. Common supplements include protein powders (for convenience), creatine (for strength/power), and multivitamins (to fill nutrient gaps). Always research thoroughly, prioritize whole foods, and consult a healthcare professional before adding supplements to your regimen. Quality and purity can vary greatly.</p>`,
+        title: 'Fundamental Exercise Form and Safety',
+        content: `<h3>Protecting Your Body, Maximizing Your Results</h3><p>Proper exercise form is paramount to prevent injuries and effectively target muscles. Always prioritize form over weight. Learn to engage your core, maintain a neutral spine, and control the movement throughout the full range of motion. If unsure, start with lighter weights or bodyweight and watch instructional videos. Listen to your body and never push through sharp pain.</p>`,
         duration: 45
     },
     {
         type: 'lesson',
-        title: 'Strategic Eating Habits: Timing & Frequency',
-        content: `<h3>Optimizing Your Meals for Energy and Performance</h3><p>Beyond *what* you eat, *when* and *how often* you eat can impact your energy and recovery. While individual needs vary, consuming balanced meals every 3-4 hours can help maintain stable blood sugar and energy levels. Pre-workout meals provide fuel, and post-workout meals are critical for nutrient replenishment and muscle repair. Listen to your body's hunger cues.</p>`,
+        title: 'Introduction to Training Splits',
+        content: `<h3>Structuring Your Workout Week</h3><p>A training split refers to how you divide your workouts across the week. Common splits include:</p><ul><li><b>Full Body:</b> Training all major muscle groups in each session (e.g., 2-3 times/week).</li><li><b>Upper/Lower:</b> Dividing workouts into upper body and lower body days.</li><li><b>Body Part Split:</b> Dedicating each workout to specific muscle groups (e.g., Chest Day, Leg Day).</li></ul><p>Choose a split that fits your schedule, recovery capacity, and goals.</p>`,
         duration: 45
     },
     {
         type: 'quiz',
-        title: 'Quiz: Nutrition Application',
-        question: 'Which type of fat is known for its anti-inflammatory properties and is found in fatty fish?',
-        options: ['Saturated Fat', 'Trans Fat', 'Omega-3 Fatty Acids', 'Cholesterol'],
-        correctAnswer: 2, // Omega-3 Fatty Acids
+        title: 'Quiz: Form & Splits',
+        question: 'What is the primary reason to prioritize proper exercise form?',
+        options: ['To lift the most weight possible', 'To prevent injuries and effectively target muscles', 'To finish workouts faster', 'To sweat more'],
+        correctAnswer: 1, // To prevent injuries and effectively target muscles
         duration: 45
     },
-    
 
     // --- Module 3: Cardiovascular Fitness ---
     {
@@ -244,7 +215,6 @@ const courseContent = [
         correctAnswer: 1, // HIIT
         duration: 45
     },
-    // --- Module 3: Cardiovascular Fitness - EXPANSION ---
     {
         type: 'lesson',
         title: 'Detailed Benefits of Cardiovascular Training',
@@ -286,7 +256,6 @@ const courseContent = [
         duration: 45
     },
 
-    
     // --- Module 4: Recovery & Mindset ---
     {
         type: 'lesson',
@@ -300,7 +269,6 @@ const courseContent = [
         content: `<h3>The Mental Game of Fitness</h3><p>Maintaining motivation is key to long-term fitness success. Set <b>SMART goals</b> (Specific, Measurable, Achievable, Relevant, Time-bound). Understand the difference between intrinsic (internal enjoyment) and extrinsic (external rewards) motivation. Everyone faces setbacks like plateaus or injuries; learn to adapt, stay resilient, and use them as learning opportunities. A strong mindset is as important as physical strength.</p>`,
         duration: 45
     },
-    // --- Module 4: Recovery & Mindset - EXPANSION ---
     {
         type: 'lesson',
         title: 'Signs and Prevention of Overtraining',
@@ -371,7 +339,6 @@ const courseContent = [
         correctAnswer: 1, // Develops functional strength and mobility
         duration: 45
     },
-    // --- Module 5: Exercise Techniques and Modalities - EXPANSION ---
     {
         type: 'lesson',
         title: 'The Importance of Warm-ups and Cool-downs',
@@ -462,15 +429,14 @@ const courseContent = [
     // Final Test Placeholder
     {
         type: 'final_test_placeholder',
-        title: 'Final Assessment'
+        title: 'Final Assessment',
+        duration: 45 // If you plan to give it a fixed duration for the placeholder itself.
+                      // The actual final test duration will depend on how you implement it,
+                      // but keeping it consistent with the other slide durations makes sense here.
     }
 ];
 
-// Note: You will also need to expand your 'finalTestQuestions' array to include
-// questions from all these new topics to make the final assessment comprehensive.
-
 // This array will hold the questions for the final test.
-// Structure similar to quiz, but potentially more questions and no immediate feedback.
 const finalTestQuestions = [
     // --- General / Introduction ---
     {
@@ -625,7 +591,7 @@ const finalTestQuestions = [
     },
     {
         question: 'Which type of stretching involves controlled, flowing movements and is best performed as part of a warm-up?',
-        options: ['Static stretching', 'Dynamic stretching', 'Ballistic stretching', 'PNF stretching'],
+        options: ['Static stretching', 'Dynamic stretching', 'Ballistic Stretching', 'PNF stretching'],
         correctAnswer: 1 // Dynamic stretching
     },
     {
@@ -635,17 +601,8 @@ const finalTestQuestions = [
     }
 ];
 
-// You will also likely need a 'final_test' type object in your courseContent
-// array that points to these questions, if you don't have one already.
-// Example (if needed, adjust to your exact structure):
-// {
-//     type: 'final_test',
-//     title: 'Final Assessment: Comprehensive Fitness Test',
-//     questions: finalTestQuestions, // Reference the array here
-//     duration: 30 * 60 // Example duration, adjust based on number of questions
-// }
 
-// --- JavaScript variables and initial setup ---
+// --- JavaScript variables (declared here, assigned inside DOMContentLoaded) ---
 let currentSlideIndex = 0;
 let timerInterval;
 let timeLeft;
@@ -653,7 +610,7 @@ let quizAttempted = false; // To prevent going back during a quiz
 let quizScore = 0; // Track score for current quiz
 let finalTestScores = []; // To store results of each final test question
 
-// Declare DOM Elements variables, but assign them inside DOMContentLoaded
+// DOM Elements - Declare them globally, but assign inside DOMContentLoaded
 let certificateCanvas;
 let downloadCertBtn;
 let ctx;
@@ -677,6 +634,11 @@ let certificationAreaEl;
 let certificateNameEl;
 let certificateCourseTitleEl;
 let certificateDateEl;
+
+// Get references to the cover page and app container (These can be global as they are simple IDs)
+const coverPage = document.getElementById('cover-page');
+const appContainer = document.getElementById('app-container');
+const startButton = document.getElementById('start-course-btn');
 
 
 // --- All code that interacts with the DOM will be inside this listener ---
@@ -737,10 +699,12 @@ document.addEventListener('DOMContentLoaded', () => {
     submitFinalTestBtn.addEventListener('click', submitFinalTest);
     downloadCertBtn.addEventListener('click', downloadCertificate); // Your new button listener
 
-    // Initial display when the page loads
-    displaySlide();
+    // Initial display when the page loads - This should ONLY be called by the start button now.
+    // So, we remove it from here.
 }); // End of DOMContentLoaded
 
+
+// --- Functions (defined outside DOMContentLoaded but using globally assigned elements) ---
 
 // Function to display current slide/lesson
 function displaySlide() {
@@ -764,7 +728,7 @@ function displaySlide() {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.remove('hidden');
         displayQuiz(currentItem);
-        startTimer(currentItem.duration || 120); // Default quiz time if not specified
+        startTimer(currentItem.duration || 45); // Default quiz time if not specified, now 45s
         backBtn.disabled = true; // Cannot go back during a quiz
         quizAttempted = false; // Reset quiz attempt status
     } else if (currentItem.type === 'final_test_placeholder') {
