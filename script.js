@@ -4,70 +4,242 @@
 // with all lessons, quizzes, and the final_test_placeholder.
 const courseContent = [
     // Existing Introduction
-    {
+{
         type: 'lesson',
         title: 'Introduction to Fitness Fundamentals',
         content: `
-            <p>Welcome to your interactive fitness journey! In this course, we'll demystify fitness, helping you build a strong foundation for a healthier, more active life.</p>
-            <p>We'll cover core principles, practical techniques, and how to maintain consistency.</p>
-            <img src=\"https://kurtastarita.github.io/400x200?text=Fitness+Intro\" alt=\"Fitness Introduction\">
+            <h3>Welcome to Your Comprehensive Fitness Journey!</h3>
+            <p>Embark on an exciting and transformative journey designed to demystify the world of fitness and empower you to build a strong, healthier, and more active life. This course is your personal guide to understanding the foundational elements of well-being, moving beyond quick fixes to embrace sustainable habits.</p>
+            
+            <h4>What You'll Learn:</h4>
+            <ul>
+                <li><strong>Core Principles:</strong> Dive into the scientific principles that govern how your body responds to exercise and nutrition, enabling you to train smarter, not just harder.</li>
+                <li><strong>Practical Techniques:</strong> Master essential exercise techniques with a focus on proper form and safety, minimizing injury risk and maximizing effectiveness.</li>
+                <li><strong>Sustainable Habits:</strong> Discover strategies for maintaining consistency, setting realistic goals, and integrating fitness seamlessly into your daily life for long-term success.</li>
+                <li><strong>Holistic Well-being:</strong> Explore the interconnectedness of physical activity, nutrition, recovery, and mental resilience, understanding that true fitness encompasses mind, body, and spirit.</li>
+            </ul>
+            
+            <p>Prepare to transform not just your physique, but also your energy levels, mental clarity, and overall quality of life. Let's begin building a healthier, more capable you!</p>
+            <img src="https://kurtastarita.github.io/400x200?text=Fitness+Intro" alt="Fitness Introduction">
+        `,
+        duration: 15
+    },
+    {
+        type: 'lesson',
+        title: 'Understanding Macronutrients',
+        content: `
+            <h3>Carbohydrates, Proteins, and Fats: The Pillars of Your Diet</h3>
+            <p>Macronutrients are fundamental to your body's function, providing the bulk of the energy you need and serving as the essential building blocks for growth, repair, and overall health. They are required in large quantities, hence the term "macro."</p>
+            
+            <ul>
+                <li>
+                    <strong>Carbohydrates: Your Primary Energy Source</strong>
+                    <p>Carbohydrates are the body's preferred fuel, especially during exercise. They are broken down into glucose, which is used immediately for energy or stored as glycogen in your muscles and liver for later use. Focus on complex carbohydrates like whole grains, fruits, and vegetables for sustained energy and fiber, rather than simple sugars that can lead to energy crashes.</p>
+                </li>
+                <li>
+                    <strong>Proteins: Essential for Muscle Repair and Growth</strong>
+                    <p>Proteins are often called the "building blocks of the body." They are crucial for repairing and building muscle tissue, producing enzymes and hormones, and supporting immune function. Excellent sources include lean meats, poultry, fish, eggs, dairy products, legumes, and nuts. Consuming adequate protein is vital for recovery, especially after physical activity.</p>
+                </li>
+                <li>
+                    <strong>Fats: Vital for Hormone Production and Nutrient Absorption</strong>
+                    <p>Dietary fats are essential for many bodily processes, including hormone production, absorption of fat-soluble vitamins (A, D, E, K), and providing a concentrated source of energy. It's important to differentiate between healthy fats (monounsaturated and polyunsaturated fats found in avocados, nuts, seeds, and olive oil) and less healthy fats (saturated and trans fats) to support heart health and overall well-being.</p>
+                </li>
+            </ul>
+            <p>Balancing these three macronutrients according to your individual activity level, goals, and body composition is key to optimal fitness and health.</p>
         `,
         duration: 1
     },
     {
         type: 'lesson',
-        title: 'Understanding Macronutrients', // Original generic, but kept for flow
+        title: 'Optimizing Macronutrient Ratios for Your Goals',
         content: `
-            <h3>Carbohydrates, Proteins, and Fats</h3>
-            <p>Macronutrients are the cornerstones of your diet, providing the energy and building blocks your body needs.</p>
+            <h3>Tailoring Your Macros: It's Not One-Size-Fits-All</h3>
+            <p>While understanding what macronutrients are is crucial, optimizing their ratios in your diet is key to achieving specific fitness goals, whether it's weight loss, muscle gain, or maintenance.</p>
             <ul>
-                <li><strong>Carbohydrates:</strong> Your primary energy source (grains, fruits, vegetables).</li>
-                <li><strong>Proteins:</strong> Essential for muscle repair and growth (meat, fish, beans, dairy).</li>
-                <li><strong>Fats:</strong> Vital for hormone production and nutrient absorption (avocado, nuts, oils).</li>
+                <li>
+                    <strong>For Weight Loss:</strong> Often involves a moderate-to-high protein intake, controlled carbohydrates, and healthy fats. Protein helps preserve muscle mass during a calorie deficit, and both protein and fats contribute to satiety.</li>
+                <li>
+                    <strong>For Muscle Gain (Bulking):</strong> Typically requires a higher overall calorie intake, with sufficient protein to support muscle protein synthesis, and adequate carbohydrates to fuel intense workouts and aid recovery. Fats remain important for hormonal balance.</li>
+                <li>
+                    <strong>For Maintenance:</strong> A balanced approach where macronutrient ratios support energy needs and overall health, typically allowing for more flexibility once goals are met.</li>
             </ul>
+            <p>There's no single "perfect" ratio for everyone, as individual needs vary based on activity level, body composition, and dietary preferences. Tools like a macro calculator can provide a starting point, but listening to your body's response is essential.</p>
         `,
-        duration: 1
+        duration: 2 // Adjust duration as needed
+    },
+    {
+        type: 'lesson',
+        title: 'Macronutrients and Exercise Performance',
+        content: `
+            <h3>Fueling Your Workouts and Boosting Recovery</h3>
+            <p>The timing and composition of your macronutrient intake significantly impact your energy levels during exercise and your body's ability to recover afterwards.</p>
+            <ul>
+                <li>
+                    <strong>Carbohydrates for Energy:</strong> Consuming carbohydrates before and during prolonged exercise provides readily available energy, helping to sustain performance and prevent fatigue. Post-workout carbs replenish glycogen stores, which is vital for recovery.</li>
+                <li>
+                    <strong>Protein for Repair:</strong> Protein intake, especially post-workout, is critical for muscle protein synthesis (the process of repairing and building new muscle tissue). Spreading protein intake throughout the day can also optimize muscle repair.</li>
+                <li>
+                    <strong>Fats for Sustained Fuel:</strong> While not the primary fuel during high-intensity exercise, healthy fats provide a dense and sustained energy source for longer, lower-intensity activities and play a crucial role in overall hormone regulation, which indirectly supports performance and recovery.</li>
+            </ul>
+            <p>Understanding how each macronutrient contributes to your athletic endeavors allows for strategic fueling that can enhance performance, speed up recovery, and optimize adaptations from your training.</p>
+        `,
+        duration: 2 // Adjust duration as needed
     },
     {
         type: 'quiz',
-        title: 'Quiz: Macronutrients', // Original quiz
-        question: 'Which macronutrient is primarily responsible for muscle repair and growth?',
-        options: ['Carbohydrates', 'Proteins', 'Fats', 'Vitamins'],
-        correctAnswer: 1, // Index of 'Proteins'
+        title: 'Quiz: Macronutrient Application', // Changed title to reflect application focus
+        question: 'A competitive athlete engaging in high-intensity, daily training sessions aims to maximize muscle recovery and sustained energy. Based on optimal macronutrient strategies, which approach to their post-workout nutrition would be most effective?',
+        options: [
+            'Prioritizing high fat intake with moderate protein and low carbohydrates',
+            'Focusing on equal parts protein, carbohydrates, and fats for balance',
+            'Emphasizing high protein and high carbohydrate intake, with moderate healthy fats',
+            'Minimizing all macronutrients immediately after training to promote fat burning'
+        ],
+        correctAnswer: 2, // Index of 'Emphasizing high protein and high carbohydrate intake, with moderate healthy fats'
         duration: 1
     },
 
     // --- Module 1: Advanced Nutrition Fundamentals (Detailed) ---
-    {
-        type: 'lesson',
-        title: 'Understanding Carbohydrates: Fueling Your Body',
-        content: `<h3>Your Body's Primary Fuel</h3><p>Carbohydrates are your body's primary source of energy, essential for powering your workouts and daily activities. They are broken down into glucose, which is used immediately or stored as glycogen in muscles and the liver. Different types of carbohydrates (simple vs. complex) affect energy levels differently. Focus on complex carbohydrates for sustained energy release.</p>`,
-        duration: 1
-    },
-    {
-        type: 'lesson',
-        title: 'The Power of Protein: Building and Repairing',
-        content: `<h3>Building Blocks for Muscles</h3><p>Protein is crucial for muscle growth and repair, enzyme production, and hormone synthesis. It's often called the 'building block' of the body. Aim for quality sources like lean meats, fish, eggs, dairy, and plant-based options to support muscle recovery after intense training.</p>`,
-        duration: 1
-    },
-    {
-        type: 'lesson',
-        title: 'Essential Fats: More Than Just Energy',
-        content: `<h3>Good Fats vs. Bad Fats</h3><p>Fats are vital for hormone production, nutrient absorption, and maintaining cell health. They also provide a concentrated source of energy. Understand the difference between healthy fats (monounsaturated, polyunsaturated, Omega-3s) found in avocados, nuts, and fatty fish, and less healthy fats (trans fats, excessive saturated fats).</p>`,
-        duration: 1
-    },
-    {
+
+{
         type: 'lesson',
         title: 'Hydration & Micronutrients: The Unsung Heroes',
-        content: `<h3>Fueling Your Body with Water and Essential Elements</h3><p>Water is essential for nearly every bodily function, including nutrient transport, temperature regulation, and joint lubrication. Dehydration can significantly impair performance. Micronutrients like vitamins and minerals, while needed in smaller amounts, play critical roles in metabolism, immune function, and overall health. Don't neglect them!</p>`,
-        duration: 1
+        content: `
+            <h3>Hydration & Micronutrients: The Unsung Heroes of Health and Performance</h3>
+            <p>While macronutrients provide the bulk of your energy, hydration and micronutrients (vitamins and minerals) are equally critical. Often overlooked, these "unsung heroes" play countless vital roles that underpin every aspect of your health and fitness.</p>
+            
+            <h4>The Power of Proper Hydration</h4>
+            <p>Water is more than just a thirst quencher; it's essential for virtually every bodily function. It acts as a solvent for nutrient transport, lubricates joints, regulates body temperature (especially during exercise), helps remove waste products, and maintains overall cellular function. Even mild dehydration can significantly impair physical performance, cognitive function, and metabolic processes.</p>
+            <ul>
+                <li><strong>How much water?</strong> General guidelines suggest 8 glasses (about 2 liters) per day, but individual needs vary greatly based on activity level, climate, and diet. Listen to your body's thirst signals and observe urine color (light yellow indicates good hydration).</li>
+                <li><strong>Beyond plain water:</strong> While plain water is best, fluids from fruits, vegetables, and other beverages contribute to your daily intake.</li>
+            </ul>
+
+            <h4>Micronutrients: Small Amounts, Big Impact</h4>
+            <p>Micronutrients are vitamins and minerals that, although needed in smaller quantities than macronutrients, are absolutely crucial for countless biochemical reactions in your body. They are vital for energy production, immune system function, bone health, nerve function, and much more.</p>
+            <ul>
+                <li>
+                    <strong>Vitamins:</strong> Organic compounds essential for normal growth and nutrition. They include fat-soluble vitamins (A, D, E, K) and water-soluble vitamins (B-vitamins, C). Each plays unique roles, from supporting vision (Vitamin A) to boosting immunity (Vitamin C) and aiding metabolism (B-vitamins).
+                </li>
+                <li>
+                    <strong>Minerals:</strong> Inorganic elements necessary for various bodily functions, such as building strong bones (Calcium), transporting oxygen (Iron), and maintaining fluid balance (Sodium, Potassium). They are often categorized as major minerals or trace minerals based on the amounts needed.
+                </li>
+            </ul>
+            <p>A diet rich in diverse, whole foods (fruits, vegetables, lean proteins, whole grains) is the best way to ensure adequate intake of a broad spectrum of micronutrients. Supplementation may be beneficial in specific cases, but a food-first approach is always recommended.</p>
+        `,
+        duration: 3 // Increased duration to reflect more comprehensive content
+    },
+{
+        type: 'lesson',
+        title: 'Understanding Carbohydrates: Fueling Your Body',
+        content: `
+            <h3>Carbohydrates: Your Body's Primary Energy Source</h3>
+            <p>Carbohydrates are the cornerstone of your body's energy system, indispensable for powering everything from your daily activities to intense workouts. They are efficiently broken down into glucose, which serves as immediate fuel for your cells, or converted into glycogen and stored in your muscles and liver for later use.</p>
+            
+            <h4>Simple vs. Complex Carbohydrates: The Energy Difference</h4>
+            <ul>
+                <li>
+                    <strong>Simple Carbohydrates:</strong> These are sugars that are quickly digested and absorbed, leading to rapid spikes in blood sugar and a quick burst of energy, often followed by a crash.
+                    <p>Examples include: Sugary drinks, candies, white bread, and many processed snacks.</p>
+                </li>
+                <li>
+                    <strong>Complex Carbohydrates:</strong> Composed of longer chains of sugar molecules, these are digested more slowly. This results in a gradual release of glucose into the bloodstream, providing sustained energy and helping to maintain stable blood sugar levels. They are also typically rich in fiber, which aids digestion and promotes satiety.
+                    <p>Examples include: Whole grains (oats, brown rice, quinoa, whole-wheat bread), legumes (beans, lentils), and starchy vegetables (sweet potatoes, corn).</p>
+                </li>
+            </ul>
+            
+            <p>For optimal energy levels throughout the day and to support your fitness goals, focus predominantly on complex carbohydrates. While simple carbohydrates can have a role (e.g., quick energy during prolonged endurance exercise), a diet rich in complex carbs provides more consistent fuel and essential nutrients.</p>
+        `,
+        duration: 2 // Increased duration to reflect more content
+    },
+{
+        type: 'lesson',
+        title: 'The Power of Protein: Building and Repairing',
+        content: `
+            <h3>Protein: The Essential Building Block for Your Body</h3>
+            <p>Protein is a macronutrient fundamental to virtually every cell and tissue in your body, far beyond just muscle. It's often referred to as the 'building block' because it's crucial for the growth, repair, and maintenance of all body tissues, including muscles, organs, skin, hair, and nails.</p>
+            
+            <h4>Key Roles of Protein:</h4>
+            <ul>
+                <li><strong>Muscle Growth and Repair:</strong> After exercise, protein provides the amino acids necessary to repair damaged muscle fibers and synthesize new ones, leading to stronger, larger muscles.</li>
+                <li><strong>Enzyme and Hormone Production:</strong> Many enzymes (which facilitate biochemical reactions) and hormones (chemical messengers) are made of protein, playing vital roles in metabolism, digestion, and communication throughout the body.</li>
+                <li><strong>Immune Function:</strong> Antibodies, which help fight off infections, are proteins, making adequate protein intake essential for a robust immune system.</li>
+                <li><strong>Transport and Storage:</strong> Proteins help transport molecules like oxygen (hemoglobin) and fats throughout the body, and can also store nutrients.</li>
+                <li><strong>Satiety and Weight Management:</strong> Protein is highly satiating, helping you feel fuller for longer, which can be beneficial for appetite control and weight management goals.</li>
+            </ul>
+
+            <h4>Quality Protein Sources:</h4>
+            <p>Protein sources vary in their amino acid profiles. Complete proteins contain all nine essential amino acids that your body cannot produce on its own.</p>
+            <ul>
+                <li>
+                    <strong>Animal-Based Proteins:</strong> Typically complete proteins. Examples include:
+                    <ul>
+                        <li>Lean Meats (Chicken, Turkey, Beef)</li>
+                        <li>Fish (Salmon, Tuna, Cod)</li>
+                        <li>Eggs</li>
+                        <li>Dairy Products (Milk, Yogurt, Cheese, Whey)</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Plant-Based Proteins:</strong> Many are incomplete on their own but can form complete proteins when combined (e.g., rice and beans). Excellent sources include:
+                    <ul>
+                        <li>Legumes (Lentils, Chickpeas, Black Beans)</li>
+                        <li>Tofu, Tempeh, Edamame</li>
+                        <li>Quinoa (complete protein)</li>
+                        <li>Nuts and Seeds</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Aim for consistent, quality protein intake throughout your day, especially around your workouts, to support muscle recovery, growth, and overall bodily functions.</p>
+        `,
+        duration: 3 // Increased duration to reflect more comprehensive content
+    },
+{
+        type: 'lesson',
+        title: 'Essential Fats: More Than Just Energy',
+        content: `
+            <h3>Essential Fats: Understanding the Good, the Bad, and the Crucial</h3>
+            <p>Often misunderstood, dietary fats are not merely a source of energy; they are vital for numerous critical bodily functions. Fats are essential for hormone production, the absorption of fat-soluble vitamins (A, D, E, K), maintaining healthy cell membranes, protecting organs, and providing a concentrated source of energy for sustained activities.</p>
+            
+            <h4>Types of Dietary Fats:</h4>
+            <ul>
+                <li>
+                    <strong>Saturated Fats:</strong>
+                    <p>Primarily found in animal products (red meat, butter, full-fat dairy) and some tropical oils (coconut oil, palm oil). Consumed in moderation, they are part of a balanced diet, but excessive intake can raise LDL ("bad") cholesterol levels.</p>
+                </li>
+                <li>
+                    <strong>Unsaturated Fats: (The "Good" Fats)</strong>
+                    <p>These fats are typically liquid at room temperature and are considered beneficial for heart health when consumed in place of saturated and trans fats. They can help lower LDL cholesterol and provide essential fatty acids.</p>
+                    <ul>
+                        <li>
+                            <strong>Monounsaturated Fats (MUFAs):</strong> Found in olive oil, avocados, nuts (almonds, pecans, cashews), and seeds.
+                        </li>
+                        <li>
+                            <strong>Polyunsaturated Fats (PUFAs):</strong> Found in sunflower oil, corn oil, soybean oil, walnuts, and flaxseeds. This category also includes the crucial Omega-3 and Omega-6 fatty acids.
+                            <p><strong>Omega-3 Fatty Acids:</strong> Particularly important for brain health, reducing inflammation, and heart health. Rich sources include fatty fish (salmon, mackerel, sardines), flaxseeds, chia seeds, and walnuts.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Trans Fats: (The "Bad" Fats)</strong>
+                    <p>These are unhealthy fats formed through a process called hydrogenation, primarily found in processed foods like some baked goods, fried foods, and certain margarines. They raise LDL cholesterol and lower HDL ("good") cholesterol, significantly increasing the risk of heart disease. It's best to avoid trans fats as much as possible.</p>
+                </li>
+            </ul>
+            <p>Incorporating a variety of healthy fats into your diet is crucial for overall health, hormone balance, and optimizing nutrient absorption, contributing significantly to your fitness journey.</p>
+        `,
+        duration: 3 // Increased duration to reflect more comprehensive content
     },
     {
         type: 'quiz',
-        title: 'Quiz: Macronutrient Mastery',
-        question: 'Which macronutrient is primarily responsible for muscle growth and repair?',
-        options: ['Carbohydrates', 'Fats', 'Proteins', 'Vitamins'],
-        correctAnswer: 2, // Proteins
+        title: 'Quiz: Advanced Nutrition Application', // Changed title to reflect advanced, applied focus
+        question: 'An individual is training for an endurance event and needs to optimize both sustained energy and cellular function. Beyond complex carbohydrates, which combination of dietary components would be most critical to focus on, as discussed in the lessons?',
+        options: [
+            'High intake of simple sugars and trans fats',
+            'Adequate hydration and a balance of essential vitamins and minerals',
+            'Exclusive reliance on saturated fats for long-term energy',
+            'Prioritizing only animal-based proteins with minimal water'
+        ],
+        correctAnswer: 1, // Index of 'Adequate hydration and a balance of essential vitamins and minerals'
         duration: 1
     },
     {
