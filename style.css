@@ -44,7 +44,7 @@
 #cover-page p {
     font-size: clamp(0.9em, 2.5vw, 1.2em); /* Use clamp for responsive P */
     line-height: 1.6;
-    max-width: 900px;
+    max-width: 1000px;
     margin-bottom: 10px;
     color: #555;
 }
@@ -62,7 +62,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 
     display: block; /* Make it a block-level element to apply margin auto */
-    max-width: 900px; /* Set a maximum width for the button */
+    max-width: 1000px; /* Set a maximum width for the button */
     width: 90%; /* Allow it to be responsive, taking up to 90% of parent width, but not more than max-width */
     margin: 0 auto; /* Center the block-level button horizontally */
 }
@@ -85,7 +85,7 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
     margin-top: 15px; /* Space from the main description */
     margin-bottom: 15px; /* Space above the button */
-    max-width: 900px; /* Limit width to keep it neat */
+    max-width: 1000px; /* Limit width to keep it neat */
     width: 90%; /* Responsive width */
     text-align: left; /* Align text within the box */
     overflow-wrap: break-word; /* Ensures long words break to fit */
