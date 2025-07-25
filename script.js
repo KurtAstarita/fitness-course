@@ -43,25 +43,25 @@ const courseContent = [
         type: 'lesson',
         title: 'Understanding Carbohydrates: Fueling Your Body',
         content: `<h3>Your Body's Primary Fuel</h3><p>Carbohydrates are your body's primary source of energy, essential for powering your workouts and daily activities. They are broken down into glucose, which is used immediately or stored as glycogen in muscles and the liver. Different types of carbohydrates (simple vs. complex) affect energy levels differently. Focus on complex carbohydrates for sustained energy release.</p>`,
-        duration: 60
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'The Power of Protein: Building and Repairing',
         content: `<h3>Building Blocks for Muscles</h3><p>Protein is crucial for muscle growth and repair, enzyme production, and hormone synthesis. It's often called the 'building block' of the body. Aim for quality sources like lean meats, fish, eggs, dairy, and plant-based options to support muscle recovery after intense training.</p>`,
-        duration: 60
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Essential Fats: More Than Just Energy',
         content: `<h3>Good Fats vs. Bad Fats</h3><p>Fats are vital for hormone production, nutrient absorption, and maintaining cell health. They also provide a concentrated source of energy. Understand the difference between healthy fats (monounsaturated, polyunsaturated, Omega-3s) found in avocados, nuts, and fatty fish, and less healthy fats (trans fats, excessive saturated fats).</p>`,
-        duration: 60
+        duration: 45
     },
         {
         type: 'lesson',
         title: 'Hydration & Micronutrients: The Unsung Heroes',
         content: `<h3>Fueling Your Body with Water and Essential Elements</h3><p>Water is essential for nearly every bodily function, including nutrient transport, temperature regulation, and joint lubrication. Dehydration can significantly impair performance. Micronutrients like vitamins and minerals, while needed in smaller amounts, play critical roles in metabolism, immune function, and overall health. Don't neglect them!</p>`,
-        duration: 75
+        duration: 45
     },
     
     {
@@ -70,26 +70,26 @@ const courseContent = [
         question: 'Which macronutrient is primarily responsible for muscle growth and repair?',
         options: ['Carbohydrates', 'Fats', 'Proteins', 'Vitamins'],
         correctAnswer: 2, // Proteins
-        duration: 90
+        duration: 45
     },
     // --- Module 1: Advanced Nutrition Fundamentals (Detailed) - EXPANSION ---
     {
         type: 'lesson',
         title: 'Carbohydrates: Simple vs. Complex',
         content: `<h3>Choosing the Right Carbs</h3><p>Not all carbohydrates are created equal. <b>Simple carbohydrates</b> (sugars) provide quick energy but can lead to energy crashes. They are found in fruits, dairy, and added sugars. <b>Complex carbohydrates</b> (starches and fiber) offer sustained energy, are rich in nutrients, and support digestive health. Prioritize whole grains, vegetables, and legumes for complex carbs.</p>`,
-        duration: 75
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Protein Quality and Timing',
         content: `<h3>Maximizing Muscle Support</h3><p>Protein sources vary in quality based on their amino acid profile. <b>Complete proteins</b> (found in animal products like meat, eggs, and dairy) contain all essential amino acids. <b>Incomplete proteins</b> (found in most plant sources) lack one or more. Combining incomplete proteins (e.g., rice and beans) can create a complete profile. Consuming protein strategically throughout the day, especially post-workout, aids muscle recovery and growth.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Types of Fats: A Deeper Look',
         content: `<h3>Understanding Saturated, Unsaturated, and Trans Fats</h3><p>Delve deeper into fats: <b>Saturated fats</b> (found in animal fats, butter) should be consumed in moderation. <b>Unsaturated fats</b> (monounsaturated in avocados/nuts, polyunsaturated in fish/seeds) are generally heart-healthy. Pay special attention to <b>Omega-3 fatty acids</b> (from fatty fish, flaxseed), which are crucial for brain health and reducing inflammation. Avoid artificial <b>trans fats</b> found in many processed foods due to their negative health impacts.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -97,19 +97,19 @@ const courseContent = [
         question: 'Which type of carbohydrate provides sustained energy release and is rich in fiber?',
         options: ['Simple Carbohydrates', 'Complex Carbohydrates', 'Sugars', 'Fructose'],
         correctAnswer: 1, // Complex Carbohydrates
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Introduction to Fitness Supplementation',
         content: `<h3>Do You Need Supplements?</h3><p>Supplements are intended to 'supplement' a healthy diet, not replace it. Common supplements include protein powders (for convenience), creatine (for strength/power), and multivitamins (to fill nutrient gaps). Always research thoroughly, prioritize whole foods, and consult a healthcare professional before adding supplements to your regimen. Quality and purity can vary greatly.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Strategic Eating Habits: Timing & Frequency',
         content: `<h3>Optimizing Your Meals for Energy and Performance</h3><p>Beyond *what* you eat, *when* and *how often* you eat can impact your energy and recovery. While individual needs vary, consuming balanced meals every 3-4 hours can help maintain stable blood sugar and energy levels. Pre-workout meals provide fuel, and post-workout meals are critical for nutrient replenishment and muscle repair. Listen to your body's hunger cues.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -117,7 +117,7 @@ const courseContent = [
         question: 'Which type of fat is known for its anti-inflammatory properties and is found in fatty fish?',
         options: ['Saturated Fat', 'Trans Fat', 'Omega-3 Fatty Acids', 'Cholesterol'],
         correctAnswer: 2, // Omega-3 Fatty Acids
-        duration: 90
+        duration: 45
     },
 
 
@@ -135,19 +135,19 @@ const courseContent = [
                 <li><strong>Consistency:</strong> Showing up regularly and sticking to your plan is more important than perfect workouts.</li>
             </ul>
         `,
-        duration: 40
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'The Science of Adaptation: Training Effect & Progressive Overload',
         content: `<h3>How Your Body Gets Stronger</h3><p>The 'training effect' describes how your body adapts to physical activity, leading to improvements like increased strength, cardiovascular efficiency, and reduced body fat. To keep making progress, you must apply the principle of <b>Progressive Overload</b> – consistently challenging your muscles by increasing weight, reps, sets, or decreasing rest over time. Without it, your progress will plateau.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Specificity, Individual Differences, and Periodization',
         content: `<h3>Tailoring Your Training for Maximum Results</h3><p>The <b>Principle of Specificity</b> means you get better at what you train for (e.g., if you want to run faster, you run; if you want to lift heavier, you lift heavy). <b>Individual Differences</b> acknowledge that everyone responds differently to training – what works for one person might not work for another. <b>Periodization</b> is the systematic planning of training, varying intensity and volume over time, to optimize performance and prevent overtraining. It helps you avoid burnout and continuously make gains.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -155,26 +155,26 @@ const courseContent = [
         question: 'Which training principle states that your body adapts to the specific demands placed on it?',
         options: ['Progressive Overload', 'Individual Differences', 'Specificity', 'Periodization'],
         correctAnswer: 2, // Specificity
-        duration: 90
+        duration: 45
     },
     // --- Module 1: Advanced Nutrition Fundamentals (Detailed) - EXPANSION ---
     {
         type: 'lesson',
         title: 'Carbohydrates: Simple vs. Complex',
         content: `<h3>Choosing the Right Carbs</h3><p>Not all carbohydrates are created equal. <b>Simple carbohydrates</b> (sugars) provide quick energy but can lead to energy crashes. They are found in fruits, dairy, and added sugars. <b>Complex carbohydrates</b> (starches and fiber) offer sustained energy, are rich in nutrients, and support digestive health. Prioritize whole grains, vegetables, and legumes for complex carbs.</p>`,
-        duration: 75
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Protein Quality and Timing',
         content: `<h3>Maximizing Muscle Support</h3><p>Protein sources vary in quality based on their amino acid profile. <b>Complete proteins</b> (found in animal products like meat, eggs, and dairy) contain all essential amino acids. <b>Incomplete proteins</b> (found in most plant sources) lack one or more. Combining incomplete proteins (e.g., rice and beans) can create a complete profile. Consuming protein strategically throughout the day, especially post-workout, aids muscle recovery and growth.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Types of Fats: A Deeper Look',
         content: `<h3>Understanding Saturated, Unsaturated, and Trans Fats</h3><p>Delve deeper into fats: <b>Saturated fats</b> (found in animal fats, butter) should be consumed in moderation. <b>Unsaturated fats</b> (monounsaturated in avocados/nuts, polyunsaturated in fish/seeds) are generally heart-healthy. Pay special attention to <b>Omega-3 fatty acids</b> (from fatty fish, flaxseed), which are crucial for brain health and reducing inflammation. Avoid artificial <b>trans fats</b> found in many processed foods due to their negative health impacts.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -182,19 +182,19 @@ const courseContent = [
         question: 'Which type of carbohydrate provides sustained energy release and is rich in fiber?',
         options: ['Simple Carbohydrates', 'Complex Carbohydrates', 'Sugars', 'Fructose'],
         correctAnswer: 1, // Complex Carbohydrates
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Introduction to Fitness Supplementation',
         content: `<h3>Do You Need Supplements?</h3><p>Supplements are intended to 'supplement' a healthy diet, not replace it. Common supplements include protein powders (for convenience), creatine (for strength/power), and multivitamins (to fill nutrient gaps). Always research thoroughly, prioritize whole foods, and consult a healthcare professional before adding supplements to your regimen. Quality and purity can vary greatly.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Strategic Eating Habits: Timing & Frequency',
         content: `<h3>Optimizing Your Meals for Energy and Performance</h3><p>Beyond *what* you eat, *when* and *how often* you eat can impact your energy and recovery. While individual needs vary, consuming balanced meals every 3-4 hours can help maintain stable blood sugar and energy levels. Pre-workout meals provide fuel, and post-workout meals are critical for nutrient replenishment and muscle repair. Listen to your body's hunger cues.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -202,7 +202,7 @@ const courseContent = [
         question: 'Which type of fat is known for its anti-inflammatory properties and is found in fatty fish?',
         options: ['Saturated Fat', 'Trans Fat', 'Omega-3 Fatty Acids', 'Cholesterol'],
         correctAnswer: 2, // Omega-3 Fatty Acids
-        duration: 90
+        duration: 45
     },
     
 
@@ -217,7 +217,7 @@ const courseContent = [
         type: 'lesson',
         title: 'Types of Cardio and Intensity Zones',
         content: `<h3>LISS vs. HIIT</h3><p>Explore different cardio methods and how to train effectively. <b>LISS (Low-Intensity Steady State)</b> involves sustained activity at a moderate pace (e.g., jogging, cycling). <b>HIIT (High-Intensity Interval Training)</b> alternates short bursts of intense exercise with brief recovery periods. Training in specific heart rate zones can target different fitness goals, like fat burning or endurance improvement.</p>`,
-        duration: 60
+        duration: 45
     },
     {
         type: 'quiz',
@@ -225,20 +225,20 @@ const courseContent = [
         question: 'Which type of cardio typically involves short bursts of intense exercise followed by brief recovery periods?',
         options: ['LISS', 'HIIT', 'Steady State', 'Yoga'],
         correctAnswer: 1, // HIIT
-        duration: 90
+        duration: 45
     },
     // --- Module 3: Cardiovascular Fitness - EXPANSION ---
     {
         type: 'lesson',
         title: 'Detailed Benefits of Cardiovascular Training',
         content: `<h3>Beyond Endurance: A Healthier You</h3><p>Cardiovascular training offers a multitude of benefits:</p><ul><li><b>Improved Heart Health:</b> Strengthens the heart muscle, lowering resting heart rate and blood pressure.</li><li><b>Increased Stamina:</b> Enhances oxygen delivery to muscles, delaying fatigue.</li><li><b>Weight Management:</b> Burns calories and can help reduce body fat.</li><li><b>Reduced Risk of Chronic Diseases:</b> Lowers risk of type 2 diabetes, stroke, and certain cancers.</li><li><b>Mental Health Boost:</b> Releases endorphins, reducing stress and improving mood.</li></ul>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Calculating Your Target Heart Rate Zones',
         content: `<h3>Train Smarter, Not Just Harder</h3><p>To optimize your cardio workouts, understanding heart rate zones is key. A simple way to estimate your Maximum Heart Rate (MHR) is <b>220 - your age</b>. Your target heart rate zones for moderate-intensity cardio are typically 50-70% of your MHR, while vigorous intensity is 70-85% of your MHR. Training within these zones helps you achieve specific fitness goals more effectively.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'quiz',
@@ -246,19 +246,19 @@ const courseContent = [
         question: 'A simple way to estimate your Maximum Heart Rate (MHR) is to subtract your age from which number?',
         options: ['180', '200', '220', '240'],
         correctAnswer: 2, // 220
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Progressing Your Cardio Workouts',
         content: `<h3>Continuously Challenging Your Cardiovascular System</h3><p>Just like strength training, progressive overload applies to cardio. You can increase the challenge by:</p><ul><li><b>Duration:</b> Gradually extending the length of your workouts.</li><li><b>Frequency:</b> Adding more cardio sessions per week.</li><li><b>Intensity:</b> Increasing your speed, resistance, or elevation (e.g., running faster, cycling uphill, increasing treadmill incline).</li><li><b>Varying Activities:</b> Incorporating different types of cardio to challenge your body in new ways.</li></ul>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Common Types of Cardiovascular Exercises',
         content: `<h3>A Variety of Ways to Get Your Heart Pumping</h3><p>Beyond running and cycling, many activities boost cardiovascular fitness:</p><ul><li><b>Walking:</b> Accessible and effective, especially brisk walking.</li><li><b>Swimming:</b> Full-body, low-impact cardio.</li><li><b>Rowing:</b> Engages both upper and lower body.</li><li><b>Jumping Rope:</b> High-intensity, great for coordination.</li><li><b>Dancing:</b> Fun and effective way to get your heart rate up.</li><li><b>Group Fitness Classes:</b> Offer variety and motivation (e.g., aerobics, Zumba).</li></ul>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -266,7 +266,7 @@ const courseContent = [
         question: 'Which of the following is NOT a way to apply progressive overload to a cardiovascular workout?',
         options: ['Increasing duration', 'Decreasing intensity', 'Increasing frequency', 'Increasing speed'],
         correctAnswer: 1, // Decreasing intensity
-        duration: 90
+        duration: 45
     },
 
     
@@ -275,26 +275,26 @@ const courseContent = [
         type: 'lesson',
         title: 'The Importance of Recovery and Sleep',
         content: `<h3>Optimal Performance Through Rest</h3><p>Recovery is when your muscles repair and grow, not during the workout itself. Adequate sleep (7-9 hours for most adults) is paramount for muscle recovery, hormone regulation, and cognitive function. Ignoring recovery leads to overtraining, injury, and stalled progress. Incorporate rest days and proper sleep hygiene into your routine.</p>`,
-        duration: 75
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Motivation, Goal Setting, and Overcoming Setbacks',
         content: `<h3>The Mental Game of Fitness</h3><p>Maintaining motivation is key to long-term fitness success. Set <b>SMART goals</b> (Specific, Measurable, Achievable, Relevant, Time-bound). Understand the difference between intrinsic (internal enjoyment) and extrinsic (external rewards) motivation. Everyone faces setbacks like plateaus or injuries; learn to adapt, stay resilient, and use them as learning opportunities. A strong mindset is as important as physical strength.</p>`,
-        duration: 90
+        duration: 45
     },
     // --- Module 4: Recovery & Mindset - EXPANSION ---
     {
         type: 'lesson',
         title: 'Signs and Prevention of Overtraining',
         content: `<h3>Recognizing When to Rest</h3><p>Overtraining occurs when you push your body beyond its ability to recover, leading to a decline in performance and increased risk of injury. Signs include persistent fatigue, decreased performance, mood disturbances, increased illness, and prolonged muscle soreness. Prevention involves incorporating adequate rest days, varying workout intensity, ensuring proper nutrition and hydration, and prioritizing sleep. Listen to your body!</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Active vs. Passive Recovery Methods',
         content: `<h3>Optimizing Your Body's Repair Process</h3><p>Recovery isn't just about doing nothing. <b>Passive recovery</b> involves complete rest, like sleep or light stretching. <b>Active recovery</b> includes low-intensity activities that promote blood flow and reduce muscle soreness, such as light cycling, walking, foam rolling, or gentle yoga. Both types are important. Incorporate active recovery on rest days to aid muscle repair and reduce stiffness.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -302,19 +302,19 @@ const courseContent = [
         question: 'Which of the following is a common sign of overtraining?',
         options: ['Increased energy levels', 'Decreased muscle soreness', 'Persistent fatigue and decreased performance', 'Rapid weight gain'],
         correctAnswer: 2, // Persistent fatigue and decreased performance
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Improving Your Sleep Hygiene',
         content: `<h3>The Foundation of Recovery</h3><p>Quality sleep is non-negotiable for physical and mental recovery. Improve your 'sleep hygiene' by:</p><ul><li>Establishing a consistent sleep schedule.</li><li>Creating a dark, quiet, and cool sleep environment.</li><li>Avoiding caffeine and heavy meals close to bedtime.</li><li>Limiting screen time before sleep.</li><li>Engaging in relaxing activities before bed (e.g., reading, stretching).</li></ul><p>Prioritizing sleep will significantly enhance your training results and overall well-being.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Stress Management and Its Impact on Fitness',
         content: `<h3>The Mind-Body Connection</h3><p>Chronic stress can negatively impact your fitness journey by increasing cortisol levels (which can promote fat storage), impairing recovery, and disrupting sleep. Learning stress management techniques like meditation, deep breathing, spending time in nature, or engaging in hobbies is crucial. A balanced lifestyle that includes effective stress coping mechanisms will support both your physical and mental health goals.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -322,13 +322,13 @@ const courseContent = [
         question: 'Which activity is generally NOT recommended close to bedtime for good sleep hygiene?',
         options: ['Reading a book', 'Light stretching', 'Limiting screen time', 'Consuming caffeine'],
         correctAnswer: 3, // Consuming caffeine
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Building Consistent Habits & Mental Toughness',
         content: `<h3>From Discipline to Lifestyle</h3><p>Long-term fitness success hinges on building consistent habits. Start small, track your progress, and celebrate small wins. Mental toughness isn't about never feeling pain, but about pushing through discomfort and setbacks with resilience. Develop a strong "why" for your fitness journey and remind yourself of your goals. Embrace challenges as opportunities for growth.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'quiz',
@@ -336,7 +336,7 @@ const courseContent = [
         question: 'What type of goals are SMART goals?',
         options: ['Simple, Measurable, Achievable, Relevant, Timeless', 'Specific, Manageable, Ambitious, Realistic, Targeted', 'Specific, Measurable, Achievable, Relevant, Time-bound', 'Short, Meaningful, Actionable, Rewarding, Transformative'],
         correctAnswer: 2, // Specific, Measurable, Achievable, Relevant, Time-bound
-        duration: 90
+        duration: 45
     },
 
     // --- Module 5: Exercise Techniques and Modalities ---
@@ -344,7 +344,7 @@ const courseContent = [
         type: 'lesson',
         title: 'Introduction to Bodyweight Training (Calisthenics)',
         content: `<h3>Mastering Your Own Body</h3><p>Bodyweight training, or calisthenics, uses your own body weight for resistance. It's excellent for developing functional strength, mobility, and core stability without needing equipment. Exercises like push-ups, squats, lunges, and planks are foundational. Progressions exist for all fitness levels to continuously challenge you.</p>`,
-        duration: 75
+        duration: 45
     },
     {
         type: 'quiz',
@@ -352,14 +352,14 @@ const courseContent = [
         question: 'What is a primary benefit of calisthenics?',
         options: ['Requires heavy weights', 'Develops functional strength and mobility', 'Only for advanced athletes', 'Primarily builds isolated muscles'],
         correctAnswer: 1, // Develops functional strength and mobility
-        duration: 90
+        duration: 45
     },
     // --- Module 5: Exercise Techniques and Modalities - EXPANSION ---
     {
         type: 'lesson',
         title: 'The Importance of Warm-ups and Cool-downs',
         content: `<h3>Prepare and Recover Effectively</h3><p><b>Warm-ups</b> prepare your body for exercise by increasing blood flow to muscles, raising core temperature, and improving joint mobility, reducing injury risk. They should be dynamic. <b>Cool-downs</b> help your body gradually return to a resting state, promoting flexibility and reducing post-exercise soreness. They typically involve light cardio followed by static stretching.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -367,25 +367,25 @@ const courseContent = [
         question: 'What is the primary purpose of a dynamic warm-up?',
         options: ['To stretch muscles to their maximum length', 'To reduce heart rate rapidly', 'To prepare the body for exercise and reduce injury risk', 'To build muscle strength'],
         correctAnswer: 2, // To prepare the body for exercise and reduce injury risk
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Introduction to Weight Training: Free Weights vs. Machines',
         content: `<h3>Choosing Your Tools for Strength</h3><p><b>Free weights</b> (barbells, dumbbells, kettlebells) engage more stabilizing muscles, allowing for a greater range of motion and mimicking real-world movements. They are excellent for functional strength. <b>Machines</b> offer more stability and isolation, making them great for beginners or targeting specific muscles. Both have a place in a well-rounded program. Start with lighter weights to master form before increasing load.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Foundational Upper Body Compound Exercises',
         content: `<h3>Building a Strong Upper Body</h3><p>Compound exercises work multiple muscle groups and joints simultaneously, making them highly efficient. Key upper body compounds include:</p><ul><li><b>Bench Press:</b> Chest, shoulders, triceps.</li><li><b>Overhead Press:</b> Shoulders, triceps, core.</li><li><b>Barbell Rows:</b> Back, biceps.</li><li><b>Pull-ups/Lat Pulldowns:</b> Back, biceps.</li></ul><p>Focus on controlled movements and proper form for maximum benefit and safety.</p>`,
-        duration: 120
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Foundational Lower Body Compound Exercises',
         content: `<h3>Powering Your Lower Half</h3><p>The lower body houses your largest muscle groups. Essential compound exercises include:</p><ul><li><b>Squats:</b> Quads, hamstrings, glutes, core.</li><li><b>Deadlifts:</b> Hamstrings, glutes, back, core.</li><li><b>Lunges:</b> Quads, hamstrings, glutes, balance.</li><li><b>Leg Press:</b> Quads, hamstrings, glutes (machine variation).</li></ul><p>Mastering these movements is crucial for overall strength, athletic performance, and daily functional movement.</p>`,
-        duration: 120
+        duration: 45
     },
     {
         type: 'quiz',
@@ -393,25 +393,25 @@ const courseContent = [
         question: 'Which exercise is a foundational compound exercise for the lower body?',
         options: ['Bicep Curl', 'Lateral Raise', 'Squat', 'Tricep Extension'],
         correctAnswer: 2, // Squat
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Understanding Isolation Exercises',
         content: `<h3>Targeting Specific Muscles</h3><p>Isolation exercises work a single muscle group and joint. While compound lifts are the foundation, isolation exercises can be used to:</p><ul><li>Address muscle imbalances.</li><li>Further develop a specific muscle group for aesthetics.</li><li>Aid in rehabilitation.</li></ul><p>Examples include bicep curls, tricep extensions, and lateral raises. They are typically performed after compound exercises.</p>`,
-        duration: 75
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Progressions in Bodyweight Training',
         content: `<h3>Taking Calisthenics to the Next Level</h3><p>As you master basic bodyweight exercises, you can progress them to increase difficulty:</p><ul><li><b>Push-ups:</b> From incline to decline, then single-arm.</li><li><b>Squats:</b> From air squats to pistol squats (single-leg).</li><li><b>Pull-ups:</b> From assisted to weighted, or one-arm variations.</li><li><b>Planks:</b> From standard to planks with leg/arm raises.</li></ul><p>This ensures continuous challenge without needing external weights.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Core Training Essentials',
         content: `<h3>The Foundation of All Movement</h3><p>Your core muscles (abdominals, obliques, lower back, glutes) provide stability for almost every movement. A strong core:</p><ul><li>Improves posture.</li><li>Reduces risk of back pain.</li><li>Enhances athletic performance.</li><li>Transfers power between upper and lower body.</li></ul><p>Incorporate exercises like planks, bird-dog, dead bug, and various crunch/twist variations. Focus on control, not just speed.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'quiz',
@@ -419,19 +419,19 @@ const courseContent = [
         question: 'Which of the following is a progression for a standard push-up?',
         options: ['Knee push-ups', 'Incline push-ups', 'Single-arm push-ups', 'Wall push-ups'],
         correctAnswer: 2, // Single-arm push-ups (this is a more advanced progression compared to the others being regressions or easier variations)
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Flexibility and Mobility: Why They Matter',
         content: `<h3>Moving Freely and Reducing Injury</h3><p><b>Flexibility</b> refers to the ability of your muscles and connective tissues to lengthen. <b>Mobility</b> is the range of motion at a joint. Both are crucial for:</p><ul><li>Improved exercise performance.</li><li>Reduced risk of injury.</li><li>Better posture and reduced stiffness.</li><li>Enhanced daily functional movement.</li></ul><p>Incorporate dynamic stretches before workouts and static stretches during cool-downs.</p>`,
-        duration: 90
+        duration: 45
     },
     {
         type: 'lesson',
         title: 'Stretching Techniques: Static, Dynamic, and Foam Rolling',
         content: `<h3>Tools for Better Movement</h3><p>Understand different stretching methods:</p><ul><li><b>Dynamic Stretching:</b> Controlled, flowing movements (e.g., leg swings, arm circles) ideal for warm-ups.</li><li><b>Static Stretching:</b> Holding a stretch for a period (e.g., 20-30 seconds) best for cool-downs to improve flexibility.</li><li><b>Foam Rolling:</b> Self-myofascial release technique using a foam roller to apply pressure to tight muscles, improving flexibility and reducing soreness.</li></ul><p>Use these techniques strategically for optimal results.</p>`,
-        duration: 100
+        duration: 45
     },
     {
         type: 'quiz',
@@ -439,7 +439,7 @@ const courseContent = [
         question: 'Which type of stretching involves controlled, flowing movements and is best for warm-ups?',
         options: ['Static Stretching', 'Ballistic Stretching', 'Dynamic Stretching', 'PNF Stretching'],
         correctAnswer: 2, // Dynamic Stretching
-        duration: 90
+        duration: 45
     },
 
     // Final Test Placeholder
