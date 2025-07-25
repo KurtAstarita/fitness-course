@@ -935,7 +935,40 @@ function submitFinalTest() {
 }
 
 // NEW FUNCTION: Generate and draw the certificate on canvas
-function generateCertificate(name, courseTitle) {
+function generateCertificate(finalScore, courseTitle) { // Keeping finalScore and courseTitle as potential parameters
+    let name = '';
+    const maxLength = 100;
+    const lettersOnlyRegex = /^[a-zA-Z\s.-]+$/; // Allows letters, spaces, hyphens, and periods
+
+    // Loop until a valid name is entered or the user cancels
+    while (true) {
+        name = prompt("Please enter your name for the certificate (letters, spaces, hyphens, periods only, max 100 characters):");
+
+        // Check if the user clicked "Cancel" or closed the prompt
+        if (name === null) {
+            alert("Certificate generation cancelled.");
+            // Optionally, hide the certification area or navigate back if appropriate
+            document.getElementById('certification-area').classList.add('hidden');
+            return; // Exit the function
+        }
+
+        name = name.trim(); // Remove leading/trailing whitespace
+
+        if (name === "") {
+            alert("Name cannot be empty. Please enter your name.");
+        } else if (name.length > maxLength) {
+            alert(`Name is too long. Please enter a name with up to ${maxLength} characters.`);
+        } else if (!lettersOnlyRegex.test(name)) {
+            alert("Invalid characters. Please use only letters, spaces, hyphens, and periods.");
+        } else {
+            // Name is valid, break out of the loop
+            break;
+        }
+    }
+
+    const certificateCanvas = document.getElementById('certificateCanvas');
+    const ctx = certificateCanvas.getContext('2d');
+
     // Clear canvas
     ctx.clearRect(0, 0, certificateCanvas.width, certificateCanvas.height);
 
@@ -981,6 +1014,7 @@ function generateCertificate(name, courseTitle) {
 
 // NEW FUNCTION: Download the certificate
 function downloadCertificate() {
+    const certificateCanvas = document.getElementById('certificateCanvas'); // Ensure canvas is accessible
     const image = certificateCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
     const link = document.createElement('a');
     link.download = 'Fitness_Course_Certificate.png';
