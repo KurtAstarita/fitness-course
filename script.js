@@ -10,7 +10,7 @@ const courseContent = [
         content: `
             <p>Welcome to your interactive fitness journey! In this course, we'll demystify fitness, helping you build a strong foundation for a healthier, more active life.</p>
             <p>We'll cover core principles, practical techniques, and how to maintain consistency.</p>
-            <img src=\"https://via.placeholder.com/400x200?text=Fitness+Intro\" alt=\"Fitness Introduction\">
+            <img src=\"https://kurtastarita.github.io/400x200?text=Fitness+Intro\" alt=\"Fitness Introduction\">
         `,
         duration: 1
     },
