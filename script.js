@@ -77,7 +77,7 @@ const finalTestQuestions = [
     // Add more challenging questions here for the final test
 ];
 
-// --- JavaScript variables and initial setup (to be filled in script.js later) ---
+// --- JavaScript variables and initial setup ---
 let currentSlideIndex = 0;
 let timerInterval;
 let timeLeft;
@@ -85,33 +85,98 @@ let quizAttempted = false; // To prevent going back during a quiz
 let quizScore = 0; // Track score for current quiz
 let finalTestScores = []; // To store results of each final test question
 
-// DOM Elements
-const certificateCanvas = document.getElementById('certificateCanvas');
-const downloadCertBtn = document.getElementById('downloadCertBtn');
-const ctx = certificateCanvas.getContext('2d'); // Get the 2D rendering context
-const courseTitleEl = document.getElementById('course-title');
-const lessonContentEl = document.getElementById('lesson-content');
-const quizContainerEl = document.getElementById('quiz-container');
-const quizQuestionEl = document.getElementById('quiz-question');
-const quizOptionsEl = document.getElementById('quiz-options');
-const submitQuizBtn = document.getElementById('submit-quiz-btn');
-const quizFeedbackEl = document.getElementById('quiz-feedback');
-const backBtn = document.getElementById('back-btn');
-const nextBtn = document.getElementById('next-btn');
-const timerDisplayEl = document.getElementById('timer-display');
-const currentTimeEl = document.getElementById('current-time');
-const finalTestContainerEl = document.getElementById('final-test-container');
-const finalTestQuestionsEl = document.getElementById('final-test-questions');
-const submitFinalTestBtn = document.getElementById('submit-final-test-btn');
-const finalTestResultsEl = document.getElementById('final-test-results');
-const certificationAreaEl = document.getElementById('certification-area');
-const certificateNameEl = document.getElementById('certificate-name');
-const certificateCourseTitleEl = document.getElementById('certificate-course-title');
-const certificateDateEl = document.getElementById('certificate-date');
+// Declare DOM Elements variables, but assign them inside DOMContentLoaded
+let certificateCanvas;
+let downloadCertBtn;
+let ctx;
+
+let courseTitleEl;
+let lessonContentEl;
+let quizContainerEl;
+let quizQuestionEl;
+let quizOptionsEl;
+let submitQuizBtn;
+let quizFeedbackEl;
+let backBtn;
+let nextBtn;
+let timerDisplayEl;
+let currentTimeEl;
+let finalTestContainerEl;
+let finalTestQuestionsEl;
+let submitFinalTestBtn;
+let finalTestResultsEl;
+let certificationAreaEl;
+let certificateNameEl;
+let certificateCourseTitleEl;
+let certificateDateEl;
+
+
+// --- All code that interacts with the DOM will be inside this listener ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Assign DOM Elements AFTER the DOM is fully loaded
+    certificateCanvas = document.getElementById('certificateCanvas');
+    downloadCertBtn = document.getElementById('downloadCertBtn');
+
+    // Only try to get context if canvas is found
+    if (certificateCanvas) {
+        ctx = certificateCanvas.getContext('2d');
+    } else {
+        console.error("Error: Canvas element with ID 'certificateCanvas' not found!");
+        // You might want to display a user-friendly error message or handle gracefully
+        return; // Exit if a critical element is missing
+    }
+
+    courseTitleEl = document.getElementById('course-title');
+    lessonContentEl = document.getElementById('lesson-content');
+    quizContainerEl = document.getElementById('quiz-container');
+    quizQuestionEl = document.getElementById('quiz-question');
+    quizOptionsEl = document.getElementById('quiz-options');
+    submitQuizBtn = document.getElementById('submit-quiz-btn');
+    quizFeedbackEl = document.getElementById('quiz-feedback');
+    backBtn = document.getElementById('back-btn');
+    nextBtn = document.getElementById('next-btn');
+    timerDisplayEl = document.getElementById('timer-display');
+    currentTimeEl = document.getElementById('current-time');
+    finalTestContainerEl = document.getElementById('final-test-container');
+    finalTestQuestionsEl = document.getElementById('final-test-questions');
+    submitFinalTestBtn = document.getElementById('submit-final-test-btn');
+    finalTestResultsEl = document.getElementById('final-test-results');
+    certificationAreaEl = document.getElementById('certification-area');
+    certificateNameEl = document.getElementById('certificate-name');
+    certificateCourseTitleEl = document.getElementById('certificate-course-title');
+    certificateDateEl = document.getElementById('certificate-date');
+
+    // Add all event listeners here
+    nextBtn.addEventListener('click', () => {
+        if (currentSlideIndex < courseContent.length - 1) {
+            currentSlideIndex++;
+            displaySlide();
+        } else if (currentSlideIndex === courseContent.length - 1 && courseContent[currentSlideIndex].type === 'final_test_placeholder') {
+            // This handles the transition TO the final test display, not moving past it
+            // The final test will have its own submit button.
+            // nextBtn will typically be disabled when on final_test_placeholder
+        }
+    });
+
+    backBtn.addEventListener('click', () => {
+        if (currentSlideIndex > 0) {
+            currentSlideIndex--;
+            displaySlide();
+        }
+    });
+
+    submitQuizBtn.addEventListener('click', submitQuiz);
+    submitFinalTestBtn.addEventListener('click', submitFinalTest);
+    downloadCertBtn.addEventListener('click', downloadCertificate); // Your new button listener
+
+    // Initial display when the page loads
+    displaySlide();
+}); // End of DOMContentLoaded
 
 
 // Function to display current slide/lesson
 function displaySlide() {
+    clearInterval(timerInterval); // Always clear timer on slide change
     // Clear previous content
     lessonContentEl.innerHTML = '';
     quizContainerEl.classList.add('hidden');
@@ -145,7 +210,7 @@ function displaySlide() {
 
     // Manage navigation button states
     backBtn.disabled = currentSlideIndex === 0 || (currentItem.type === 'quiz' && !quizAttempted) || currentItem.type === 'final_test_placeholder';
-    // nextBtn.disabled will be handled by timer or quiz completion
+    // nextBtn.disabled will be handled by timer or quiz completion (for lessons/quizzes)
 }
 
 // Function to start timer for a section
@@ -159,13 +224,12 @@ function startTimer(duration) {
         updateTimerDisplay();
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            // Optionally, automatically advance or enable next button after timer
-            // For lessons, we can just enable the next button if it's not already
+            // For lessons, just enable the next button if it's not already
             if (courseContent[currentSlideIndex].type === 'lesson') {
                 nextBtn.disabled = false;
             } else if (courseContent[currentSlideIndex].type === 'quiz') {
-                // If quiz time runs out, auto-submit or prompt for submission
-                if (!quizAttempted) { // Only auto-submit if not already attempted
+                // If quiz time runs out, auto-submit if not already attempted
+                if (!quizAttempted) {
                     submitQuiz();
                 }
             }
@@ -226,12 +290,12 @@ function submitQuiz() {
     } else {
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
-        quizAttempted = false; // Allow re-attempt if no answer selected
+        quizAttempted = false; // Keep quizAttempted false if no answer selected to allow re-submission
         // Re-enable timer if not selected or give more time etc.
         if (timeLeft <= 0) { // If time ran out and no selection
-             nextBtn.disabled = false; // Still allow to move on
+            nextBtn.disabled = false; // Still allow to move on, but no answer recorded
         } else {
-             startTimer(timeLeft); // Resume timer if user needs to select
+            startTimer(timeLeft); // Resume timer if user needs to select
         }
     }
 }
@@ -348,31 +412,3 @@ function downloadCertificate() {
     link.click();
     document.body.removeChild(link);
 }
-
-// Add event listener for the download button
-downloadCertBtn.addEventListener('click', downloadCertificate);
-
-// Event Listeners for navigation buttons
-nextBtn.addEventListener('click', () => {
-    if (currentSlideIndex < courseContent.length - 1) {
-        currentSlideIndex++;
-        displaySlide();
-    } else if (currentSlideIndex === courseContent.length - 1 && courseContent[currentSlideIndex].type === 'final_test_placeholder') {
-        // This handles the transition TO the final test display, not moving past it
-        // The final test will have its own submit button.
-        // nextBtn will typically be disabled when on final_test_placeholder
-    }
-});
-
-backBtn.addEventListener('click', () => {
-    if (currentSlideIndex > 0) {
-        currentSlideIndex--;
-        displaySlide();
-    }
-});
-
-submitQuizBtn.addEventListener('click', submitQuiz);
-submitFinalTestBtn.addEventListener('click', submitFinalTest);
-
-// Initial display when the page loads
-displaySlide();
