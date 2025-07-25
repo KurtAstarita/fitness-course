@@ -56,6 +56,55 @@
     transform: translateY(0);
 }
 
+/* Styling for the Course Details List on the Cover Page */
+#cover-page #list {
+    background-color: rgba(255, 255, 255, 0.7); /* Slightly translucent white background */
+    padding: 25px 35px; /* More padding inside */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin-top: 30px; /* Space from the main description */
+    margin-bottom: 40px; /* Space above the button */
+    max-width: 600px; /* Limit width to keep it neat */
+    width: 90%; /* Responsive width */
+    text-align: left; /* Align text within the box */
+}
+
+#cover-page #list h3 {
+    font-size: 1.6em;
+    color: #0056b3; /* Consistent blue with the main title */
+    margin-bottom: 15px;
+    text-align: center; /* Center the heading within its box */
+}
+
+#cover-page #list ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+#cover-page #list li {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 8px;
+    padding-left: 25px; /* Space for custom bullet */
+    position: relative;
+}
+
+#cover-page #list li:last-child {
+    margin-bottom: 0; /* No margin after the last item */
+}
+
+/* Custom bullet point for list items */
+#cover-page #list li::before {
+    content: '•'; /* Unicode character for a bullet */
+    color: #28a745; /* Green bullet for emphasis */
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 /* Ensure app-container is hidden by default until start button is clicked */
 #app-container {
     display: none; /* Hide by default */
