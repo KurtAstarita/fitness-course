@@ -861,7 +861,7 @@ function submitQuiz() {
 
     submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
     nextBtn.disabled = false; // Allow user to move to next slide
-} else {
+else {
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
         quizAttempted = false; // Keep quizAttempted false if no answer selected to allow re-submission
