@@ -86,6 +86,9 @@ let quizScore = 0; // Track score for current quiz
 let finalTestScores = []; // To store results of each final test question
 
 // DOM Elements
+const certificateCanvas = document.getElementById('certificateCanvas');
+const downloadCertBtn = document.getElementById('downloadCertBtn');
+const ctx = certificateCanvas.getContext('2d'); // Get the 2D rendering context
 const courseTitleEl = document.getElementById('course-title');
 const lessonContentEl = document.getElementById('lesson-content');
 const quizContainerEl = document.getElementById('quiz-container');
@@ -258,7 +261,7 @@ function displayFinalTest() {
     });
 }
 
-// Function to submit final test
+// Modify submitFinalTest to call certificate generation
 function submitFinalTest() {
     let correctAnswers = 0;
     finalTestQuestions.forEach((qData, qIndex) => {
@@ -272,21 +275,82 @@ function submitFinalTest() {
     const scorePercentage = (correctAnswers / totalQuestions) * 100;
 
     finalTestResultsEl.innerHTML = `<p>You scored ${correctAnswers} out of ${totalQuestions} (${scorePercentage.toFixed(2)}%).</p>`;
-    finalTestResultsEl.style.color = scorePercentage >= 70 ? 'green' : 'red'; // Example pass mark
+    finalTestResultsEl.style.color = scorePercentage >= 70 ? 'green' : 'red';
 
-    // Simple certification logic
-    if (scorePercentage >= 70) { // You can set your own passing percentage
+    if (scorePercentage >= 70) {
         certificationAreaEl.classList.remove('hidden');
-        certificateNameEl.textContent = 'Valued Learner'; // Could be prompted from user later
-        certificateDateEl.textContent = new Date().toLocaleDateString();
-        // You can update certificateCourseTitleEl if you want a dynamic title based on what's configured
+        // Prompt for user's name for the certificate
+        let userName = prompt("Congratulations! Please enter your name for the certificate:");
+        if (!userName || userName.trim() === "") {
+            userName = "Valued Learner"; // Default if no name entered
+        }
+        generateCertificate(userName, 'Interactive Fitness Course'); // Call the new function
     } else {
         certificationAreaEl.classList.add('hidden');
         finalTestResultsEl.innerHTML += `<p>You need at least 70% to receive a certification. Please review the material and try again!</p>`;
     }
 
-    submitFinalTestBtn.disabled = true; // Disable after submission
+    submitFinalTestBtn.disabled = true;
 }
+
+// NEW FUNCTION: Generate and draw the certificate on canvas
+function generateCertificate(name, courseTitle) {
+    // Clear canvas
+    ctx.clearRect(0, 0, certificateCanvas.width, certificateCanvas.height);
+
+    // Background
+    ctx.fillStyle = '#f0f8ff'; // Light blue background for certificate
+    ctx.fillRect(0, 0, certificateCanvas.width, certificateCanvas.height);
+
+    // Border
+    ctx.strokeStyle = '#007bff';
+    ctx.lineWidth = 10;
+    ctx.strokeRect(5, 5, certificateCanvas.width - 10, certificateCanvas.height - 10);
+
+    // Title
+    ctx.fillStyle = '#333';
+    ctx.font = 'bold 30px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('CERTIFICATE OF COMPLETION', certificateCanvas.width / 2, 80);
+
+    // Subtitle
+    ctx.font = 'italic 18px Arial';
+    ctx.fillText('Proudly Presented To', certificateCanvas.width / 2, 130);
+
+    // Name
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 40px "Times New Roman"'; // A fancier font for the name
+    ctx.fillText(name, certificateCanvas.width / 2, 200);
+
+    // Course
+    ctx.font = '20px Arial';
+    ctx.fillText(`For successfully completing the`, certificateCanvas.width / 2, 250);
+    ctx.font = 'bold 25px Arial';
+    ctx.fillText(`${courseTitle}`, certificateCanvas.width / 2, 285);
+
+    // Date
+    ctx.font = '16px Arial';
+    const completionDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    ctx.fillText(`on ${completionDate}`, certificateCanvas.width / 2, 330);
+
+    // Signature/Placeholder
+    ctx.font = 'italic 14px Arial';
+    ctx.fillText('Your Fitness Guru', certificateCanvas.width / 2, 370);
+}
+
+// NEW FUNCTION: Download the certificate
+function downloadCertificate() {
+    const image = certificateCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+    const link = document.createElement('a');
+    link.download = 'Fitness_Course_Certificate.png';
+    link.href = image;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Add event listener for the download button
+downloadCertBtn.addEventListener('click', downloadCertificate);
 
 // Event Listeners for navigation buttons
 nextBtn.addEventListener('click', () => {
