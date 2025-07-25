@@ -427,8 +427,8 @@ const courseContent = [
     // Final Test Placeholder
     {
         type: 'final_test_placeholder',
-        title: 'Final Assessment',
-        duration: 45
+        title: 'Final Assessment - 30 minutes',
+        duration: 1800
     }
 ];
 
@@ -597,6 +597,9 @@ const finalTestQuestions = [
     }
 ];
 
+// --- New Global Variables for Penalty Logic ---
+let penaltyPoints = 0; // Accumulates penalty points for the current slide
+let lastPenaltyBlock = -1; // Tracks which penalty block was last applied to avoid duplicate deductions
 
 // --- JavaScript variables (declared here, assigned inside DOMContentLoaded) ---
 let currentSlideIndex = 0;
@@ -752,28 +755,42 @@ function displaySlide() {
     // nextBtn.disabled will be handled by timer or quiz completion (for lessons/quizzes)
 }
 
-// Function to start timer for a section
+// --- UPDATED startTimer Function ---
 function startTimer(duration) {
     clearInterval(timerInterval); // Clear any existing timer
     timeLeft = duration;
-    updateTimerDisplay();
+    penaltyPoints = 0; // Reset penalties for the new slide
+    lastPenaltyBlock = -1; // Reset penalty block tracker for the new slide
+
+    updateTimerDisplay(); // Initial display
 
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            // For lessons, just enable the next button if it's not already
-            if (courseContent[currentSlideIndex].type === 'lesson') {
-                nextBtn.disabled = false;
-            } else if (courseContent[currentSlideIndex].type === 'quiz') {
-                // If quiz time runs out, auto-submit if not already attempted
-                if (!quizAttempted) {
-                    submitQuiz();
-                }
+
+        // Check for penalties only if time has gone negative
+        if (timeLeft < 0) {
+            const timeOver = Math.abs(timeLeft);
+            const penaltyBlockDuration = 45; // Every 45 seconds over
+            const currentPenaltyBlock = Math.floor(timeOver / penaltyBlockDuration);
+
+            // If a new penalty block has been crossed
+            if (currentPenaltyBlock > lastPenaltyBlock) {
+                penaltyPoints += 1; // Deduct 1 point for every penaltyBlockDuration over
+                lastPenaltyBlock = currentPenaltyBlock;
+                // console.log(`Penalty incurred! Total penalty points for this slide: ${penaltyPoints}`); // For debugging
             }
         }
-    }, 1000);
+
+        // For lessons, enable next button when time is up (or goes negative)
+        if (timeLeft <= 0 && courseContent[currentSlideIndex].type === 'lesson') {
+            clearInterval(timerInterval);
+            nextBtn.disabled = false;
+            // Optionally update title to show "Time's Up!" or penalty info
+            // courseTitleEl.textContent = `${courseContent[currentSlideIndex].title} (Time's Up! Penalties: ${penaltyPoints})`;
+        }
+        // For quizzes, the timer will continue past zero until submitted, allowing penalties to accumulate.
+    }, 1000); // Update every second
 
     // Disable next button initially for timed sections until time is up,
     // unless it's a quiz where next is enabled after submission.
@@ -782,11 +799,17 @@ function startTimer(duration) {
     }
 }
 
-// Function to update timer display
+// --- UPDATED updateTimerDisplay Function ---
 function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    currentTimeEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    let displayTime = timeLeft;
+    let prefix = '';
+    if (displayTime < 0) {
+        prefix = '-';
+        displayTime = Math.abs(displayTime); // Use absolute value for display calculation
+    }
+    const minutes = Math.floor(displayTime / 60);
+    const seconds = displayTime % 60;
+    currentTimeEl.textContent = `${prefix}${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 // Function to display quiz questions
@@ -807,7 +830,7 @@ function displayQuiz(quizData) {
     quizFeedbackEl.textContent = '';
 }
 
-// Function to handle quiz submission
+// --- UPDATED submitQuiz Function ---
 function submitQuiz() {
     quizAttempted = true;
     clearInterval(timerInterval); // Stop timer
@@ -815,18 +838,30 @@ function submitQuiz() {
     const selectedOption = document.querySelector('input[name="quizOption"]:checked');
     const currentQuiz = courseContent[currentSlideIndex];
 
-    if (selectedOption) {
-        if (parseInt(selectedOption.value) === currentQuiz.correctAnswer) {
-            quizFeedbackEl.textContent = 'Correct!';
-            quizFeedbackEl.style.color = 'green';
-            quizScore++; // Increment overall quiz score if needed, or just for immediate feedback
-        } else {
-            quizFeedbackEl.textContent = `Incorrect. The correct answer was: ${currentQuiz.options[currentQuiz.correctAnswer]}`;
-            quizFeedbackEl.style.color = 'red';
-        }
-        submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
-        nextBtn.disabled = false; // Allow user to move to next slide
+    let correct = false;
+    if (selectedOption && parseInt(selectedOption.value) === currentQuiz.correctAnswer) {
+        correct = true;
+        quizFeedbackEl.textContent = 'Correct! ';
+        quizFeedbackEl.style.color = 'green';
     } else {
+        quizFeedbackEl.textContent = `Incorrect. The correct answer was: ${currentQuiz.options[currentQuiz.correctAnswer]}. `;
+        quizFeedbackEl.style.color = 'red';
+    }
+
+    // Calculate final score for this quiz (1 point for correct, minus penalties)
+    let currentQuizScore = correct ? 1 : 0;
+    currentQuizScore -= penaltyPoints;
+
+    // Ensure score doesn't go below zero for a single quiz
+    if (currentQuizScore < 0) {
+        currentQuizScore = 0;
+    }
+
+    quizFeedbackEl.textContent += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScore} point(s)).`;
+
+    submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
+    nextBtn.disabled = false; // Allow user to move to next slide
+} else {
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
         quizAttempted = false; // Keep quizAttempted false if no answer selected to allow re-submission
