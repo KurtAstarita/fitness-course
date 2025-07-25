@@ -83,6 +83,9 @@
     max-width: 600px; /* Limit width to keep it neat */
     width: 90%; /* Responsive width */
     text-align: left; /* Align text within the box */
+    /* Add this to ensure content inside doesn't overflow the box itself */
+    overflow-wrap: break-word; /* Ensures long words break to fit */
+    word-wrap: break-word;     /* Legacy for older browsers */
 }
 
 #cover-page #list h3 {
@@ -103,8 +106,12 @@
     line-height: 1.8;
     color: #333;
     margin-bottom: 8px;
-    padding-left: 25px; /* Space for custom bullet */
+    /* REDUCED PADDING: This is the key change for mobile */
+    padding-left: 20px; /* Slightly less space for custom bullet, allows more text room */
     position: relative;
+    /* Ensure text wraps within the available space */
+    word-break: break-word; /* Breaks words at arbitrary points if needed */
+    overflow-wrap: break-word; /* Standard property for breaking long words */
 }
 
 #cover-page #list li:last-child {
@@ -118,6 +125,7 @@
     font-size: 1.2em;
     position: absolute;
     left: 0;
+    /* Adjust top slightly if needed for vertical alignment with new padding-left */
     top: 0;
 }
 
@@ -352,5 +360,18 @@ body {
 
     #lesson-title {
         font-size: 1.3em;
+    }
+}
+
+
+/* --- Add/Adjust Media Queries for even smaller screens if necessary --- */
+@media (max-width: 480px) {
+    #cover-page #list {
+        padding: 15px 20px; /* Further reduce padding on very small screens */
+    }
+
+    #cover-page #list li {
+        font-size: 0.95em; /* Slightly smaller font size for list items */
+        padding-left: 18px; /* Further reduce padding for bullet point */
     }
 }
