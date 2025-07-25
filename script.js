@@ -421,10 +421,15 @@ const courseContent = [
     },
     {
         type: 'quiz',
-        title: 'Quiz: Nutrition Application',
-        question: 'Which type of fat is known for its anti-inflammatory properties and is found in fatty fish?',
-        options: ['Saturated Fat', 'Trans Fat', 'Omega-3 Fatty Acids', 'Cholesterol'],
-        correctAnswer: 2, // Omega-3 Fatty Acids
+        title: 'Quiz: Advanced Nutrition Application', // Reusing this title for consistency with previous advanced quiz
+        question: 'A strength athlete is aiming to maximize muscle protein synthesis and maintain consistent energy for daily intensive training. Based on the comprehensive nutrition lessons, which strategic dietary approach would be most effective?',
+        options: [
+            'Relying solely on simple carbohydrates for pre-workout energy and consuming all daily protein in one large meal.',
+            'Prioritizing high intake of saturated fats and avoiding all carbohydrates to promote fat adaptation.',
+            'Distributing high-quality protein consistently throughout the day, strategically combining complex carbohydrates around training times, and ensuring adequate intake of essential healthy fats.',
+            'Minimizing fluid intake during training and consuming only incomplete proteins to avoid excessive calories.'
+        ],
+        correctAnswer: 2, // Index of 'Distributing high-quality protein consistently throughout the day, strategically combining complex carbohydrates around training times, and ensuring adequate intake of essential healthy fats.'
         duration: 1
     },
 
