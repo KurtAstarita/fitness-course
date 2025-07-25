@@ -1,9 +1,7 @@
-// This array will hold all your course content, slide by slide.
-// Each object represents a "slide" or a "lesson segment".
-// 'type': 'lesson' for content, 'quiz' for a quiz.
-// 'duration': Time in seconds for the timer for lesson slides.
-// 'content': HTML string for lesson slides.
-// For quizzes, 'question', 'options' (array of strings), and 'correctAnswer' (index of the correct option).
+// --- Your Course Content Array ---
+// This array holds all your lessons, quizzes, and placeholders.
+// Please ensure this 'courseContent' array is your most up-to-date one
+// with all lessons, quizzes, and the final_test_placeholder.
 const courseContent = [
     // Existing Introduction
     {
@@ -95,7 +93,7 @@ const courseContent = [
         title: 'Quiz: Advanced Macronutrients',
         question: 'Which type of carbohydrate provides sustained energy release and is rich in fiber?',
         options: ['Simple Carbohydrates', 'Complex Carbohydrates', 'Sugars', 'Fructose'],
-        correctAnswer: 1, // Complex Carbohydrates
+        correctAnswer: 1, // Complex Carbohydates
         duration: 45
     },
     {
@@ -430,9 +428,7 @@ const courseContent = [
     {
         type: 'final_test_placeholder',
         title: 'Final Assessment',
-        duration: 45 // If you plan to give it a fixed duration for the placeholder itself.
-                      // The actual final test duration will depend on how you implement it,
-                      // but keeping it consistent with the other slide durations makes sense here.
+        duration: 45
     }
 ];
 
@@ -591,7 +587,7 @@ const finalTestQuestions = [
     },
     {
         question: 'Which type of stretching involves controlled, flowing movements and is best performed as part of a warm-up?',
-        options: ['Static stretching', 'Dynamic stretching', 'Ballistic Stretching', 'PNF stretching'],
+        options: ['Static stretching', 'Ballistic Stretching', 'Dynamic Stretching', 'PNF stretching'],
         correctAnswer: 1 // Dynamic stretching
     },
     {
@@ -611,6 +607,10 @@ let quizScore = 0; // Track score for current quiz
 let finalTestScores = []; // To store results of each final test question
 
 // DOM Elements - Declare them globally, but assign inside DOMContentLoaded
+let coverPage; // Declared globally
+let appContainer; // Declared globally
+let startButton; // Declared globally
+
 let certificateCanvas;
 let downloadCertBtn;
 let ctx;
@@ -635,15 +635,14 @@ let certificateNameEl;
 let certificateCourseTitleEl;
 let certificateDateEl;
 
-// Get references to the cover page and app container (These can be global as they are simple IDs)
-const coverPage = document.getElementById('cover-page');
-const appContainer = document.getElementById('app-container');
-const startButton = document.getElementById('start-course-btn');
-
 
 // --- All code that interacts with the DOM will be inside this listener ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Assign DOM Elements AFTER the DOM is fully loaded
+    // Assign ALL DOM Elements AFTER the DOM is fully loaded
+    coverPage = document.getElementById('cover-page');
+    appContainer = document.getElementById('app-container');
+    startButton = document.getElementById('start-course-btn');
+
     certificateCanvas = document.getElementById('certificateCanvas');
     downloadCertBtn = document.getElementById('downloadCertBtn');
 
@@ -677,6 +676,17 @@ document.addEventListener('DOMContentLoaded', () => {
     certificateDateEl = document.getElementById('certificate-date');
 
     // Add all event listeners here
+    startButton.addEventListener('click', () => {
+        // Hide the cover page
+        coverPage.style.display = 'none';
+        // Show the main app container
+        appContainer.style.display = 'block'; // Ensure this matches your CSS display property
+
+        // Load the very first lesson AFTER the app container is shown
+        currentSlideIndex = 0; // Reset to ensure it starts from the beginning
+        displaySlide();
+    });
+
     nextBtn.addEventListener('click', () => {
         if (currentSlideIndex < courseContent.length - 1) {
             currentSlideIndex++;
@@ -697,10 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     submitQuizBtn.addEventListener('click', submitQuiz);
     submitFinalTestBtn.addEventListener('click', submitFinalTest);
-    downloadCertBtn.addEventListener('click', downloadCertificate); // Your new button listener
-
-    // Initial display when the page loads - This should ONLY be called by the start button now.
-    // So, we remove it from here.
+    downloadCertBtn.addEventListener('click', downloadCertificate);
 }); // End of DOMContentLoaded
 
 
