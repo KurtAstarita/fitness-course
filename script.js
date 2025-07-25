@@ -831,6 +831,7 @@ function displayQuiz(quizData) {
 }
 
 // --- UPDATED submitQuiz Function ---
+// --- CORRECTED submitQuiz Function ---
 function submitQuiz() {
     quizAttempted = true;
     clearInterval(timerInterval); // Stop timer
@@ -839,29 +840,31 @@ function submitQuiz() {
     const currentQuiz = courseContent[currentSlideIndex];
 
     let correct = false;
-    if (selectedOption && parseInt(selectedOption.value) === currentQuiz.correctAnswer) {
-        correct = true;
-        quizFeedbackEl.textContent = 'Correct! ';
-        quizFeedbackEl.style.color = 'green';
-    } else {
-        quizFeedbackEl.textContent = `Incorrect. The correct answer was: ${currentQuiz.options[currentQuiz.correctAnswer]}. `;
-        quizFeedbackEl.style.color = 'red';
-    }
+    // The 'else' for 'no option selected' must be directly tied to this 'if'
+    if (selectedOption) {
+        if (parseInt(selectedOption.value) === currentQuiz.correctAnswer) {
+            correct = true;
+            quizFeedbackEl.textContent = 'Correct! ';
+            quizFeedbackEl.style.color = 'green';
+        } else {
+            quizFeedbackEl.textContent = `Incorrect. The correct answer was: ${currentQuiz.options[currentQuiz.correctAnswer]}. `;
+            quizFeedbackEl.style.color = 'red';
+        }
 
-    // Calculate final score for this quiz (1 point for correct, minus penalties)
-    let currentQuizScore = correct ? 1 : 0;
-    currentQuizScore -= penaltyPoints;
+        // Calculate final score for this quiz (1 point for correct, minus penalties)
+        let currentQuizScore = correct ? 1 : 0;
+        currentQuizScore -= penaltyPoints;
 
-    // Ensure score doesn't go below zero for a single quiz
-    if (currentQuizScore < 0) {
-        currentQuizScore = 0;
-    }
+        // Ensure score doesn't go below zero for a single quiz
+        if (currentQuizScore < 0) {
+            currentQuizScore = 0;
+        }
 
-    quizFeedbackEl.textContent += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScore} point(s)).`;
+        quizFeedbackEl.textContent += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScore} point(s)).`;
 
-    submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
-    nextBtn.disabled = false; // Allow user to move to next slide
-else {
+        submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
+        nextBtn.disabled = false; // Allow user to move to next slide
+    } else { // This 'else' is now correctly associated with 'if (selectedOption)'
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
         quizAttempted = false; // Keep quizAttempted false if no answer selected to allow re-submission
