@@ -14,7 +14,7 @@ const courseContent = [
             <p>We'll cover core principles, practical techniques, and how to maintain consistency.</p>
             <img src="https://via.placeholder.com/400x200?text=Fitness+Intro" alt="Fitness Introduction" style="max-width:100%;">
         `,
-        duration: 30
+        duration: 15
     },
     {
         type: 'lesson',
