@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Fitness Course</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="course-container">
+        <div id="course-title"></div>
+        <div id="lesson-content" class="slide">
+            </div>
+
+        <div id="quiz-container" class="quiz-area hidden">
+            <div id="quiz-question"></div>
+            <div id="quiz-options"></div>
+            <button id="submit-quiz-btn">Submit Answer</button>
+            <div id="quiz-feedback"></div>
+        </div>
+
+        <div class="navigation-area">
+            <button id="back-btn" class="nav-btn">Back</button>
+            <div id="timer-display">Time: <span id="current-time">00:00</span></div>
+            <button id="next-btn" class="nav-btn">Next</button>
+        </div>
+
+        <div id="final-test-container" class="hidden">
+            <h2>Final Assessment</h2>
+            <div id="final-test-questions"></div>
+            <button id="submit-final-test-btn">Submit Final Test</button>
+            <div id="final-test-results"></div>
+            <div id="certification-area" class="hidden">
+                <h3>Certificate of Completion</h3>
+                <p>This certifies that <span id="certificate-name">[Your Name]</span> has successfully completed the</p>
+                <p><strong><span id="certificate-course-title">Interactive Fitness Course</span></strong></p>
+                <p>on <span id="certificate-date"></span></p>
+                <p>Congratulations!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
