@@ -3002,25 +3002,36 @@ function displaySlide() {
         startTimer(initialTimerDuration); // Pass the determined duration
         nextBtn.disabled = true; // Disable for lessons until timer is up
         timerDisplayEl.classList.remove('hidden'); // Show timer for lessons
+// In your displaySlide function:
+
     } else if (currentItem.type === 'quiz') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.remove('hidden');
-        finalTestContainerEl.classList.add('hidden'); // Ensure final test is hidden
-        displayQuiz(currentItem);
-        startTimer(initialTimerDuration || 45); // Quizzes default to 45 if no duration/saved time
-        
-        nextBtn.disabled = true; // Disable Next button when a quiz is displayed
+        finalTestContainerEl.classList.add('hidden');
+        displayQuiz(currentItem); // This populates the quiz question and options
+        startTimer(initialTimerDuration || 45); // Start or resume timer for the quiz
         timerDisplayEl.classList.remove('hidden'); // Show timer for quizzes
+        
+        // --- REMOVE THE PROBLEMATIC LINE:
+        // if (currentItem.completed !== true) {
+        //     quizAttempted = false;
+        // }
+        // The global 'quizAttempted' flag should be managed by submitQuiz() and course resets,
+        // not reset here on every display unless the quiz is truly 'new'.
 
-        // Manage quiz attempted and completed state (existing logic)
-        if (currentItem.completed !== true) { 
-            quizAttempted = false; 
-        }
+        // --- UPDATED BUTTON MANAGEMENT FOR QUIZZES ---
         if (currentItem.completed === true) {
-            submitQuizBtn.classList.add('hidden');
-            nextBtn.disabled = false;
+            // Quiz is completed (meaning it was passed successfully)
+            nextBtn.disabled = false; // Allow moving forward
+            submitQuizBtn.classList.add('hidden'); // Hide submit button as it's done
             quizFeedbackEl.textContent = "You have already completed this quiz.";
             quizFeedbackEl.style.color = 'grey';
+        } else {
+            // Quiz is not completed (either fresh, failed previously, or no answer submitted)
+            nextBtn.disabled = true; // Always disable next until successfully completed
+            submitQuizBtn.classList.remove('hidden'); // Show submit button to allow attempts/retries
+            quizFeedbackEl.textContent = ""; // Clear any previous feedback when loading this state
+            quizFeedbackEl.style.color = '';
         }
     } else if (currentItem.type === 'final_test_placeholder') {
         lessonContentEl.classList.add('hidden'); // Hide lesson content
