@@ -8,8 +8,8 @@
     background: linear-gradient(to bottom right, #f0f4f8, #c8d9e6); /* Light gradient background */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center;   /* Center content horizontally */
+    justify-content: flex-start; /* Changed from center to flex-start */
+    align-items: center;    /* Center content horizontally */
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
@@ -89,7 +89,7 @@
     width: 90%; /* Responsive width */
     text-align: left; /* Align text within the box */
     overflow-wrap: break-word; /* Ensures long words break to fit */
-    word-wrap: break-word;     /* Legacy for older browsers */
+    word-wrap: break-word;      /* Legacy for older browsers */
     flex-shrink: 1; /* Explicitly allow list to shrink as a flex item */
     min-width: 0; /* Important for flex items to shrink */
 }
@@ -146,7 +146,7 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Changed from center to flex-start */
     min-height: 100vh;
     background-color: #f4f4f4;
     margin: 0;
