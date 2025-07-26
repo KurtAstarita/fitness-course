@@ -3086,6 +3086,7 @@ function submitQuiz() {
     let feedbackMessage = '';
 
     if (selectedOption) {
+        // This block executes if an option IS selected
         const selectedAnswerValue = parseInt(selectedOption.value);
 
         if (selectedAnswerValue === currentQuiz.correctAnswer) {
@@ -3102,13 +3103,13 @@ function submitQuiz() {
         // Apply time penalties to the overall score (penaltyPoints is calculated in startTimer)
         totalCourseScore -= penaltyPoints;
 
-        // Ensure overall score doesn't go below zero (optional, depends on how you want to handle negative scores)
+        // Ensure overall score doesn't go below zero
         if (totalCourseScore < 0) {
             totalCourseScore = 0;
         }
 
         // --- Mark the current quiz as completed ---
-        currentQuiz.completed = true; 
+        currentQuiz.completed = true;
         // Optional: Save the user's selected answer if you want to show it when revisiting
         // currentQuiz.selectedAnswer = selectedAnswerValue;
 
@@ -3123,28 +3124,34 @@ function submitQuiz() {
 
         feedbackMessage += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScoreForDisplay} point(s)).`;
         // Optionally, display the current overall score to the user for transparency
-        feedbackMessage += ` Current Course Score: ${totalCourseScore}.`; // Added for transparency
+        feedbackMessage += ` Current Course Score: ${totalCourseScore}.`;
         quizFeedbackEl.textContent = feedbackMessage;
 
         submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
-        nextBtn.disabled = false; // Allow user to move to next slide
-        
-        saveCourseState(); // <--- SAVE STATE after quiz submission
-    } else { // This 'else' is now correctly associated with 'if (selectedOption)'
+        nextBtn.disabled = false; // <<< THIS IS WHERE NEXT BUTTON IS UNLOCKED (CORRECT BEHAVIOR)
+
+        saveCourseState(); // Save state after quiz submission
+    } else {
+        // This block executes if NO option is selected
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
-        
-        if (timeLeft <= 0) { // If time ran out and no selection
-            nextBtn.disabled = false; // Still allow to move on, but no answer recorded
+
+        if (timeLeft <= 0) {
+            // If time ran out and no selection
+            // The next button will NOT be unlocked here.
+            // This means the user MUST select an answer and submit, even if time is negative.
+            // If they don't select, they will remain on this quiz slide.
             quizAttempted = true; // Consider it attempted if time ran out without selection
-            currentQuiz.completed = true; // And mark as completed to prevent going back
+            currentQuiz.completed = true; // Mark as completed to prevent going back
             totalCourseScore -= penaltyPoints; // Still apply time penalty
-            if (totalCourseScore < 0) totalCourseScore = 0; // Ensure score doesn't go below zero
+            if (totalCourseScore < 0) totalCourseScore = 0;
             quizFeedbackEl.textContent += ` Time expired! No answer selected. Current Course Score: ${totalCourseScore}.`;
-            saveCourseState(); // <--- SAVE STATE if time expired without selection
+            saveCourseState(); // Save state if time expired without selection
         } else {
-            startTimer(timeLeft); // Resume timer if user needs to select
+            // If time is still remaining, resume timer, user can still select an answer
+            startTimer(timeLeft);
         }
+        // IMPORTANT: The nextBtn remains disabled here because no valid selection was made.
     }
 }
 
