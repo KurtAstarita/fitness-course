@@ -88,80 +88,6 @@ html, body {
     transform: translateY(0);
 }
 
-/* Styles for a disabled button */
-#back-btn:disabled,
-#next-btn:disabled,
-#submit-quiz-btn:disabled,
-#submit-final-test-btn:disabled,
-#downloadCertBtn:disabled {
-    cursor: not-allowed; /* Changes cursor to a 'no-entry' or 'no-drop' symbol */
-    opacity: 0.5; /* Makes the button semi-transparent */
-    background-color: #cccccc; /* A light grey background */
-    border-color: #999999; /* A darker grey border */
-    color: #666666; /* Grey text color */
-    box-shadow: none; /* Removes any shadow effects */
-    /* Add any other styles to make it visually clear it's disabled */
-}
-
-/* Styling for the Course Details List on the Cover Page */
-#cover-page #list {
-    background-color: rgba(255, 255, 255, 0.7); /* Slightly translucent white background */
-    padding: 20px 25px; /* Reduced side padding from 35px to 25px */
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    margin-top: 15px; /* Space from the main description */
-    margin-bottom: 15px; /* Space above the button */
-    max-width: 1000px; /* Limit width to keep it neat */
-    width: 90%; /* Responsive width */
-    text-align: left; /* Align text within the box */
-    overflow-wrap: break-word; /* Ensures long words break to fit */
-    word-wrap: break-word;      /* Legacy for older browsers */
-    flex-shrink: 1; /* Explicitly allow list to shrink as a flex item */
-    min-width: 0; /* Important for flex items to shrink */
-}
-
-#cover-page #list h3 {
-    font-size: clamp(1.2em, 3vw, 1.6em); /* Use clamp for responsive H3 */
-    color: #0056b3; /* Consistent blue with the main title */
-    margin-bottom: 15px;
-    text-align: center; /* Center the heading within its box */
-}
-
-#cover-page #list ul {
-    list-style: none; /* Remove default bullet points */
-    padding: 0;
-    margin: 0;
-    display: flex; /* Make ul a flex container */
-    flex-direction: column; /* Stack list items vertically */
-    gap: 8px; /* Add space between list items */
-}
-
-#cover-page #list li {
-    font-size: clamp(0.85em, 2.8vw, 1.1em); /* Min 0.85em, scales with viewport, max 1.1em */
-    line-height: 1.5; /* Slightly tighter line height to save vertical space */
-    color: #333;
-    margin-bottom: 0; /* Removed fixed margin-bottom, using gap on ul instead */
-    padding-left: 20px; /* Space for custom bullet */
-    position: relative;
-    word-break: break-word; /* Breaks words at arbitrary points if needed */
-    overflow-wrap: break-word; /* Standard property for breaking long words */
-    white-space: normal; /* Ensure text wrapping is not prevented by white-space property */
-}
-
-#cover-page #list li:last-child {
-    margin-bottom: 0; /* No margin after the last item */
-}
-
-/* Custom bullet point for list items */
-#cover-page #list li::before {
-    content: '•'; /* Unicode character for a bullet */
-    color: #28a745; /* Green bullet for emphasis */
-    font-size: 1.2em;
-    position: absolute;
-    left: 0;
-    top: 0; /* Keep top at 0, padding-top on li will create space */
-}
-
 /* Ensure app-container is hidden by default until start button is clicked */
 #app-container {
     display: none; /* Hide by default */
@@ -311,6 +237,21 @@ body {
     height: auto; /* Ensures aspect ratio is maintained */
     display: block; /* Helps with centering if needed, and avoids extra space below */
     margin: 0 auto; /* Centers the image if it's smaller than max-width */
+}
+
+/* Styles for a disabled button */
+#back-btn:disabled,
+#next-btn:disabled,
+#submit-quiz-btn:disabled,
+#submit-final-test-btn:disabled,
+#downloadCertBtn:disabled {
+    cursor: not-allowed; /* Changes cursor to a 'no-entry' or 'no-drop' symbol */
+    opacity: 0.5; /* Makes the button semi-transparent */
+    background-color: #cccccc; /* A light grey background */
+    border-color: #999999; /* A darker grey border */
+    color: #666666; /* Grey text color */
+    box-shadow: none; /* Removes any shadow effects */
+    /* Add any other styles to make it visually clear it's disabled */
 }
 
 /* --- Responsive Design / Mobile-Friendly Styles --- */
