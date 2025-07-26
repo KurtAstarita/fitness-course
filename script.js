@@ -90,7 +90,6 @@ const courseContent = [
         title: 'Quiz: Macronutrient Application', // Changed title to reflect application focus
         question: 'A competitive athlete engaging in high-intensity, daily training sessions aims to maximize muscle recovery and sustained energy. Based on optimal macronutrient strategies, which approach to their post-workout nutrition would be most effective?',
         options: [
-            <br />
             'Prioritizing high fat intake with moderate protein and low carbohydrates',
             'Focusing on equal parts protein, carbohydrates, and fats for balance',
             'Emphasizing high protein and high carbohydrate intake, with moderate healthy fats',
