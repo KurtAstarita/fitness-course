@@ -2742,21 +2742,17 @@ let lessonContentEl;
 let quizContainerEl;
 let quizQuestionEl;
 let quizOptionsEl;
-let submitQuizBtn;
-let quizFeedbackEl;
-let backBtn;
-let nextBtn;
-let timerDisplayEl;
-let currentTimeEl;
-let finalTestContainerEl;
-let finalTestQuestionsEl;
-let submitFinalTestBtn;
-let finalTestResultsEl;
-let certificationAreaEl;
-// These might be unused if cert data is passed directly to generateCertificate
-// let certificateNameEl; // Removed as it's not used directly from DOM
-// let certificateCourseTitleEl; // Removed as it's not used directly from DOM
-// let certificateDateEl; // Removed as it's not used directly from DOM
+submitQuizBtn; // Will be assigned in DOMContentLoaded
+quizFeedbackEl; // Will be assigned in DOMContentLoaded
+backBtn; // Will be assigned in DOMContentLoaded
+nextBtn; // Will be assigned in DOMContentLoaded
+timerDisplayEl; // Will be assigned in DOMContentLoaded
+currentTimeEl; // Will be assigned in DOMContentLoaded
+finalTestContainerEl; // Will be assigned in DOMContentLoaded
+finalTestQuestionsEl; // Will be assigned in DOMContentLoaded
+submitFinalTestBtn; // Will be assigned in DOMContentLoaded
+finalTestResultsEl; // Will be assigned in DOMContentLoaded
+certificationAreaEl; // Will be assigned in DOMContentLoaded
 
 
 // --- All code that interacts with the DOM will be inside this listener ---
@@ -2774,7 +2770,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx = certificateCanvas.getContext('2d');
     } else {
         console.error("Error: Canvas element with ID 'certificateCanvas' not found!");
-        // You might want to display a user-friendly error message or handle gracefully
         return; // Exit if a critical element is missing
     }
 
@@ -2819,7 +2814,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- UPDATED BACK BUTTON EVENT LISTENER with failsafe ---
     backBtn.addEventListener('click', () => {
+        // Failsafe: If the button is disabled, do not proceed with navigation
+        if (backBtn.disabled) {
+            console.log("Attempted to click disabled Back button. Action prevented.");
+            return; // Exit the function, preventing navigation
+        }
+
         if (currentSlideIndex > 0) {
             currentSlideIndex--;
             displaySlide();
@@ -2831,8 +2833,6 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadCertBtn.addEventListener('click', downloadCertificate);
 }); // End of DOMContentLoaded
 
-
-// --- Functions (defined outside DOMContentLoaded but using globally assigned elements) ---
 
 // --- Functions (defined outside DOMContentLoaded but using globally assigned elements) ---
 
@@ -2883,12 +2883,26 @@ function displaySlide() {
     console.log(`Quiz Completed Status (if quiz): ${currentItem.completed}`);
     console.log(`Global quizAttempted: ${quizAttempted}`);
 
+    // --- NEW CONDITION: Check if the immediate previous slide was a completed quiz ---
+    let isPreviousSlideCompletedQuiz = false;
+    if (currentSlideIndex > 0) {
+        const previousItem = courseContent[currentSlideIndex - 1];
+        if (previousItem.type === 'quiz' && previousItem.completed === true) {
+            isPreviousSlideCompletedQuiz = true;
+        }
+    }
+    console.log(`Is Previous Slide Completed Quiz: ${isPreviousSlideCompletedQuiz}`); // Debugging
+
     // --- Manage Back button states ---
-    // Disable back if it's the first slide, the final test placeholder,
-    // or if the current item is a quiz that has been completed or is currently unattempted.
+    // Disable back if:
+    // 1. It's the first slide.
+    // 2. It's the final test placeholder.
+    // 3. It's a quiz that has been completed OR is currently unattempted.
+    // 4. The immediately previous slide was a completed quiz. (NEW)
     const shouldDisableBack = currentSlideIndex === 0 || 
                               currentItem.type === 'final_test_placeholder' || 
-                              (currentItem.type === 'quiz' && (currentItem.completed === true || !quizAttempted));
+                              (currentItem.type === 'quiz' && (currentItem.completed === true || !quizAttempted)) ||
+                              isPreviousSlideCompletedQuiz;
     
     backBtn.disabled = shouldDisableBack;
 
