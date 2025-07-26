@@ -1218,7 +1218,16 @@ const courseContent = [
                 <li><strong>Progression:</strong> Increase duration, intensity of movements, or learn more complex routines.</li>
             </ul>
 
-            <h5>8. Group Fitness Classes</h5>
+          <h5>8. Group Fitness Classes</h5>
+            <ul>
+                <li><strong>Description:</strong> Structured exercise sessions led by an instructor in a group setting. Can include various modalities like aerobics, spinning, Zumba, HIIT, bootcamp, or dance fitness.</li>
+                <li><strong>Benefits:</strong> High motivation from group energy and instructor guidance. Provides structured workouts, often with music, which can make exercise more enjoyable. Offers variety and a sense of community.</li>
+                <li><strong>Progression:</strong> Attend more frequently, choose higher intensity classes, increase effort within the class, or aim for more challenging modifications.</li>
+            </ul>
+            <p>Varying your cardiovascular activities not only prevents boredom but also challenges your body in different ways, leading to more comprehensive fitness improvements.</p>
+        `,
+        duration: 1
+    },
      {
         type: 'quiz',
         title: 'Quiz: Cardio Progression & Variety',
