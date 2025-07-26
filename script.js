@@ -3156,18 +3156,12 @@ function submitQuiz() {
 }
 
 // Function to display the final test
-// finalTestQuestions array is assumed to be defined elsewhere in your script
 function displayFinalTest() {
-    finalTestQuestionsEl.innerHTML = ''; // Clear previous
+    finalTestQuestionsEl.innerHTML = ''; // Clear previous questions
     finalTestScores = []; // Reset scores for final test
 
-    // Define finalTestQuestions here for demonstration if not global
-    // In a real scenario, this should be defined globally or fetched.
-    const finalTestQuestions = [
-        { question: 'What is the powerhouse of the cell?', options: ['Nucleus', 'Mitochondria', 'Ribosome', 'Cytoplasm'], correctAnswer: 1 },
-        { question: 'Which nutrient is primarily responsible for muscle repair and growth?', options: ['Carbohydrates', 'Fats', 'Proteins', 'Vitamins'], correctAnswer: 2 },
-        { question: 'What is the recommended daily water intake for adults (approximate)?', options: ['1-2 liters', '2-3 liters', '3-4 liters', '4-5 liters'], correctAnswer: 1 }
-    ];
+    // REMOVED: Local declaration of finalTestQuestions array, now it uses the global one.
+    // The global finalTestQuestions array (with all 34 questions) will be used.
 
     finalTestQuestions.forEach((qData, qIndex) => {
         const questionDiv = document.createElement('div');
@@ -3194,12 +3188,8 @@ function displayFinalTest() {
 // Modify submitFinalTest to call certificate generation
 function submitFinalTest() {
     let correctAnswers = 0;
-    // Assuming finalTestQuestions is accessible here (e.g., globally defined)
-    const finalTestQuestions = [
-        { question: 'What is the powerhouse of the cell?', options: ['Nucleus', 'Mitochondria', 'Ribosome', 'Cytoplasm'], correctAnswer: 1 },
-        { question: 'Which nutrient is primarily responsible for muscle repair and growth?', options: ['Carbohydrates', 'Fats', 'Proteins', 'Vitamins'], correctAnswer: 2 },
-        { question: 'What is the recommended daily water intake for adults (approximate)?', options: ['1-2 liters', '2-3 liters', '3-4 liters', '4-5 liters'], correctAnswer: 1 }
-    ];
+    // REMOVED: Local declaration of finalTestQuestions array, now it uses the global one.
+    // The global finalTestQuestions array (with all 34 questions) will be used for grading.
 
     finalTestQuestions.forEach((qData, qIndex) => {
         const selectedOption = document.querySelector(`input[name="finalQuestion${qIndex}"]:checked`);
@@ -3208,11 +3198,11 @@ function submitFinalTest() {
         }
     });
 
-    const totalQuestions = finalTestQuestions.length;
+    const totalQuestions = finalTestQuestions.length; // This will now correctly be 34
     let scorePercentage = (correctAnswers / totalQuestions) * 100;
 
     finalTestResultsEl.innerHTML = `<p>Final Test Score: ${correctAnswers} out of ${totalQuestions} (${scorePercentage.toFixed(2)}%).</p>`;
-    finalTestResultsEl.innerHTML += `<p>Overall Course Score (after penalties): ${totalCourseScore} points.</p>`; // Display overall score
+    finalTestResultsEl.innerHTML += `<p>Overall Course Score (after penalties): ${totalCourseScore} points.</p>`;
     
     const combinedScoreConsideration = scorePercentage; // Or some calculation involving totalCourseScore
     finalTestResultsEl.style.color = combinedScoreConsideration >= 70 ? 'green' : 'red';
@@ -3231,7 +3221,7 @@ function submitFinalTest() {
 
     submitFinalTestBtn.disabled = true;
     // Optionally save the final state after completing the final test
-    saveCourseState(); 
+    saveCourseState();
 }
 
 // NEW FUNCTION: Generate and draw the certificate on canvas
