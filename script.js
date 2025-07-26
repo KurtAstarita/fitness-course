@@ -3281,29 +3281,6 @@ function submitQuiz() {
     }
     saveCourseState(); // Save state after quiz submission (covers all branches)
 }
- } else {
-        // This block executes if NO option is selected
-        quizFeedbackEl.textContent = 'Please select an answer.';
-        quizFeedbackEl.style.color = 'orange';
-
-        if (timeLeft <= 0) {
-            // If time ran out and no selection
-            // The next button will NOT be unlocked here.
-            // This means the user MUST select an answer and submit, even if time is negative.
-            // If they don't select, they will remain on this quiz slide.
-            quizAttempted = true; // Consider it attempted if time ran out without selection
-            currentQuiz.completed = true; // Mark as completed to prevent going back
-            totalCourseScore -= penaltyPoints; // Still apply time penalty
-            if (totalCourseScore < 0) totalCourseScore = 0;
-            quizFeedbackEl.textContent += ` Time expired! No answer selected. Current Course Score: ${totalCourseScore}.`;
-            saveCourseState(); // Save state if time expired without selection
-        } else {
-            // If time is still remaining, resume timer, user can still select an answer
-            startTimer(timeLeft);
-        }
-        // IMPORTANT: The nextBtn remains disabled here because no valid selection was made.
-    }
-}
 
 // Function to display the final test
 function displayFinalTest() {
