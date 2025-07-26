@@ -3019,7 +3019,7 @@ function startTimer(duration) {
 
             // If a new penalty block has been crossed
             if (currentPenaltyBlock > lastPenaltyBlock) {
-                penaltyPoints += 1; // Deduct 1 point for every penaltyBlockDuration over
+                penaltyPoints += 0.5; // Deduct 1 point for every penaltyBlockDuration over
                 lastPenaltyBlock = currentPenaltyBlock;
                 // console.log(`Penalty incurred! Total penalty points for this slide: ${penaltyPoints}`); // For debugging
             }
