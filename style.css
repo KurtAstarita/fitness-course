@@ -1,10 +1,13 @@
-/* Ensure HTML and body take full height */
+/* Ensure HTML and body take full height and base styles */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Prevent scrolling if content overflows */
+    overflow: hidden; /* Prevents scrolling on the main page */
+    font-family: Arial, sans-serif; /* Consolidated font-family here */
+    background-color: #f4f4f4; /* Consolidated background-color here */
+    box-sizing: border-box; /* Consistent box-sizing */
 }
 
 /* Cover Page Styles */
@@ -18,15 +21,16 @@ html, body {
     
     display: flex;
     flex-direction: column;
-    justify-content: center; /* <--- THIS IS THE KEY CHANGE: Centers content vertically */
-    align-items: center;    /* Centers content horizontally */
+    justify-content: center; /* THIS IS THE KEY FOR VERTICAL CENTERING */
+    align-items: center;    /* THIS IS THE KEY FOR HORIZONTAL CENTERING */
     
     text-align: center;
-    padding: 20px;
+    padding: 15px; /* Slightly reduced padding to save space */
     box-sizing: border-box;
     z-index: 1000; /* Ensure it's on top */
     color: #333;
-    font-family: Arial, sans-serif;
+    /* If content might still overflow vertically on very small screens, you can add: */
+    /* overflow-y: auto; */
 }
 
 /* New Rule: Ensure direct children of #cover-page can shrink to fit */
@@ -37,6 +41,8 @@ html, body {
     max-width: 90%; /* Optional: Limit width to keep content readable on very wide screens */
     width: 100%;    /* Take full available width up to max-width */
     box-sizing: border-box; /* Ensures padding/border are included in the element's total width and height */
+    margin-top: 0; /* Reset default margins for direct children */
+    margin-bottom: 0; /* Reset default margins for direct children */
 }
 
 /* Also ensure images within the cover page scale down */
@@ -47,7 +53,7 @@ html, body {
 
 #cover-page h1 {
     font-size: clamp(1.5em, 4vw, 2.0em); /* Use clamp for responsive H1 */
-    margin-bottom: 10px;
+    margin-bottom: 10px; /* Space below h1 */
     color: #0056b3; /* A strong blue */
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
@@ -56,8 +62,69 @@ html, body {
     font-size: clamp(0.9em, 2.5vw, 1.2em); /* Use clamp for responsive P */
     line-height: 1.6;
     max-width: 1000px;
-    margin-bottom: 10px;
+    margin-bottom: 15px; /* Space below paragraph before the list */
     color: #555;
+}
+
+/* Styling for the Course Details List on the Cover Page */
+#cover-page #list {
+    background-color: rgba(255, 255, 255, 0.7); /* Slightly translucent white background */
+    padding: 15px 20px; /* Slightly reduced padding */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin-top: 15px; /* Space from the main description */
+    margin-bottom: 0; /* Remove margin-bottom here, button will have its own top margin */
+    max-width: 1000px; /* Limit width to keep it neat */
+    width: 90%; /* Responsive width */
+    text-align: left; /* Align text within the box */
+    overflow-wrap: break-word; /* Ensures long words break to fit */
+    word-wrap: break-word;      /* Legacy for older browsers */
+    flex-shrink: 1; /* Explicitly allow list to shrink as a flex item */
+    min-width: 0; /* Important for flex items to shrink */
+    box-sizing: border-box; /* Ensures padding/border are included in the element's total width and height */
+}
+
+#cover-page #list h3 {
+    font-size: clamp(1.2em, 3vw, 1.6em); /* Use clamp for responsive H3 */
+    color: #0056b3; /* Consistent blue with the main title */
+    margin-top: 0; /* Ensure no extra top margin */
+    margin-bottom: 15px; /* Space below heading */
+    text-align: center; /* Center the heading within its box */
+}
+
+#cover-page #list ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Make ul a flex container */
+    flex-direction: column; /* Stack list items vertically */
+    gap: 8px; /* Add space between list items */
+}
+
+#cover-page #list li {
+    font-size: clamp(0.85em, 2.8vw, 1.1em); /* Min 0.85em, scales with viewport, max 1.1em */
+    line-height: 1.5; /* Slightly tighter line height to save vertical space */
+    color: #333;
+    margin-bottom: 0; /* Removed fixed margin-bottom, using gap on ul instead */
+    padding-left: 20px; /* Space for custom bullet */
+    position: relative;
+    word-break: break-word; /* Breaks words at arbitrary points if needed */
+    overflow-wrap: break-word; /* Standard property for breaking long words */
+    white-space: normal; /* Ensure text wrapping is not prevented by white-space property */
+}
+
+#cover-page #list li:last-child {
+    margin-bottom: 0; /* No margin after the last item */
+}
+
+/* Custom bullet point for list items */
+#cover-page #list li::before {
+    content: '•'; /* Unicode character for a bullet */
+    color: #28a745; /* Green bullet for emphasis */
+    font-size: 1.2em;
+    position: absolute;
+    left: 0;
+    top: 0; /* Keep top at 0, padding-top on li will create space */
 }
 
 #start-course-btn {
@@ -75,7 +142,7 @@ html, body {
     display: block; /* Make it a block-level element to apply margin auto */
     max-width: 1000px; /* Set a maximum width for the button */
     width: 90%; /* Allow it to be responsive, taking up to 90% of parent width, but not more than max-width */
-    margin: 0 auto; /* Center the block-level button horizontally */
+    margin: 20px auto 0 auto; /* Add top margin for spacing from list, center horizontally */
 }
 
 #start-course-btn:hover {
@@ -91,35 +158,26 @@ html, body {
 /* Ensure app-container is hidden by default until start button is clicked */
 #app-container {
     display: none; /* Hide by default */
-    /* Keep your existing app-container styles here */
+    /* All general layout properties for the app-container are now within .course-container below */
 }
 
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Changed from center to flex-start */
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    margin: 0;
+/* --- General App Container Styles --- */
+/* These styles are applied to the main app content when it's visible */
+.course-container { /* #app-container has this class */
     padding: 20px;
-    box-sizing: border-box;
-}
-
-.course-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
     max-width: 800px;
-    padding: 30px;
-    text-align: center;
+    margin: 20px auto; /* Centered with top/bottom margin */
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center; /* Added for general content centering */
 }
 
 #course-title {
     font-size: 2em;
     margin-bottom: 20px;
     color: #333;
+    text-align: center;
 }
 
 #lesson-content {
@@ -127,40 +185,37 @@ body {
     margin-bottom: 20px;
     padding: 15px;
     border: 1px solid #eee;
-    text-align: left;
+    text-align: left; /* Ensure lesson content text is left-aligned */
     line-height: 1.6;
 }
 
-.navigation-area {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#lesson-content img {
+    max-width: 100%;
+    height: auto; /* Ensures aspect ratio is maintained */
+    display: block; /* Helps with centering if needed, and avoids extra space below */
+    margin: 0 auto; /* Centers the image if it's smaller than max-width */
+}
+
+/* Styles for specific elements within lessons/quizzes */
+.slide p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.slide h3 {
+    color: #007bff;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-.nav-btn,
-#submit-quiz-btn,
-#submit-final-test-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
+.slide ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
 }
 
-.nav-btn:hover,
-#submit-quiz-btn:hover,
-#submit-final-test-btn:hover {
-    background-color: #0056b3;
-}
-
-#timer-display {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #555;
+.slide li {
+    margin-bottom: 5px;
 }
 
 .quiz-area {
@@ -171,23 +226,80 @@ body {
     text-align: left;
 }
 
-.quiz-area label {
+#quiz-question {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#quiz-options label {
     display: block;
     margin-bottom: 8px;
     cursor: pointer;
 }
 
-.quiz-area input[type="radio"] {
+#quiz-options input[type="radio"] {
     margin-right: 8px;
-}
-
-#quiz-question {
-    margin-bottom: 20px; /* Adjust this value (e.g., 10px, 25px) to get your desired spacing */
 }
 
 #quiz-feedback {
     margin-top: 10px;
     font-weight: bold;
+}
+
+.navigation-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.nav-btn,
+#submit-quiz-btn,
+#submit-final-test-btn,
+#downloadCertBtn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    /* Common button styles that were separated are now together here */
+    display: block; /* Ensures they take full width if needed */
+    width: 100%;    /* Take full available width */
+    margin-top: 20px; /* Default margin from element above */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Specific overrides for nav buttons as they are in a flex container */
+.nav-btn {
+    width: auto; /* Nav buttons don't need to be 100% width */
+    margin-top: 0; /* Remove top margin for nav buttons */
+}
+#submit-quiz-btn, #submit-final-test-btn, #downloadCertBtn {
+    width: auto; /* These buttons should also not be 100% width unless specifically desired */
+    max-width: 300px; /* Example max width to keep them from being too wide */
+    margin-left: auto; /* Center submit buttons if they are auto width */
+    margin-right: auto;
+}
+
+
+/* Hover states for buttons */
+.nav-btn:hover,
+#submit-quiz-btn:hover,
+#submit-final-test-btn:hover,
+#downloadCertBtn:hover {
+    background-color: #0056b3;
+}
+
+#timer-display {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
 }
 
 .hidden {
@@ -207,18 +319,47 @@ body {
     margin-bottom: 20px;
 }
 
+#final-test-questions .final-test-question {
+    background-color: #f0f0f0;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+#final-test-questions .final-test-question p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#final-test-questions .final-test-question label {
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+#final-test-questions .final-test-question input[type="radio"] {
+    margin-right: 5px;
+}
+
 #certification-area {
     margin-top: 30px;
     padding: 20px;
-    border: 2px solid #28a745;
+    border: 2px dashed #28a745;
     border-radius: 10px;
     background-color: #d4edda;
     color: #155724;
     font-size: 1.2em;
     line-height: 1.8;
+    text-align: center; /* Ensured content inside is centered */
 }
 
-#certificate-name, #certificate-course-title, #certificate-date {
+#certification-area h3 {
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+#certificate-name, #certificate-course-title, #certificate-date { /* These target elements for canvas text */
     font-weight: bold;
     color: #000;
 }
@@ -226,17 +367,9 @@ body {
 #certificateCanvas {
     border: 1px solid #d4edda;
     background-color: #fff;
-}
-
-#downloadCertBtn {
-    margin-top: 15px;
-}
-
-#lesson-content img {
-    max-width: 100%;
-    height: auto; /* Ensures aspect ratio is maintained */
-    display: block; /* Helps with centering if needed, and avoids extra space below */
-    margin: 0 auto; /* Centers the image if it's smaller than max-width */
+    margin-bottom: 15px;
+    max-width: 100%; /* Ensures canvas scales down on smaller screens */
+    height: auto;
 }
 
 /* Styles for a disabled button */
@@ -245,25 +378,22 @@ body {
 #submit-quiz-btn:disabled,
 #submit-final-test-btn:disabled,
 #downloadCertBtn:disabled {
-    cursor: not-allowed; /* Changes cursor to a 'no-entry' or 'no-drop' symbol */
-    opacity: 0.5; /* Makes the button semi-transparent */
-    background-color: #cccccc; /* A light grey background */
-    border-color: #999999; /* A darker grey border */
-    color: #666666; /* Grey text color */
-    box-shadow: none; /* Removes any shadow effects */
-    /* Add any other styles to make it visually clear it's disabled */
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #cccccc;
+    border-color: #999999;
+    color: #666666;
+    box-shadow: none;
 }
 
 /* --- Responsive Design / Mobile-Friendly Styles --- */
-
-/* For screens smaller than 768px (common breakpoint for tablets and smaller) */
 @media (max-width: 768px) {
     #cover-page h1 {
-        font-size: clamp(1.5em, 4vw, 2em); /* More aggressive clamp for H1 on smaller screens */
+        font-size: clamp(1.5em, 4vw, 2em);
     }
 
     #cover-page p {
-        font-size: clamp(0.8em, 2.2vw, 1em); /* More aggressive clamp for P on smaller screens */
+        font-size: clamp(0.8em, 2.2vw, 1em);
     }
 
     #start-course-btn {
@@ -272,9 +402,9 @@ body {
     }
 
     #cover-page #list {
-        padding: 15px 20px; /* Reduced padding */
+        padding: 15px 20px;
         margin-top: 15px;
-        margin-bottom: 25px;
+        margin-bottom: 25px; /* Adjust as needed for spacing before button */
     }
 
     #cover-page #list h3 {
@@ -282,47 +412,51 @@ body {
     }
 
     #cover-page #list li {
-        font-size: clamp(0.8em, 2.2vw, 1em); /* More aggressive clamp for list items */
-        padding-left: 18px; /* Adjust custom bullet padding */
+        font-size: clamp(0.8em, 2.2vw, 1em);
+        padding-left: 18px;
     }
 
     /* Main app container adjustments */
-    #app-container {
-        padding: 15px; /* Less padding around the main content */
-        width: 98%; /* Take up more width on smaller screens */
+    .course-container { /* Applies to #app-container */
+        padding: 15px;
+        width: 98%;
+        margin: 15px auto; /* Adjust margin for smaller screens */
     }
 
-    #lesson-title {
-        font-size: 1.4em; /* Smaller lesson titles */
+    #course-title {
+        font-size: 1.4em;
         margin-bottom: 15px;
     }
 
     #lesson-content p,
     #lesson-content ul li {
-        font-size: 0.9em; /* Slightly smaller text for lessons */
+        font-size: 0.9em;
     }
 
-    /* Quiz options */
-    #quiz-options button {
-        padding: 6px; /* Smaller padding for quiz buttons */
+    /* Quiz options - this rule seems to target buttons but quiz options are labels/inputs */
+    /* If you have buttons within quiz options, keep; otherwise, review */
+    /* #quiz-options button {
+        padding: 6px;
         font-size: 0.85em;
-    }
+    } */
 
-    /* Navigation buttons */
-    #navigation-buttons button {
-        padding: 6px 12px; /* Smaller navigation buttons */
-        font-size: 0.85em;
+    /* Navigation buttons and submit buttons */
+    .nav-btn,
+    #submit-quiz-btn,
+    #submit-final-test-btn,
+    #downloadCertBtn {
+        padding: 8px 15px; /* Adjusted padding */
+        font-size: 0.9em; /* Adjusted font size */
     }
 }
 
-/* For very small screens / mobile phones (e.g., less than 480px) */
 @media (max-width: 480px) {
     #cover-page h1 {
-        font-size: clamp(1.2em, 3.5vw, 1.5em); /* Even more aggressive clamp for H1 */
+        font-size: clamp(1.2em, 3.5vw, 1.5em);
     }
 
     #cover-page p {
-        font-size: clamp(0.75em, 2vw, 0.9em); /* Even more aggressive clamp for P */
+        font-size: clamp(0.75em, 2vw, 0.9em);
     }
 
     #start-course-btn {
@@ -331,7 +465,7 @@ body {
     }
 
     #cover-page #list {
-        padding: 10px 15px; /* Minimal padding on very small screens */
+        padding: 10px 15px;
         margin-top: 10px;
         margin-bottom: 20px;
     }
@@ -341,15 +475,25 @@ body {
     }
 
     #cover-page #list li {
-        font-size: clamp(0.7em, 1.8vw, 0.9em); /* Smallest font for list items */
-        padding-left: 14px; /* Smallest padding for bullet point */
+        font-size: clamp(0.7em, 1.8vw, 0.9em);
+        padding-left: 14px;
     }
 
-    #app-container {
-        padding: 10px; /* Even less padding */
+    .course-container { /* Applies to #app-container */
+        padding: 10px;
+        margin: 10px auto; /* Adjust margin for very small screens */
     }
 
-    #lesson-title {
+    #course-title {
         font-size: 1.2em;
+    }
+
+    /* Navigation buttons and submit buttons */
+    .nav-btn,
+    #submit-quiz-btn,
+    #submit-final-test-btn,
+    #downloadCertBtn {
+        padding: 6px 10px; /* Further adjusted padding */
+        font-size: 0.8em; /* Further adjusted font size */
     }
 }
