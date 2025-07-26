@@ -2711,13 +2711,6 @@ const finalTestQuestions = [
     }
 ];
 
-// --- New Global Variables for Penalty Logic ---
-let penaltyPoints = 0; // Accumulates penalty points for the current slide
-let lastPenaltyBlock = -1; // Tracks which penalty block was last applied to avoid duplicate deductions
-
-// --- Global Score Variable ---
-let totalCourseScore = 100; // Initialize the overall course score. Adjust starting value as needed.
-const INCORRECT_QUIZ_PENALTY = 5; // Points to deduct for each incorrect quiz answer. Adjust as needed.
 
 
 // --- New Global Variables for Penalty Logic ---
