@@ -96,7 +96,7 @@ const courseContent = [
             'Minimizing all macronutrients immediately after training to promote fat burning'
         ],
         correctAnswer: 2, // Index of 'Emphasizing high protein and high carbohydrate intake, with moderate healthy fats'
-        duration: 1
+        duration: 1,
         completed: false
     },
 
@@ -241,7 +241,7 @@ const courseContent = [
             'Prioritizing only animal-based proteins with minimal water'
         ],
         correctAnswer: 1, // Index of 'Adequate hydration and a balance of essential vitamins and minerals'
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -362,7 +362,7 @@ const courseContent = [
         question: 'Which type of carbohydrate provides sustained energy release and is rich in fiber?',
         options: ['Simple Carbohydrates', 'Complex Carbohydrates', 'Sugars', 'Fructose'],
         correctAnswer: 1, // Complex Carbohydates
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -376,7 +376,7 @@ const courseContent = [
             'Eliminating all dietary fats to minimize calorie intake.'
         ],
         correctAnswer: 2, // Index of 'Substituting saturated and trans fats with an emphasis on Omega-3 rich polyunsaturated fats and monounsaturated fats.'
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -434,7 +434,7 @@ const courseContent = [
             'Minimizing fluid intake during training and consuming only incomplete proteins to avoid excessive calories.'
         ],
         correctAnswer: 2, // Index of 'Distributing high-quality protein consistently throughout the day, strategically combining complex carbohydrates around training times, and ensuring adequate intake of essential healthy fats.'
-        duration: 1
+        duration: 1,
         completed: false
     },
 
@@ -579,7 +579,7 @@ const courseContent = [
             'Principle of Reversibility'
         ],
         correctAnswer: 2, // Principle of Progressive Overload
-        duration: 1 // Duration set to 1 as per user instruction
+        duration: 1, // Duration set to 1 as per user instruction
     completed: false
     },
 {
@@ -670,7 +670,7 @@ const courseContent = [
             '8-10 reps; Oxidative System; Individual Differences'
         ],
         correctAnswer: 2, // 1-5 reps; ATP-PC System; Progressive Overload
-        duration: 1 // Duration set to 1 as per user instruction
+        duration: 1, // Duration set to 1 as per user instruction
     completed: false
     },
 {
@@ -799,7 +799,7 @@ const courseContent = [
             'Push/Pull/Legs Split; Skipping warm-ups to save time'
         ],
         correctAnswer: 2, // Full Body Split; Prioritizing proper form and controlled movements
-        duration: 1 // Duration set to 1 as per user instruction
+        duration: 1, // Duration set to 1 as per user instruction
     completed: false
     },
 
@@ -932,7 +932,7 @@ const courseContent = [
             'Sustained high-impact cardio, at an RPE of 7-8 (Vigorous)'
         ],
         correctAnswer: 1, // LISS, at an RPE of 4-6 (Moderate)
-        duration: 1
+        duration: 1,
     completed: false
     },
 {
@@ -1083,7 +1083,7 @@ const courseContent = [
             '160-170 bpm'
         ],
         correctAnswer: 2, // 146-157 bpm (Calculation: MHR = 220-40=180. HRR = 180-65=115. 70%: (115*0.7)+65 = 145.5. 80%: (115*0.8)+65 = 157)
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -1249,7 +1249,7 @@ const courseContent = [
             'Switch to only low-intensity walking for all sessions to focus solely on active recovery.'
         ],
         correctAnswer: 2, // Introduce two short (15-20 min) HIIT sprint sessions at an RPE of 9-10 into their week, while maintaining two longer moderate runs.
-        duration: 1
+        duration: 1,
          completed: false
     },
 
@@ -1553,7 +1553,7 @@ const courseContent = [
             'They are not doing enough active recovery; they should add more high-intensity foam rolling sessions daily on top of their current training.'
         ],
         correctAnswer: 1, // They are showing clear signs of overtraining; they should prioritize 1-2 complete rest days and consistently aim for 7-9 hours of quality sleep nightly.
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -1710,7 +1710,7 @@ const courseContent = [
             'They need more active recovery; suggest adding daily intense foam rolling sessions to their existing intense training regimen.'
         ],
         correctAnswer: 2, // Chronic stress is likely elevating cortisol, impairing recovery, disrupting sleep, and promoting fat storage; they need to prioritize stress management techniques and improved sleep hygiene.
-        duration: 1
+        duration: 1,
     completed: false
     },
 {
@@ -1781,7 +1781,7 @@ const courseContent = [
             'Delegate all household chores to free up time for intense, 90-minute gym sessions every evening, regardless of her energy levels or current fatigue.'
         ],
         correctAnswer: 2, // Establish a "habit stack" by laying out her running clothes before bed, committing to a 10-minute brisk walk immediately upon arriving home, and regularly visualizing herself successfully crossing the 10K finish line to build consistency and mental resilience.
-        duration: 1
+        duration: 1,
         completed: false
     },
 
@@ -1855,7 +1855,7 @@ const courseContent = [
             'Do 100 jumping jacks daily to improve his overall fitness before attempting any push movements.'
         ],
         correctAnswer: 1, // Perform incline push-ups against a wall or elevated surface to decrease the resistance, focusing on proper form.
-        duration: 1
+        duration: 1,
         completed: false
     },
     {
@@ -1929,7 +1929,7 @@ const courseContent = [
             'Performing explosive plyometric push-ups, to maximize post-workout strength gains and overall power.'
         ],
         correctAnswer: 1, // Holding a hamstring stretch for 20-30 seconds, because muscles are warm and pliable after exercise, making it an ideal time to improve flexibility.
-        duration: 1
+        duration: 1,
         completed: false
     },
     {
@@ -2175,7 +2175,7 @@ const courseContent = [
             'The weight is too light for them; they should immediately increase the weight to engage their muscles more effectively and reduce discomfort.'
         ],
         correctAnswer: 2, // They are failing to maintain a neutral spine and properly brace their core during the hip hinge; they should focus on keeping their chest up and pushing their hips back while initiating the lift, ensuring the back remains flat.
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -2391,7 +2391,7 @@ const courseContent = [
             'Increasing your rest time between sets of push-ups'
         ],
         correctAnswer: 2, // Executing a single-arm push-up
-        duration: 1
+        duration: 1,
         completed: false
     },
 {
@@ -2510,7 +2510,7 @@ const courseContent = [
             'PNF Stretching'
         ],
         correctAnswer: 2, // Dynamic Stretching
-        duration: 1
+        duration: 1,
       completed: false
     },
 
