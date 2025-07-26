@@ -1,6 +1,3 @@
-let finalScore = 100; // You can start with a base score, e.g., 100, or 0 and add points for correct answers.
-const PENALTY_PER_INCORRECT_QUIZ = 5; // Define how many points to subtract for each wrong quiz answer
-
 // --- Your Course Content Array ---
 // This array holds all your lessons, quizzes, and placeholders.
 // Please ensure this 'courseContent' array is your most up-to-date one
@@ -2699,6 +2696,11 @@ const finalTestQuestions = [
 let penaltyPoints = 0; // Accumulates penalty points for the current slide
 let lastPenaltyBlock = -1; // Tracks which penalty block was last applied to avoid duplicate deductions
 
+// --- Global Score Variable ---
+let totalCourseScore = 100; // Initialize the overall course score. Adjust starting value as needed.
+const INCORRECT_QUIZ_PENALTY = 5; // Points to deduct for each incorrect quiz answer. Adjust as needed.
+
+
 // --- JavaScript variables (declared here, assigned inside DOMContentLoaded) ---
 let currentSlideIndex = 0;
 let timerInterval;
@@ -2772,9 +2774,11 @@ document.addEventListener('DOMContentLoaded', () => {
     submitFinalTestBtn = document.getElementById('submit-final-test-btn');
     finalTestResultsEl = document.getElementById('final-test-results');
     certificationAreaEl = document.getElementById('certification-area');
-    certificateNameEl = document.getElementById('certificate-name');
-    certificateCourseTitleEl = document.getElementById('certificate-course-title');
-    certificateDateEl = document.getElementById('certificate-date');
+    // These might be unused if cert data is passed directly to generateCertificate
+    // certificateNameEl = document.getElementById('certificate-name');
+    // certificateCourseTitleEl = document.getElementById('certificate-course-title');
+    // certificateDateEl = document.getElementById('certificate-date');
+
 
     // Add all event listeners here
     startButton.addEventListener('click', () => {
@@ -2823,7 +2827,7 @@ function displaySlide() {
     finalTestContainerEl.classList.add('hidden');
     quizFeedbackEl.textContent = '';
     submitQuizBtn.classList.remove('hidden'); // Ensure quiz submit button is visible for new quizzes
-    nextBtn.disabled = false; // Enable next button by default
+    // nextBtn.disabled = false; // This line will be managed per slide type below
 
     const currentItem = courseContent[currentSlideIndex];
     courseTitleEl.textContent = currentItem.title;
@@ -2832,6 +2836,7 @@ function displaySlide() {
         lessonContentEl.classList.remove('hidden');
         lessonContentEl.innerHTML = currentItem.content;
         startTimer(currentItem.duration);
+        nextBtn.disabled = true; // Disable for lessons until timer is up
     } else if (currentItem.type === 'quiz') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.remove('hidden');
@@ -2839,6 +2844,9 @@ function displaySlide() {
         startTimer(currentItem.duration || 45); // Default quiz time if not specified, now 45s
         backBtn.disabled = true; // Cannot go back during a quiz
         quizAttempted = false; // Reset quiz attempt status
+
+        // --- FIX: Disable Next button when a quiz is displayed ---
+        nextBtn.disabled = true; 
     } else if (currentItem.type === 'final_test_placeholder') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.add('hidden');
@@ -2848,9 +2856,8 @@ function displaySlide() {
         nextBtn.disabled = true; // Cannot go forward from final test placeholder
     }
 
-    // Manage navigation button states
+    // Manage navigation button states (back button for other cases)
     backBtn.disabled = currentSlideIndex === 0 || (currentItem.type === 'quiz' && !quizAttempted) || currentItem.type === 'final_test_placeholder';
-    // nextBtn.disabled will be handled by timer or quiz completion (for lessons/quizzes)
 }
 
 // --- UPDATED startTimer Function ---
@@ -2890,11 +2897,11 @@ function startTimer(duration) {
         // For quizzes, the timer will continue past zero until submitted, allowing penalties to accumulate.
     }, 1000); // Update every second
 
-    // Disable next button initially for timed sections until time is up,
-    // unless it's a quiz where next is enabled after submission.
-    if (courseContent[currentSlideIndex].type === 'lesson') {
-        nextBtn.disabled = true;
-    }
+    // This block is now primarily handled by displaySlide function for initial states.
+    // However, if a lesson, ensure it's disabled.
+    // if (courseContent[currentSlideIndex].type === 'lesson') {
+    //     nextBtn.disabled = true;
+    // }
 }
 
 // --- UPDATED updateTimerDisplay Function ---
@@ -2928,9 +2935,7 @@ function displayQuiz(quizData) {
     quizFeedbackEl.textContent = '';
 }
 
-// --- UPDATED submitQuiz Function ---
-// --- CORRECTED submitQuiz Function ---
-// --- UPDATED submitQuiz Function ---
+// --- UPDATED submitQuiz Function (includes overall score deduction) ---
 function submitQuiz() {
     quizAttempted = true;
     clearInterval(timerInterval); // Stop timer
@@ -2955,8 +2960,8 @@ function submitQuiz() {
             totalCourseScore -= INCORRECT_QUIZ_PENALTY;
         }
 
-        // Apply time penalties to the overall score
-        totalCourseScore -= penaltyPoints; // Assuming penaltyPoints is already calculated from the timer
+        // Apply time penalties to the overall score (penaltyPoints is calculated in startTimer)
+        totalCourseScore -= penaltyPoints;
 
         // Ensure overall score doesn't go below zero (optional, depends on how you want to handle negative scores)
         if (totalCourseScore < 0) {
@@ -2968,10 +2973,9 @@ function submitQuiz() {
         if (currentQuizScoreForDisplay < 0) currentQuizScoreForDisplay = 0;
 
         feedbackMessage += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScoreForDisplay} point(s)).`;
-        quizFeedbackEl.textContent = feedbackMessage;
-
         // Optionally, display the current overall score to the user for transparency
-        // quizFeedbackEl.textContent += ` Your current overall course score: ${totalCourseScore}.`;
+        feedbackMessage += ` Current Course Score: ${totalCourseScore}.`; // Added for transparency
+        quizFeedbackEl.textContent = feedbackMessage;
 
         submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
         nextBtn.disabled = false; // Allow user to move to next slide
@@ -2990,9 +2994,18 @@ function submitQuiz() {
 }
 
 // Function to display the final test
+// finalTestQuestions array is assumed to be defined elsewhere in your script
 function displayFinalTest() {
     finalTestQuestionsEl.innerHTML = ''; // Clear previous
     finalTestScores = []; // Reset scores for final test
+
+    // Define finalTestQuestions here for demonstration if not global
+    // In a real scenario, this should be defined globally or fetched.
+    const finalTestQuestions = [
+        { question: 'What is the powerhouse of the cell?', options: ['Nucleus', 'Mitochondria', 'Ribosome', 'Cytoplasm'], correctAnswer: 1 },
+        { question: 'Which nutrient is primarily responsible for muscle repair and growth?', options: ['Carbohydrates', 'Fats', 'Proteins', 'Vitamins'], correctAnswer: 2 },
+        { question: 'What is the recommended daily water intake for adults (approximate)?', options: ['1-2 liters', '2-3 liters', '3-4 liters', '4-5 liters'], correctAnswer: 1 }
+    ];
 
     finalTestQuestions.forEach((qData, qIndex) => {
         const questionDiv = document.createElement('div');
@@ -3017,6 +3030,13 @@ function displayFinalTest() {
 // Modify submitFinalTest to call certificate generation
 function submitFinalTest() {
     let correctAnswers = 0;
+    // Assuming finalTestQuestions is accessible here (e.g., globally defined)
+    const finalTestQuestions = [
+        { question: 'What is the powerhouse of the cell?', options: ['Nucleus', 'Mitochondria', 'Ribosome', 'Cytoplasm'], correctAnswer: 1 },
+        { question: 'Which nutrient is primarily responsible for muscle repair and growth?', options: ['Carbohydrates', 'Fats', 'Proteins', 'Vitamins'], correctAnswer: 2 },
+        { question: 'What is the recommended daily water intake for adults (approximate)?', options: ['1-2 liters', '2-3 liters', '3-4 liters', '4-5 liters'], correctAnswer: 1 }
+    ];
+
     finalTestQuestions.forEach((qData, qIndex) => {
         const selectedOption = document.querySelector(`input[name="finalQuestion${qIndex}"]:checked`);
         if (selectedOption && parseInt(selectedOption.value) === qData.correctAnswer) {
@@ -3025,12 +3045,19 @@ function submitFinalTest() {
     });
 
     const totalQuestions = finalTestQuestions.length;
-    const scorePercentage = (correctAnswers / totalQuestions) * 100;
+    let scorePercentage = (correctAnswers / totalQuestions) * 100;
 
-    finalTestResultsEl.innerHTML = `<p>You scored ${correctAnswers} out of ${totalQuestions} (${scorePercentage.toFixed(2)}%).</p>`;
-    finalTestResultsEl.style.color = scorePercentage >= 70 ? 'green' : 'red';
+    // Incorporate the totalCourseScore into the final percentage, or display it alongside.
+    // This is a conceptual integration. You might want to define how finalTestScore and totalCourseScore combine.
+    // For now, let's just display both.
+    finalTestResultsEl.innerHTML = `<p>Final Test Score: ${correctAnswers} out of ${totalQuestions} (${scorePercentage.toFixed(2)}%).</p>`;
+    finalTestResultsEl.innerHTML += `<p>Overall Course Score (after penalties): ${totalCourseScore} points.</p>`; // Display overall score
+    
+    // You might want to adjust the pass threshold based on the combined score
+    const combinedScoreConsideration = scorePercentage; // Or some calculation involving totalCourseScore
+    finalTestResultsEl.style.color = combinedScoreConsideration >= 70 ? 'green' : 'red';
 
-    if (scorePercentage >= 70) {
+    if (combinedScoreConsideration >= 70) {
         certificationAreaEl.classList.remove('hidden');
         // Prompt for user's name for the certificate
         let userName = prompt("Congratulations! Please enter your name for the certificate:");
@@ -3040,15 +3067,14 @@ function submitFinalTest() {
         generateCertificate(userName, 'Interactive Fitness Course'); // Call the new function
     } else {
         certificationAreaEl.classList.add('hidden');
-        finalTestResultsEl.innerHTML += `<p>You need at least 70% to receive a certification. Please review the material and try again!</p>`;
+        finalTestResultsEl.innerHTML += `<p>You need at least 70% on the final test to receive a certification. Please review the material and try again!</p>`;
     }
 
     submitFinalTestBtn.disabled = true;
 }
 
 // NEW FUNCTION: Generate and draw the certificate on canvas
-function generateCertificate(finalScore, courseTitle) { // Keeping finalScore and courseTitle as potential parameters
-    let name = '';
+function generateCertificate(name, courseTitle) { // Keeping courseTitle as a parameter
     const maxLength = 100;
     const lettersOnlyRegex = /^[a-zA-Z\s.-]+$/; // Allows letters, spaces, hyphens, and periods
 
