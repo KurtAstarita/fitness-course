@@ -2716,6 +2716,13 @@ const finalTestQuestions = [
 // Global constant for localStorage key
 const COURSE_SAVE_KEY = 'fitnessCourseState';
 
+// ... other existing global variables ...
+let finalTestFailedTimestamp = null; // To store when the test was last failed (already added in previous step)
+
+// --- New Global Variables for Timer Persistence ---
+let isInitialLoad = false; // Flag to indicate if this is the very first display after a page load
+let savedCurrentSlideIndexFromLoad = -1; // Stores the currentSlideIndex retrieved from localStorage
+// ... rest of your DOM Elements declarations
 
 // --- New Global Variables for Penalty Logic ---
 let penaltyPoints = 0; // Accumulates penalty points for the current slide
@@ -2764,19 +2771,25 @@ let certificationAreaEl; // Corrected: Added 'let'
 // --- Save/Load State Functions ---
 
 // Function to save the current course state to localStorage
+// Function to save the current course state to localStorage
 function saveCourseState() {
     const stateToSave = {
         currentSlideIndex: currentSlideIndex,
         totalCourseScore: totalCourseScore,
         // Create a simplified version of courseContent for saving,
         // primarily to capture the 'completed' status of quizzes.
-        // We only need the index and 'completed' status for quizzes.
         quizStates: courseContent.map((item, index) => {
             if (item.type === 'quiz') {
-                return { index: index, completed: !!item.completed }; // !! ensures boolean true/false
+                return { index: index, completed: !!item.completed };
             }
-            return null; // Don't need to save specific state for non-quizzes
-        }).filter(item => item !== null) // Filter out nulls
+            return null;
+        }).filter(item => item !== null),
+        finalTestFailedTimestamp: finalTestFailedTimestamp, // From previous step
+
+        // --- NEW: Save current timer state ---
+        savedTimeLeft: timeLeft,
+        savedPenaltyPoints: penaltyPoints,
+        savedLastPenaltyBlock: lastPenaltyBlock
     };
     localStorage.setItem(COURSE_SAVE_KEY, JSON.stringify(stateToSave));
     console.log('Course state saved:', stateToSave);
@@ -2789,14 +2802,22 @@ function loadCourseState() {
         try {
             const savedState = JSON.parse(savedStateString);
             
-            // Restore basic state variables, providing defaults if undefined (e.g., first load)
-            currentSlideIndex = savedState.currentSlideIndex || 0; 
+            // Restore basic state variables, providing defaults if undefined
+            currentSlideIndex = savedState.currentSlideIndex || 0;
+            // Store the loaded index to compare with actual currentSlideIndex in displaySlide
+            savedCurrentSlideIndexFromLoad = currentSlideIndex; // <<< NEW: Store loaded index
             totalCourseScore = savedState.totalCourseScore !== undefined ? savedState.totalCourseScore : 100;
+            finalTestFailedTimestamp = savedState.finalTestFailedTimestamp || null;
 
-            // Restore quiz completion status in the *live* courseContent array
+            // --- NEW: Restore saved timer state ---
+            // These will be used by displaySlide if it's resuming the timer for the same slide
+            timeLeft = savedState.savedTimeLeft !== undefined ? savedState.savedTimeLeft : null;
+            penaltyPoints = savedState.savedPenaltyPoints !== undefined ? savedState.savedPenaltyPoints : 0;
+            lastPenaltyBlock = savedState.savedLastPenaltyBlock !== undefined ? savedState.savedLastPenaltyBlock : -1;
+
+            // Restore quiz completion status
             if (savedState.quizStates && Array.isArray(savedState.quizStates)) {
                 savedState.quizStates.forEach(savedQuiz => {
-                    // Ensure the saved index is valid and corresponds to a quiz
                     if (savedQuiz.index !== undefined && savedQuiz.completed !== undefined &&
                         savedQuiz.index >= 0 && savedQuiz.index < courseContent.length &&
                         courseContent[savedQuiz.index].type === 'quiz') {
@@ -2810,7 +2831,6 @@ function loadCourseState() {
         } catch (e) {
             console.error('Error parsing or loading saved course state:', e);
             localStorage.removeItem(COURSE_SAVE_KEY); // Clear potentially corrupt data
-            // Optionally, inform the user about corrupt data or restart cleanly
             return false;
         }
     }
@@ -2833,7 +2853,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx = certificateCanvas.getContext('2d');
     } else {
         console.error("Error: Canvas element with ID 'certificateCanvas' not found!");
-        return;
+        return; // Exit if canvas is not found to prevent further errors
     }
 
     courseTitleEl = document.getElementById('course-title');
@@ -2855,23 +2875,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Load state first, then determine initial display ---
     if (loadCourseState()) {
-        // State was successfully loaded, go straight to the app
+        // State was successfully loaded
+        isInitialLoad = true; // <<< NEW: Mark this as an initial load that restored state
+        // savedCurrentSlideIndexFromLoad is already set inside loadCourseState
         coverPage.style.display = 'none';
         appContainer.style.display = 'block';
-        displaySlide(); // Display the loaded slide
+        displaySlide(); // Display the loaded slide (will resume timer if applicable)
     } else {
         // No saved state or error loading, show cover page
         coverPage.style.display = 'block';
         appContainer.style.display = 'none';
     }
 
-    // Add all event listeners here
+    // --- NEW: Event listener to save state before page unload/refresh/close ---
+    // This is crucial for pausing the timer correctly
+    window.addEventListener('beforeunload', saveCourseState);
+
+    // Add all other event listeners here
     startButton.addEventListener('click', () => {
         // This button is only visible if no state was loaded, or user wants to restart
         coverPage.style.display = 'none';
         appContainer.style.display = 'block';
         currentSlideIndex = 0; // Explicitly start from 0 if hitting start button
         totalCourseScore = 100; // Reset score on new start
+        // Reset all timer-related global variables when starting fresh
+        timeLeft = null;
+        penaltyPoints = 0;
+        lastPenaltyBlock = -1;
+        finalTestFailedTimestamp = null; // Also clear any failed test cooldown
+
         // Also reset all quiz completion statuses if starting fresh
         courseContent.forEach(item => {
             if (item.type === 'quiz') {
@@ -2918,50 +2950,128 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to display current slide/lesson
 function displaySlide() {
-    clearInterval(timerInterval); // Always clear timer on slide change
-    // Clear previous content
+    clearInterval(timerInterval); // Always clear any existing timer when changing slides
+    
+    // Clear previous content and hide all dynamic areas by default
     lessonContentEl.innerHTML = '';
     quizContainerEl.classList.add('hidden');
     finalTestContainerEl.classList.add('hidden');
     quizFeedbackEl.textContent = '';
     submitQuizBtn.classList.remove('hidden'); // Ensure quiz submit button is visible for new quizzes
+    certificationAreaEl.classList.add('hidden'); // Ensure certificate area is hidden by default
 
     const currentItem = courseContent[currentSlideIndex];
     courseTitleEl.textContent = currentItem.title;
 
+    let initialTimerDuration; // This will hold the time to start the timer with
+    let shouldResumeTimer = false; // Flag to indicate if we are resuming a timer
+
+    // --- Logic to determine if we should resume a timer from saved state ---
+    // This runs only once on initial page load if the user was on a timed slide
+    if (isInitialLoad && savedCurrentSlideIndexFromLoad === currentSlideIndex) {
+        // If timeLeft was saved and is a valid number, use it
+        if (typeof timeLeft === 'number' && timeLeft !== null) {
+            initialTimerDuration = timeLeft; // Resume from saved time
+            // penaltyPoints and lastPenaltyBlock are already loaded into global scope from loadCourseState
+            shouldResumeTimer = true;
+            console.log(`Resuming timer for slide ${currentSlideIndex} from ${initialTimerDuration} seconds.`);
+        } else {
+            // No valid saved timeLeft for this specific slide, start fresh
+            initialTimerDuration = currentItem.duration; // Default to full duration
+            penaltyPoints = 0; // Reset penalties for a fresh start
+            lastPenaltyBlock = -1; // Reset penalty block tracker
+            console.log(`Starting new timer (no valid resume data) for slide ${currentSlideIndex} with ${currentItem.duration} seconds.`);
+        }
+        // After this initial check and potential resume, disable initial load flags
+        // and clear the global timeLeft variable so it doesn't incorrectly apply to other slides later.
+        isInitialLoad = false;
+        savedCurrentSlideIndexFromLoad = -1;
+        timeLeft = null; // Clear this global so it's not reused for subsequent slide navigations
+    } else {
+        // Not an initial load, or not the saved slide, so start fresh for this slide
+        initialTimerDuration = currentItem.duration; // Default to full duration
+        penaltyPoints = 0; // Reset penalties for a fresh start
+        lastPenaltyBlock = -1; // Reset penalty block tracker
+        console.log(`Starting new timer (not resuming) for slide ${currentSlideIndex} with ${currentItem.duration} seconds.`);
+    }
+
+    // --- Display content based on slide type ---
     if (currentItem.type === 'lesson') {
         lessonContentEl.classList.remove('hidden');
         lessonContentEl.innerHTML = currentItem.content;
-        startTimer(currentItem.duration);
+        startTimer(initialTimerDuration); // Pass the determined duration
         nextBtn.disabled = true; // Disable for lessons until timer is up
+        timerDisplayEl.classList.remove('hidden'); // Show timer for lessons
     } else if (currentItem.type === 'quiz') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.remove('hidden');
+        finalTestContainerEl.classList.add('hidden'); // Ensure final test is hidden
         displayQuiz(currentItem);
-        startTimer(currentItem.duration || 45); // Default quiz time if not specified, now 45s
+        startTimer(initialTimerDuration || 45); // Quizzes default to 45 if no duration/saved time
         
-        // --- Disable Next button when a quiz is displayed ---
-        nextBtn.disabled = true; 
+        nextBtn.disabled = true; // Disable Next button when a quiz is displayed
+        timerDisplayEl.classList.remove('hidden'); // Show timer for quizzes
 
-        // IMPORTANT: Only reset quizAttempted to false if this quiz hasn't been completed yet.
+        // Manage quiz attempted and completed state (existing logic)
         if (currentItem.completed !== true) { 
             quizAttempted = false; 
         }
-        // If quiz is already completed, hide submit button
         if (currentItem.completed === true) {
             submitQuizBtn.classList.add('hidden');
-            nextBtn.disabled = false; // Allow moving forward if already completed
+            nextBtn.disabled = false;
             quizFeedbackEl.textContent = "You have already completed this quiz.";
             quizFeedbackEl.style.color = 'grey';
         }
     } else if (currentItem.type === 'final_test_placeholder') {
+        lessonContentEl.classList.add('hidden'); // Hide lesson content
+        quizContainerEl.classList.add('hidden'); // Hide quiz content
+
+        const retryDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        const now = Date.now();
+
+        if (finalTestFailedTimestamp && (now < (finalTestFailedTimestamp + retryDuration))) {
+            // Cooldown active: no timer, show message
+            finalTestContainerEl.classList.add('hidden'); // Hide the test itself
+            submitFinalTestBtn.classList.add('hidden'); // Hide submit button for the test
+            timerDisplayEl.classList.add('hidden'); // Hide the timer display
+
+            // Display cooldown message in the lesson content area
+            lessonContentEl.classList.remove('hidden');
+            const retryTime = new Date(finalTestFailedTimestamp + retryDuration);
+            lessonContentEl.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: red;">
+                    <h3>Retake Cooldown Active</h3>
+                    <p>You recently attempted and did not pass the final exam.</p>
+                    <p>You can retake the test after: <strong>${retryTime.toLocaleString()}</strong>.</p>
+                    <p>Please use this time to review the course material.</p>
+                </div>
+            `;
+            // Disable all navigation as they are on cooldown
+            backBtn.disabled = true;
+            nextBtn.disabled = true;
+            clearInterval(timerInterval); // No timer running for cooldown message
+        } else {
+            // No cooldown: show test, start timer
+            finalTestContainerEl.classList.add('hidden'); // Hide it first just in case
+            finalTestContainerEl.classList.remove('hidden'); // Then show
+            submitFinalTestBtn.classList.remove('hidden'); // Ensure submit button is visible
+            timerDisplayEl.classList.remove('hidden'); // Show timer for the final test
+
+            displayFinalTest(); // Populate the questions
+            startTimer(initialTimerDuration); // Pass the determined duration
+            backBtn.disabled = true; // Still cannot go back during final test
+            nextBtn.disabled = true; // Still cannot go forward directly from final test placeholder
+            
+            // Clear any previous final test results/feedback if user is retaking
+            finalTestResultsEl.textContent = '';
+            finalTestResultsEl.style.color = '';
+        }
+    } else {
+        // Fallback for any other slide types or to ensure elements are hidden
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.add('hidden');
-        finalTestContainerEl.classList.remove('hidden');
-        displayFinalTest(); // This calls the function that populates questions
-        backBtn.disabled = true; // Cannot go back during final test
-        nextBtn.disabled = true; // Cannot go forward from final test placeholder
-        startTimer(currentItem.duration); // <<< ADD THIS LINE TO START FINAL TEST TIMER
+        finalTestContainerEl.classList.add('hidden');
+        timerDisplayEl.classList.add('hidden'); // Hide timer by default for non-timed types
     }
 
     // --- DEBUGGING CONSOLE LOGS ---
@@ -2969,8 +3079,12 @@ function displaySlide() {
     console.log(`Slide Type: ${currentItem.type}`);
     console.log(`Quiz Completed Status (if quiz): ${currentItem.completed}`);
     console.log(`Global quizAttempted: ${quizAttempted}`);
+    console.log(`Final Test Failed Timestamp: ${finalTestFailedTimestamp ? new Date(finalTestFailedTimestamp).toLocaleString() : 'None'}`);
+    console.log(`Should Resume Timer (calculated): ${shouldResumeTimer}`);
+    console.log(`Initial Timer Duration (passed to startTimer): ${initialTimerDuration}`);
 
-    // --- NEW CONDITION: Check if the immediate previous slide was a completed quiz ---
+
+    // --- Manage Back button states --- (Existing logic)
     let isPreviousSlideCompletedQuiz = false;
     if (currentSlideIndex > 0) {
         const previousItem = courseContent[currentSlideIndex - 1];
@@ -2978,16 +3092,11 @@ function displaySlide() {
             isPreviousSlideCompletedQuiz = true;
         }
     }
-    console.log(`Is Previous Slide Completed Quiz: ${isPreviousSlideCompletedQuiz}`); // Debugging
+    console.log(`Is Previous Slide Completed Quiz: ${isPreviousSlideCompletedQuiz}`);
 
-    // --- Manage Back button states ---
-    // Disable back if:
-    // 1. It's the first slide.
-    // 2. It's the final test placeholder.
-    // 3. It's a quiz that has been completed OR is currently unattempted.
-    // 4. The immediately previous slide was a completed quiz. (NEW)
     const shouldDisableBack = currentSlideIndex === 0 || 
-                              currentItem.type === 'final_test_placeholder' || 
+                              (currentItem.type === 'final_test_placeholder' && (finalTestFailedTimestamp && (Date.now() < (finalTestFailedTimestamp + 24 * 60 * 60 * 1000)))) || // If on cooldown message
+                              currentItem.type === 'final_test_placeholder' || // Also disable during actual test
                               (currentItem.type === 'quiz' && (currentItem.completed === true || !quizAttempted)) ||
                               isPreviousSlideCompletedQuiz;
     
@@ -3081,10 +3190,10 @@ function displayQuiz(quizData) {
     quizFeedbackEl.textContent = '';
 }
 
-// --- UPDATED submitQuiz Function (includes overall score deduction and quiz completion marking) ---
 function submitQuiz() {
     quizAttempted = true; // Mark quiz as attempted
     clearInterval(timerInterval); // Stop timer
+    timeLeft = null; // <<< NEW: Clear timeLeft after submission, so it doesn't resume if refreshed here
 
     const selectedOption = document.querySelector('input[name="quizOption"]:checked');
     const currentQuiz = courseContent[currentSlideIndex];
@@ -3227,8 +3336,9 @@ function submitFinalTest() {
     }
 
     submitFinalTestBtn.disabled = true;
-    // Optionally save the final state after completing the final test
-    saveCourseState();
+    clearInterval(timerInterval); // Stop timer
+    timeLeft = null; // <<< NEW: Clear timeLeft after submission, so it doesn't resume if refreshed here
+    saveCourseState(); // Save state including nullified timeLeft
 }
 
 // NEW FUNCTION: Generate and draw the certificate on canvas
