@@ -77,6 +77,21 @@
     transform: translateY(0);
 }
 
+/* Styles for a disabled button */
+#back-btn:disabled,
+#next-btn:disabled,
+#submit-quiz-btn:disabled,
+#submit-final-test-btn:disabled,
+#downloadCertBtn:disabled {
+    cursor: not-allowed; /* Changes cursor to a 'no-entry' or 'no-drop' symbol */
+    opacity: 0.5; /* Makes the button semi-transparent */
+    background-color: #cccccc; /* A light grey background */
+    border-color: #999999; /* A darker grey border */
+    color: #666666; /* Grey text color */
+    box-shadow: none; /* Removes any shadow effects */
+    /* Add any other styles to make it visually clear it's disabled */
+}
+
 /* Styling for the Course Details List on the Cover Page */
 #cover-page #list {
     background-color: rgba(255, 255, 255, 0.7); /* Slightly translucent white background */
