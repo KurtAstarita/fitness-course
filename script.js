@@ -2519,7 +2519,7 @@ const courseContent = [
     {
         type: 'final_test_placeholder',
         title: 'Final Assessment - 30 minutes',
-        duration: 1
+        duration: 2700
     }
 ];
 
@@ -2944,7 +2944,6 @@ function displaySlide() {
         nextBtn.disabled = true; 
 
         // IMPORTANT: Only reset quizAttempted to false if this quiz hasn't been completed yet.
-        // If it's a completed quiz being revisited, we want quizAttempted to remain true (or irrelevant for back button logic).
         if (currentItem.completed !== true) { 
             quizAttempted = false; 
         }
@@ -2959,9 +2958,10 @@ function displaySlide() {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.add('hidden');
         finalTestContainerEl.classList.remove('hidden');
-        displayFinalTest();
+        displayFinalTest(); // This calls the function that populates questions
         backBtn.disabled = true; // Cannot go back during final test
         nextBtn.disabled = true; // Cannot go forward from final test placeholder
+        startTimer(currentItem.duration); // <<< ADD THIS LINE TO START FINAL TEST TIMER
     }
 
     // --- DEBUGGING CONSOLE LOGS ---
@@ -3007,6 +3007,16 @@ function startTimer(duration) {
 
     updateTimerDisplay(); // Initial display
 
+    // Determine penaltyBlockDuration based on the current slide type
+    let currentSlide = courseContent[currentSlideIndex];
+    let penaltyBlockDuration;
+
+    if (currentSlide.type === 'final_test_placeholder') {
+        penaltyBlockDuration = 120; // 120 seconds for the final exam
+    } else {
+        penaltyBlockDuration = 45; // Default 45 seconds for regular quizzes
+    }
+
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
@@ -3014,25 +3024,22 @@ function startTimer(duration) {
         // Check for penalties only if time has gone negative
         if (timeLeft < 0) {
             const timeOver = Math.abs(timeLeft);
-            const penaltyBlockDuration = 45; // Every 45 seconds over
             const currentPenaltyBlock = Math.floor(timeOver / penaltyBlockDuration);
 
             // If a new penalty block has been crossed
             if (currentPenaltyBlock > lastPenaltyBlock) {
-                penaltyPoints += 0.5; // Deduct 1 point for every penaltyBlockDuration over
+                penaltyPoints += 0.5; // Penalty is 0.5 points
                 lastPenaltyBlock = currentPenaltyBlock;
                 // console.log(`Penalty incurred! Total penalty points for this slide: ${penaltyPoints}`); // For debugging
             }
         }
 
         // For lessons, enable next button when time is up (or goes negative)
-        if (timeLeft <= 0 && courseContent[currentSlideIndex].type === 'lesson') {
+        // For quizzes and final test, the timer will continue past zero until submitted, allowing penalties to accumulate.
+        if (timeLeft <= 0 && currentSlide.type === 'lesson') {
             clearInterval(timerInterval);
             nextBtn.disabled = false;
-            // Optionally update title to show "Time's Up!" or penalty info
-            // courseTitleEl.textContent = `${courseContent[currentSlideIndex].title} (Time's Up! Penalties: ${penaltyPoints})`;
         }
-        // For quizzes, the timer will continue past zero until submitted, allowing penalties to accumulate.
     }, 1000); // Update every second
 }
 
