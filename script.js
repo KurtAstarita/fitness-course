@@ -3204,7 +3204,7 @@ function displayQuiz(quizData) {
 function submitQuiz() {
     quizAttempted = true; // Mark quiz as attempted
     clearInterval(timerInterval); // Stop timer
-    timeLeft = null; // <<< NEW: Clear timeLeft after submission, so it doesn't resume if refreshed here
+    timeLeft = null; // Clear timeLeft after submission, so it doesn't resume if refreshed here
 
     const selectedOption = document.querySelector('input[name="quizOption"]:checked');
     const currentQuiz = courseContent[currentSlideIndex];
@@ -3235,8 +3235,8 @@ function submitQuiz() {
             totalCourseScore = 0;
         }
 
-        // --- Mark the current quiz as completed ---
-        currentQuiz.completed = true;
+        // --- Mark the current quiz as completed (ONLY when an answer was selected and processed) ---
+        currentQuiz.completed = true; 
         // Optional: Save the user's selected answer if you want to show it when revisiting
         // currentQuiz.selectedAnswer = selectedAnswerValue;
 
@@ -3255,10 +3255,33 @@ function submitQuiz() {
         quizFeedbackEl.textContent = feedbackMessage;
 
         submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
-        nextBtn.disabled = false; // <<< THIS IS WHERE NEXT BUTTON IS UNLOCKED (CORRECT BEHAVIOR)
+        nextBtn.disabled = false; // <<< THIS IS WHERE NEXT BUTTON IS UNLOCKED (CORRECT BEHAVIOR, ONLY IF ANSWER WAS GIVEN)
 
-        saveCourseState(); // Save state after quiz submission
     } else {
+        // This block executes if NO option is selected
+        quizFeedbackEl.textContent = 'Please select an answer.';
+        quizFeedbackEl.style.color = 'orange';
+
+        if (timeLeft <= 0) {
+            // If time ran out and no selection
+            // We DO NOT mark currentQuiz.completed = true here.
+            // The user must still select an answer to move forward.
+            quizAttempted = true; // Still mark as attempted
+            // REMOVED: currentQuiz.completed = true; // THIS WAS THE BUGGY LINE!
+
+            totalCourseScore -= penaltyPoints; // Still apply time penalty
+            if (totalCourseScore < 0) totalCourseScore = 0;
+            quizFeedbackEl.textContent += ` Time expired! No answer selected. Current Course Score: ${totalCourseScore}.`;
+            // The next button will remain disabled.
+        } else {
+            // If time is still remaining, resume timer, user can still select an answer
+            startTimer(timeLeft);
+        }
+        // IMPORTANT: The nextBtn remains disabled here because no valid selection was made.
+    }
+    saveCourseState(); // Save state after quiz submission (covers all branches)
+  
+ } else {
         // This block executes if NO option is selected
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
