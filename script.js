@@ -2713,23 +2713,28 @@ const finalTestQuestions = [
 
 
 
+// Global constant for localStorage key
+const COURSE_SAVE_KEY = 'fitnessCourseState';
+
+
 // --- New Global Variables for Penalty Logic ---
-let penaltyPoints = 0;
-let lastPenaltyBlock = -1;
+let penaltyPoints = 0; // Accumulates penalty points for the current slide
+let lastPenaltyBlock = -1; // Tracks which penalty block was last applied to avoid duplicate deductions
 
 // --- Global Score Variable ---
-let totalCourseScore = 100;
-const INCORRECT_QUIZ_PENALTY = 5;
+let totalCourseScore = 100; // Initialize the overall course score. Adjust starting value as needed.
+const INCORRECT_QUIZ_PENALTY = 5; // Points to deduct for each incorrect quiz answer. Adjust as needed.
+
 
 // --- JavaScript variables (declared here, assigned inside DOMContentLoaded) ---
 let currentSlideIndex = 0;
 let timerInterval;
 let timeLeft;
-let quizAttempted = false;
-let quizScore = 0;
-let finalTestScores = [];
+let quizAttempted = false; // To prevent going back during a quiz (used for current active quiz)
+let quizScore = 0; // Track score for current quiz
+let finalTestScores = []; // To store results of each final test question
 
-// DOM Elements - Declare them globally with 'let'
+// DOM Elements - Declare them globally, but assign inside DOMContentLoaded
 let coverPage;
 let appContainer;
 let startButton;
@@ -2743,17 +2748,75 @@ let lessonContentEl;
 let quizContainerEl;
 let quizQuestionEl;
 let quizOptionsEl;
-let submitQuizBtn; // <--- ADDED 'let'
-let quizFeedbackEl; // <--- ADDED 'let'
-let backBtn; // <--- ADDED 'let'
-let nextBtn; // <--- ADDED 'let'
-let timerDisplayEl; // <--- ADDED 'let'
-let currentTimeEl; // <--- ADDED 'let'
-let finalTestContainerEl; // <--- ADDED 'let'
-let finalTestQuestionsEl; // <--- ADDED 'let'
-let submitFinalTestBtn; // <--- ADDED 'let'
-let finalTestResultsEl; // <--- ADDED 'let'
-let certificationAreaEl; // <--- ADDED 'let'
+let submitQuizBtn; // Corrected: Added 'let'
+let quizFeedbackEl; // Corrected: Added 'let'
+let backBtn; // Corrected: Added 'let'
+let nextBtn; // Corrected: Added 'let'
+let timerDisplayEl; // Corrected: Added 'let'
+let currentTimeEl; // Corrected: Added 'let'
+let finalTestContainerEl; // Corrected: Added 'let'
+let finalTestQuestionsEl; // Corrected: Added 'let'
+let submitFinalTestBtn; // Corrected: Added 'let'
+let finalTestResultsEl; // Corrected: Added 'let'
+let certificationAreaEl; // Corrected: Added 'let'
+
+
+// --- Save/Load State Functions ---
+
+// Function to save the current course state to localStorage
+function saveCourseState() {
+    const stateToSave = {
+        currentSlideIndex: currentSlideIndex,
+        totalCourseScore: totalCourseScore,
+        // Create a simplified version of courseContent for saving,
+        // primarily to capture the 'completed' status of quizzes.
+        // We only need the index and 'completed' status for quizzes.
+        quizStates: courseContent.map((item, index) => {
+            if (item.type === 'quiz') {
+                return { index: index, completed: !!item.completed }; // !! ensures boolean true/false
+            }
+            return null; // Don't need to save specific state for non-quizzes
+        }).filter(item => item !== null) // Filter out nulls
+    };
+    localStorage.setItem(COURSE_SAVE_KEY, JSON.stringify(stateToSave));
+    console.log('Course state saved:', stateToSave);
+}
+
+// Function to load the course state from localStorage
+function loadCourseState() {
+    const savedStateString = localStorage.getItem(COURSE_SAVE_KEY);
+    if (savedStateString) {
+        try {
+            const savedState = JSON.parse(savedStateString);
+            
+            // Restore basic state variables, providing defaults if undefined (e.g., first load)
+            currentSlideIndex = savedState.currentSlideIndex || 0; 
+            totalCourseScore = savedState.totalCourseScore !== undefined ? savedState.totalCourseScore : 100;
+
+            // Restore quiz completion status in the *live* courseContent array
+            if (savedState.quizStates && Array.isArray(savedState.quizStates)) {
+                savedState.quizStates.forEach(savedQuiz => {
+                    // Ensure the saved index is valid and corresponds to a quiz
+                    if (savedQuiz.index !== undefined && savedQuiz.completed !== undefined &&
+                        savedQuiz.index >= 0 && savedQuiz.index < courseContent.length &&
+                        courseContent[savedQuiz.index].type === 'quiz') {
+                        
+                        courseContent[savedQuiz.index].completed = savedQuiz.completed;
+                    }
+                });
+            }
+            console.log('Course state loaded:', savedState);
+            return true; // Indicate that state was loaded
+        } catch (e) {
+            console.error('Error parsing or loading saved course state:', e);
+            localStorage.removeItem(COURSE_SAVE_KEY); // Clear potentially corrupt data
+            // Optionally, inform the user about corrupt data or restart cleanly
+            return false;
+        }
+    }
+    console.log('No saved course state found.');
+    return false;
+}
 
 
 // --- All code that interacts with the DOM will be inside this listener ---
@@ -2766,12 +2829,11 @@ document.addEventListener('DOMContentLoaded', () => {
     certificateCanvas = document.getElementById('certificateCanvas');
     downloadCertBtn = document.getElementById('downloadCertBtn');
 
-    // Only try to get context if canvas is found
     if (certificateCanvas) {
         ctx = certificateCanvas.getContext('2d');
     } else {
         console.error("Error: Canvas element with ID 'certificateCanvas' not found!");
-        return; // Exit if a critical element is missing
+        return;
     }
 
     courseTitleEl = document.getElementById('course-title');
@@ -2791,26 +2853,42 @@ document.addEventListener('DOMContentLoaded', () => {
     finalTestResultsEl = document.getElementById('final-test-results');
     certificationAreaEl = document.getElementById('certification-area');
 
+    // --- Load state first, then determine initial display ---
+    if (loadCourseState()) {
+        // State was successfully loaded, go straight to the app
+        coverPage.style.display = 'none';
+        appContainer.style.display = 'block';
+        displaySlide(); // Display the loaded slide
+    } else {
+        // No saved state or error loading, show cover page
+        coverPage.style.display = 'block';
+        appContainer.style.display = 'none';
+    }
 
     // Add all event listeners here
     startButton.addEventListener('click', () => {
-        // Hide the cover page
+        // This button is only visible if no state was loaded, or user wants to restart
         coverPage.style.display = 'none';
-        // Show the main app container
-        appContainer.style.display = 'block'; // Ensure this matches your CSS display property
-
-        // Load the very first lesson AFTER the app container is shown
-        currentSlideIndex = 0; // Reset to ensure it starts from the beginning
+        appContainer.style.display = 'block';
+        currentSlideIndex = 0; // Explicitly start from 0 if hitting start button
+        totalCourseScore = 100; // Reset score on new start
+        // Also reset all quiz completion statuses if starting fresh
+        courseContent.forEach(item => {
+            if (item.type === 'quiz') {
+                item.completed = false;
+            }
+        });
+        saveCourseState(); // Save the reset state
         displaySlide();
     });
 
     nextBtn.addEventListener('click', () => {
         if (currentSlideIndex < courseContent.length - 1) {
             currentSlideIndex++;
+            saveCourseState(); // Save state on next slide
             displaySlide();
         } else if (currentSlideIndex === courseContent.length - 1 && courseContent[currentSlideIndex].type === 'final_test_placeholder') {
-            // This handles the transition TO the final test display, not moving past it
-            // The final test will have its own submit button.
+            // This handles the transition TO the final test display.
             // nextBtn will typically be disabled when on final_test_placeholder
         }
     });
@@ -2825,6 +2903,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentSlideIndex > 0) {
             currentSlideIndex--;
+            // No save needed here, as going back doesn't change progress forward
             displaySlide();
         }
     });
@@ -2869,6 +2948,13 @@ function displaySlide() {
         if (currentItem.completed !== true) { 
             quizAttempted = false; 
         }
+        // If quiz is already completed, hide submit button
+        if (currentItem.completed === true) {
+            submitQuizBtn.classList.add('hidden');
+            nextBtn.disabled = false; // Allow moving forward if already completed
+            quizFeedbackEl.textContent = "You have already completed this quiz.";
+            quizFeedbackEl.style.color = 'grey';
+        }
     } else if (currentItem.type === 'final_test_placeholder') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.add('hidden');
@@ -2911,8 +2997,6 @@ function displaySlide() {
     console.log(`Back Button disabled (actual property): ${backBtn.disabled}`);
     console.log(`--------------------------------------`);
 }
-
-// --- The rest of your script.js continues from here ---
 
 // --- UPDATED startTimer Function ---
 function startTimer(duration) {
@@ -2976,6 +3060,12 @@ function displayQuiz(quizData) {
         input.type = 'radio';
         input.name = 'quizOption';
         input.value = index;
+        // If the quiz was completed, check the previously selected answer (if saved)
+        if (quizData.completed && quizData.selectedAnswer === index) { // Assuming selectedAnswer could be saved on the quiz object if needed
+             input.checked = true;
+        }
+        input.disabled = quizData.completed === true; // Disable options if quiz completed
+
         label.appendChild(input);
         label.appendChild(document.createTextNode(option));
         quizOptionsEl.appendChild(label);
@@ -3017,8 +3107,15 @@ function submitQuiz() {
             totalCourseScore = 0;
         }
 
-        // --- NEW: Mark the current quiz as completed ---
+        // --- Mark the current quiz as completed ---
         currentQuiz.completed = true; 
+        // Optional: Save the user's selected answer if you want to show it when revisiting
+        // currentQuiz.selectedAnswer = selectedAnswerValue;
+
+        // Disable all radio buttons after submission
+        document.querySelectorAll('input[name="quizOption"]').forEach(radio => {
+            radio.disabled = true;
+        });
 
         // Display detailed feedback for the user for this specific quiz
         let currentQuizScoreForDisplay = (correct ? 1 : 0) - penaltyPoints; // Score for this specific quiz display
@@ -3031,21 +3128,20 @@ function submitQuiz() {
 
         submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
         nextBtn.disabled = false; // Allow user to move to next slide
-
+        
+        saveCourseState(); // <--- SAVE STATE after quiz submission
     } else { // This 'else' is now correctly associated with 'if (selectedOption)'
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
-        // If no option selected, quizAttempted remains false, allowing re-submission or time to run out
-        // The back button will remain disabled as per the logic in displaySlide for unattempted quizzes
         
         if (timeLeft <= 0) { // If time ran out and no selection
             nextBtn.disabled = false; // Still allow to move on, but no answer recorded
-            // If time runs out and no selection, still mark as attempted to prevent going back
             quizAttempted = true; // Consider it attempted if time ran out without selection
             currentQuiz.completed = true; // And mark as completed to prevent going back
             totalCourseScore -= penaltyPoints; // Still apply time penalty
             if (totalCourseScore < 0) totalCourseScore = 0; // Ensure score doesn't go below zero
             quizFeedbackEl.textContent += ` Time expired! No answer selected. Current Course Score: ${totalCourseScore}.`;
+            saveCourseState(); // <--- SAVE STATE if time expired without selection
         } else {
             startTimer(timeLeft); // Resume timer if user needs to select
         }
@@ -3084,6 +3180,8 @@ function displayFinalTest() {
         });
         finalTestQuestionsEl.appendChild(questionDiv);
     });
+    // The final test timer would ideally start here, if you add one.
+    // startTimer(courseContent[currentSlideIndex].duration);
 }
 
 // Modify submitFinalTest to call certificate generation
@@ -3106,50 +3204,44 @@ function submitFinalTest() {
     const totalQuestions = finalTestQuestions.length;
     let scorePercentage = (correctAnswers / totalQuestions) * 100;
 
-    // Incorporate the totalCourseScore into the final percentage, or display it alongside.
-    // This is a conceptual integration. You might want to define how finalTestScore and totalCourseScore combine.
-    // For now, let's just display both.
     finalTestResultsEl.innerHTML = `<p>Final Test Score: ${correctAnswers} out of ${totalQuestions} (${scorePercentage.toFixed(2)}%).</p>`;
     finalTestResultsEl.innerHTML += `<p>Overall Course Score (after penalties): ${totalCourseScore} points.</p>`; // Display overall score
     
-    // You might want to adjust the pass threshold based on the combined score
     const combinedScoreConsideration = scorePercentage; // Or some calculation involving totalCourseScore
     finalTestResultsEl.style.color = combinedScoreConsideration >= 70 ? 'green' : 'red';
 
     if (combinedScoreConsideration >= 70) {
         certificationAreaEl.classList.remove('hidden');
-        // Prompt for user's name for the certificate
         let userName = prompt("Congratulations! Please enter your name for the certificate:");
         if (!userName || userName.trim() === "") {
-            userName = "Valued Learner"; // Default if no name entered
+            userName = "Valued Learner";
         }
-        generateCertificate(userName, 'Interactive Fitness Course'); // Call the new function
+        generateCertificate(userName, 'Interactive Fitness Course');
     } else {
         certificationAreaEl.classList.add('hidden');
         finalTestResultsEl.innerHTML += `<p>You need at least 70% on the final test to receive a certification. Please review the material and try again!</p>`;
     }
 
     submitFinalTestBtn.disabled = true;
+    // Optionally save the final state after completing the final test
+    saveCourseState(); 
 }
 
 // NEW FUNCTION: Generate and draw the certificate on canvas
-function generateCertificate(name, courseTitle) { // Keeping courseTitle as a parameter
+function generateCertificate(name, courseTitle) {
     const maxLength = 100;
-    const lettersOnlyRegex = /^[a-zA-Z\s.-]+$/; // Allows letters, spaces, hyphens, and periods
+    const lettersOnlyRegex = /^[a-zA-Z\s.-]+$/;
 
-    // Loop until a valid name is entered or the user cancels
     while (true) {
         name = prompt("Please enter your name for the certificate (letters, spaces, hyphens, periods only, max 100 characters):");
 
-        // Check if the user clicked "Cancel" or closed the prompt
         if (name === null) {
             alert("Certificate generation cancelled.");
-            // Optionally, hide the certification area or navigate back if appropriate
             document.getElementById('certification-area').classList.add('hidden');
-            return; // Exit the function
+            return;
         }
 
-        name = name.trim(); // Remove leading/trailing whitespace
+        name = name.trim();
 
         if (name === "") {
             alert("Name cannot be empty. Please enter your name.");
@@ -3158,7 +3250,6 @@ function generateCertificate(name, courseTitle) { // Keeping courseTitle as a pa
         } else if (!lettersOnlyRegex.test(name)) {
             alert("Invalid characters. Please use only letters, spaces, hyphens, and periods.");
         } else {
-            // Name is valid, break out of the loop
             break;
         }
     }
@@ -3166,52 +3257,35 @@ function generateCertificate(name, courseTitle) { // Keeping courseTitle as a pa
     const certificateCanvas = document.getElementById('certificateCanvas');
     const ctx = certificateCanvas.getContext('2d');
 
-    // Clear canvas
     ctx.clearRect(0, 0, certificateCanvas.width, certificateCanvas.height);
-
-    // Background
-    ctx.fillStyle = '#f0f8ff'; // Light blue background for certificate
+    ctx.fillStyle = '#f0f8ff';
     ctx.fillRect(0, 0, certificateCanvas.width, certificateCanvas.height);
-
-    // Border
     ctx.strokeStyle = '#007bff';
     ctx.lineWidth = 10;
     ctx.strokeRect(5, 5, certificateCanvas.width - 10, certificateCanvas.height - 10);
-
-    // Title
     ctx.fillStyle = '#333';
     ctx.font = 'bold 30px Arial';
     ctx.textAlign = 'center';
     ctx.fillText('CERTIFICATE OF COMPLETION', certificateCanvas.width / 2, 80);
-
-    // Subtitle
     ctx.font = 'italic 18px Arial';
     ctx.fillText('Proudly Presented To', certificateCanvas.width / 2, 130);
-
-    // Name
     ctx.fillStyle = '#000';
-    ctx.font = 'bold 40px "Times New Roman"'; // A fancier font for the name
+    ctx.font = 'bold 40px "Times New Roman"';
     ctx.fillText(name, certificateCanvas.width / 2, 200);
-
-    // Course
     ctx.font = '20px Arial';
     ctx.fillText(`For successfully completing the`, certificateCanvas.width / 2, 250);
     ctx.font = 'bold 25px Arial';
     ctx.fillText(`${courseTitle}`, certificateCanvas.width / 2, 285);
-
-    // Date
     ctx.font = '16px Arial';
     const completionDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     ctx.fillText(`on ${completionDate}`, certificateCanvas.width / 2, 330);
-
-    // Signature/Placeholder
     ctx.font = 'italic 14px Arial';
     ctx.fillText('Your Fitness Guru', certificateCanvas.width / 2, 370);
 }
 
 // NEW FUNCTION: Download the certificate
 function downloadCertificate() {
-    const certificateCanvas = document.getElementById('certificateCanvas'); // Ensure canvas is accessible
+    const certificateCanvas = document.getElementById('certificateCanvas');
     const image = certificateCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
     const link = document.createElement('a');
     link.download = 'Fitness_Course_Certificate.png';
