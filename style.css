@@ -4,7 +4,6 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%; /* Keep height for initial fixed cover page */
-    /* REMOVED: overflow: hidden; */ /* This was preventing scrolling */
     font-family: Arial, sans-serif; /* Consolidated font-family here */
     background-color: #f4f4f4; /* Consolidated background-color here */
     box-sizing: border-box; /* Consistent box-sizing */
@@ -24,13 +23,12 @@ html, body {
     justify-content: center; /* THIS IS THE KEY FOR VERTICAL CENTERING */
     align-items: center;    /* THIS IS THE KEY FOR HORIZONTAL CENTERING */
     
-    text-align: center;
+    text-align: center; /* Ensures most direct text children inherit centering */
     padding: 15px; /* Slightly reduced padding to save space */
     box-sizing: border-box;
     z-index: 1000; /* Ensure it's on top */
     color: #333;
-    /* Added overflow-y: auto here to allow the cover page content to scroll if it gets too tall */
-    overflow-y: auto; 
+    overflow-y: auto; /* Allow the cover page content to scroll if it gets too tall */
 }
 
 /* New Rule: Ensure direct children of #cover-page can shrink to fit */
@@ -38,7 +36,7 @@ html, body {
     flex-shrink: 1; /* Allows children to shrink if they exceed available space */
     min-height: 0;  /* Allows content to shrink below its intrinsic height */
     min-width: 0;   /* Allows content to shrink below its intrinsic width */
-    max-width: 90%; /* Optional: Limit width to keep content readable on very wide screens */
+    max-width: 90%; /* Limit width to keep content readable on very wide screens */
     width: 100%;    /* Take full available width up to max-width */
     box-sizing: border-box; /* Ensures padding/border are included in the element's total width and height */
     margin-top: 0; /* Reset default margins for direct children */
@@ -64,6 +62,7 @@ html, body {
     max-width: 1000px;
     margin-bottom: 15px; /* Space below paragraph before the list */
     color: #555;
+    text-align: center; /* IMPORTANT FIX: Centers the text content within the paragraph */
 }
 
 /* Styling for the Course Details List on the Cover Page */
@@ -76,7 +75,7 @@ html, body {
     margin-bottom: 0; /* Remove margin-bottom here, button will have its own top margin */
     max-width: 1000px; /* Limit width to keep it neat */
     width: 90%; /* Responsive width */
-    text-align: left; /* Align text within the box */
+    text-align: left; /* Keep this as 'left' for readability of list items */
     overflow-wrap: break-word; /* Ensures long words break to fit */
     word-wrap: break-word;      /* Legacy for older browsers */
     flex-shrink: 1; /* Explicitly allow list to shrink as a flex item */
@@ -95,7 +94,10 @@ html, body {
 #cover-page #list ul {
     list-style: none; /* Remove default bullet points */
     padding: 0;
-    margin: 0;
+    /* IMPORTANT FIX: Center the entire UL block within the #list div */
+    margin: 0 auto; 
+    max-width: 450px; /* Adjust this max-width for the list block as needed */
+
     display: flex; /* Make ul a flex container */
     flex-direction: column; /* Stack list items vertically */
     gap: 8px; /* Add space between list items */
@@ -266,22 +268,21 @@ html, body {
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease;
-    /* Common button styles that were separated are now together here */
-    display: block; /* Ensures they take full width if needed */
-    width: 100%;    /* Take full available width */
-    margin-top: 20px; /* Default margin from element above */
-    box-sizing: border-box; /* Include padding in width */
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    box-sizing: border-box;
 }
 
 /* Specific overrides for nav buttons as they are in a flex container */
 .nav-btn {
-    width: auto; /* Nav buttons don't need to be 100% width */
-    margin-top: 0; /* Remove top margin for nav buttons */
+    width: auto;
+    margin-top: 0;
 }
 #submit-quiz-btn, #submit-final-test-btn, #downloadCertBtn {
-    width: auto; /* These buttons should also not be 100% width unless specifically desired */
-    max-width: 300px; /* Example max width to keep them from being too wide */
-    margin-left: auto; /* Center submit buttons if they are auto width */
+    width: auto;
+    max-width: 300px;
+    margin-left: auto;
     margin-right: auto;
 }
 
@@ -392,6 +393,7 @@ html, body {
 
     #cover-page p {
         font-size: clamp(0.8em, 2.2vw, 1em);
+        text-align: center; /* Re-affirm center alignment for smaller screens */
     }
 
     #start-course-btn {
@@ -448,6 +450,7 @@ html, body {
 
     #cover-page p {
         font-size: clamp(0.75em, 2vw, 0.9em);
+        text-align: center; /* Re-affirm center alignment for smaller screens */
     }
 
     #start-course-btn {
