@@ -2720,18 +2720,26 @@ let totalCourseScore = 100; // Initialize the overall course score. Adjust start
 const INCORRECT_QUIZ_PENALTY = 5; // Points to deduct for each incorrect quiz answer. Adjust as needed.
 
 
+// --- New Global Variables for Penalty Logic ---
+let penaltyPoints = 0;
+let lastPenaltyBlock = -1;
+
+// --- Global Score Variable ---
+let totalCourseScore = 100;
+const INCORRECT_QUIZ_PENALTY = 5;
+
 // --- JavaScript variables (declared here, assigned inside DOMContentLoaded) ---
 let currentSlideIndex = 0;
 let timerInterval;
 let timeLeft;
-let quizAttempted = false; // To prevent going back during a quiz (used for current active quiz)
-let quizScore = 0; // Track score for current quiz
-let finalTestScores = []; // To store results of each final test question
+let quizAttempted = false;
+let quizScore = 0;
+let finalTestScores = [];
 
-// DOM Elements - Declare them globally, but assign inside DOMContentLoaded
-let coverPage; // Declared globally
-let appContainer; // Declared globally
-let startButton; // Declared globally
+// DOM Elements - Declare them globally with 'let'
+let coverPage;
+let appContainer;
+let startButton;
 
 let certificateCanvas;
 let downloadCertBtn;
@@ -2742,17 +2750,17 @@ let lessonContentEl;
 let quizContainerEl;
 let quizQuestionEl;
 let quizOptionsEl;
-submitQuizBtn; // Will be assigned in DOMContentLoaded
-quizFeedbackEl; // Will be assigned in DOMContentLoaded
-backBtn; // Will be assigned in DOMContentLoaded
-nextBtn; // Will be assigned in DOMContentLoaded
-timerDisplayEl; // Will be assigned in DOMContentLoaded
-currentTimeEl; // Will be assigned in DOMContentLoaded
-finalTestContainerEl; // Will be assigned in DOMContentLoaded
-finalTestQuestionsEl; // Will be assigned in DOMContentLoaded
-submitFinalTestBtn; // Will be assigned in DOMContentLoaded
-finalTestResultsEl; // Will be assigned in DOMContentLoaded
-certificationAreaEl; // Will be assigned in DOMContentLoaded
+let submitQuizBtn; // <--- ADDED 'let'
+let quizFeedbackEl; // <--- ADDED 'let'
+let backBtn; // <--- ADDED 'let'
+let nextBtn; // <--- ADDED 'let'
+let timerDisplayEl; // <--- ADDED 'let'
+let currentTimeEl; // <--- ADDED 'let'
+let finalTestContainerEl; // <--- ADDED 'let'
+let finalTestQuestionsEl; // <--- ADDED 'let'
+let submitFinalTestBtn; // <--- ADDED 'let'
+let finalTestResultsEl; // <--- ADDED 'let'
+let certificationAreaEl; // <--- ADDED 'let'
 
 
 // --- All code that interacts with the DOM will be inside this listener ---
