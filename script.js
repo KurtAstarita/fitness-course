@@ -3280,7 +3280,7 @@ function submitQuiz() {
         // IMPORTANT: The nextBtn remains disabled here because no valid selection was made.
     }
     saveCourseState(); // Save state after quiz submission (covers all branches)
-  
+}
  } else {
         // This block executes if NO option is selected
         quizFeedbackEl.textContent = 'Please select an answer.';
