@@ -229,6 +229,10 @@ body {
     margin-right: 8px;
 }
 
+#quiz-question {
+    margin-bottom: 20px; /* Adjust this value (e.g., 10px, 25px) to get your desired spacing */
+}
+
 #quiz-feedback {
     margin-top: 10px;
     font-weight: bold;
