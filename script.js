@@ -2834,6 +2834,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Functions (defined outside DOMContentLoaded but using globally assigned elements) ---
 
+// --- Functions (defined outside DOMContentLoaded but using globally assigned elements) ---
+
 // Function to display current slide/lesson
 function displaySlide() {
     clearInterval(timerInterval); // Always clear timer on slide change
@@ -2861,8 +2863,11 @@ function displaySlide() {
         // --- Disable Next button when a quiz is displayed ---
         nextBtn.disabled = true; 
 
-        // Reset quiz attempt status when entering a quiz
-        quizAttempted = false; 
+        // IMPORTANT: Only reset quizAttempted to false if this quiz hasn't been completed yet.
+        // If it's a completed quiz being revisited, we want quizAttempted to remain true (or irrelevant for back button logic).
+        if (currentItem.completed !== true) { 
+            quizAttempted = false; 
+        }
     } else if (currentItem.type === 'final_test_placeholder') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.add('hidden');
@@ -2872,14 +2877,27 @@ function displaySlide() {
         nextBtn.disabled = true; // Cannot go forward from final test placeholder
     }
 
-    // --- UPDATED: Manage Back button states ---
+    // --- DEBUGGING CONSOLE LOGS ---
+    console.log(`--- Displaying Slide Index: ${currentSlideIndex} ---`);
+    console.log(`Slide Type: ${currentItem.type}`);
+    console.log(`Quiz Completed Status (if quiz): ${currentItem.completed}`);
+    console.log(`Global quizAttempted: ${quizAttempted}`);
+
+    // --- Manage Back button states ---
     // Disable back if it's the first slide, the final test placeholder,
-    // or if it's a quiz that has been completed, or currently in an unattempted quiz.
-    backBtn.disabled = currentSlideIndex === 0 || 
-                       currentItem.type === 'final_test_placeholder' || 
-                       (currentItem.type === 'quiz' && currentItem.completed === true) || // Prevent going back to a completed quiz
-                       (currentItem.type === 'quiz' && !quizAttempted); // Prevent going back while quiz is active and unattempted
+    // or if the current item is a quiz that has been completed or is currently unattempted.
+    const shouldDisableBack = currentSlideIndex === 0 || 
+                              currentItem.type === 'final_test_placeholder' || 
+                              (currentItem.type === 'quiz' && (currentItem.completed === true || !quizAttempted));
+    
+    backBtn.disabled = shouldDisableBack;
+
+    console.log(`Back Button shouldDisableBack (calculated): ${shouldDisableBack}`);
+    console.log(`Back Button disabled (actual property): ${backBtn.disabled}`);
+    console.log(`--------------------------------------`);
 }
+
+// --- The rest of your script.js continues from here ---
 
 // --- UPDATED startTimer Function ---
 function startTimer(duration) {
@@ -2946,7 +2964,8 @@ function displayQuiz(quizData) {
         label.appendChild(input);
         label.appendChild(document.createTextNode(option));
         quizOptionsEl.appendChild(label);
-    });
+    }
+    );
     quizFeedbackEl.textContent = '';
 }
 
