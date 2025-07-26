@@ -18,30 +18,30 @@ html, body {
     height: 100vh; /* Use 100vh to ensure it always matches viewport height */
     background: linear-gradient(to bottom right, #f0f4f8, #c8d9e6); /* Light gradient background */
     
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* THIS IS THE KEY FOR VERTICAL CENTERING */
-    align-items: center;    /* THIS IS THE KEY FOR HORIZONTAL CENTERING */
+    /* REMOVED FLEXBOX CENTERING */
+    display: block; /* Change from flex to block for simple flow */
+    /* justify-content: center; */ /* REMOVED */
+    /* align-items: center; */    /* REMOVED */
     
-    text-align: center; /* Ensures most direct text children inherit centering */
-    padding: 15px; /* Slightly reduced padding to save space */
+    text-align: left; /* IMPORTANT: Align text to the left within the page */
+    padding: 20px; /* Increased padding around the entire cover page content */
     box-sizing: border-box;
     z-index: 1000; /* Ensure it's on top */
     color: #333;
     overflow-y: auto; /* Allow the cover page content to scroll if it gets too tall */
 }
 
-/* New Rule: Ensure direct children of #cover-page can shrink to fit */
+/* New Rule: Control direct children width and add horizontal margin */
 #cover-page > * {
-    flex-shrink: 1; /* Allows children to shrink if they exceed available space */
-    min-height: 0;  /* Allows content to shrink below its intrinsic height */
-    min-width: 0;   /* Allows content to shrink below its intrinsic width */
-    max-width: 90%; /* Limit width to keep content readable on very wide screens */
+    max-width: 1000px; /* Set a maximum width for content inside the cover page */
     width: 100%;    /* Take full available width up to max-width */
+    margin-left: auto; /* IMPORTANT: Auto margins will center the block within #cover-page if max-width is less than 100% */
+    margin-right: auto;/* IMPORTANT: Auto margins will center the block within #cover-page if max-width is less than 100% */
     box-sizing: border-box; /* Ensures padding/border are included in the element's total width and height */
     margin-top: 0; /* Reset default margins for direct children */
     margin-bottom: 0; /* Reset default margins for direct children */
 }
+
 
 /* Also ensure images within the cover page scale down */
 #cover-page img {
@@ -54,15 +54,16 @@ html, body {
     margin-bottom: 10px; /* Space below h1 */
     color: #0056b3; /* A strong blue */
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-align: left; /* Align title to left */
 }
 
 #cover-page p {
     font-size: clamp(0.9em, 2.5vw, 1.2em); /* Use clamp for responsive P */
     line-height: 1.6;
-    max-width: 1000px;
+    max-width: 1000px; /* Keep max-width for readability */
     margin-bottom: 15px; /* Space below paragraph before the list */
     color: #555;
-    text-align: center; /* IMPORTANT FIX: Centers the text content within the paragraph */
+    text-align: left; /* IMPORTANT CHANGE: Align paragraph text to left */
 }
 
 /* Styling for the Course Details List on the Cover Page */
@@ -74,12 +75,10 @@ html, body {
     margin-top: 15px; /* Space from the main description */
     margin-bottom: 0; /* Remove margin-bottom here, button will have its own top margin */
     max-width: 1000px; /* Limit width to keep it neat */
-    width: 90%; /* Responsive width */
+    width: 100%; /* Take full width of parent (which has max-width of 1000px) */
     text-align: left; /* Keep this as 'left' for readability of list items */
     overflow-wrap: break-word; /* Ensures long words break to fit */
     word-wrap: break-word;      /* Legacy for older browsers */
-    flex-shrink: 1; /* Explicitly allow list to shrink as a flex item */
-    min-width: 0; /* Important for flex items to shrink */
     box-sizing: border-box; /* Ensures padding/border are included in the element's total width and height */
 }
 
@@ -88,26 +87,26 @@ html, body {
     color: #0056b3; /* Consistent blue with the main title */
     margin-top: 0; /* Ensure no extra top margin */
     margin-bottom: 15px; /* Space below heading */
-    text-align: center; /* Center the heading within its box */
+    text-align: left; /* IMPORTANT CHANGE: Align heading to left within its box */
 }
 
 #cover-page #list ul {
     list-style: none; /* Remove default bullet points */
     padding: 0;
-    /* IMPORTANT FIX: Center the entire UL block within the #list div */
-    margin: 0 auto; 
-    max-width: 450px; /* Adjust this max-width for the list block as needed */
+    /* IMPORTANT CHANGE: Remove auto margins here, list items will align naturally */
+    margin: 0; 
+    /* max-width: 450px; */ /* REMOVED: No need to center UL block anymore */
 
-    display: flex; /* Make ul a flex container */
-    flex-direction: column; /* Stack list items vertically */
-    gap: 8px; /* Add space between list items */
+    display: block; /* Change from flex to block */
+    /* flex-direction: column; */ /* REMOVED */
+    gap: 8px; /* Removed, gap is for flex containers */
 }
 
 #cover-page #list li {
     font-size: clamp(0.85em, 2.8vw, 1.1em); /* Min 0.85em, scales with viewport, max 1.1em */
     line-height: 1.5; /* Slightly tighter line height to save vertical space */
     color: #333;
-    margin-bottom: 0; /* Removed fixed margin-bottom, using gap on ul instead */
+    margin-bottom: 8px; /* Added margin back for li items */
     padding-left: 20px; /* Space for custom bullet */
     position: relative;
     word-break: break-word; /* Breaks words at arbitrary points if needed */
@@ -142,9 +141,9 @@ html, body {
     transition: background-color 0.3s ease, transform 0.2s ease;
 
     display: block; /* Make it a block-level element to apply margin auto */
-    max-width: 1000px; /* Set a maximum width for the button */
-    width: 90%; /* Allow it to be responsive, taking up to 90% of parent width, but not more than max-width */
-    margin: 20px auto 0 auto; /* Add top margin for spacing from list, center horizontally */
+    max-width: 1000px; /* Set a maximum width for the button (same as other content) */
+    width: 100%; /* Allow it to be responsive, taking up to 100% of parent width, but not more than max-width */
+    margin: 20px auto 0 auto; /* Add top margin for spacing from list, center horizontally within its defined max-width */
 }
 
 #start-course-btn:hover {
@@ -393,7 +392,7 @@ html, body {
 
     #cover-page p {
         font-size: clamp(0.8em, 2.2vw, 1em);
-        text-align: center; /* Re-affirm center alignment for smaller screens */
+        text-align: left; /* Re-affirm left alignment for smaller screens */
     }
 
     #start-course-btn {
@@ -409,6 +408,7 @@ html, body {
 
     #cover-page #list h3 {
         font-size: clamp(1em, 2.5vw, 1.4em);
+        text-align: left; /* Re-affirm left alignment for smaller screens */
     }
 
     #cover-page #list li {
@@ -450,7 +450,7 @@ html, body {
 
     #cover-page p {
         font-size: clamp(0.75em, 2vw, 0.9em);
-        text-align: center; /* Re-affirm center alignment for smaller screens */
+        text-align: left; /* Re-affirm left alignment for smaller screens */
     }
 
     #start-course-btn {
@@ -466,6 +466,7 @@ html, body {
 
     #cover-page #list h3 {
         font-size: clamp(0.9em, 2.2vw, 1.2em);
+        text-align: left; /* Re-affirm left alignment for smaller screens */
     }
 
     #cover-page #list li {
