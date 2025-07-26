@@ -97,6 +97,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Index of 'Emphasizing high protein and high carbohydrate intake, with moderate healthy fats'
         duration: 1
+        completed: false
     },
 
     // --- Module 1: Advanced Nutrition Fundamentals (Detailed) ---
@@ -241,6 +242,7 @@ const courseContent = [
         ],
         correctAnswer: 1, // Index of 'Adequate hydration and a balance of essential vitamins and minerals'
         duration: 1
+        completed: false
     },
 {
         type: 'lesson',
@@ -361,6 +363,7 @@ const courseContent = [
         options: ['Simple Carbohydrates', 'Complex Carbohydrates', 'Sugars', 'Fructose'],
         correctAnswer: 1, // Complex Carbohydates
         duration: 1
+        completed: false
     },
 {
         type: 'quiz',
@@ -374,6 +377,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Index of 'Substituting saturated and trans fats with an emphasis on Omega-3 rich polyunsaturated fats and monounsaturated fats.'
         duration: 1
+        completed: false
     },
 {
         type: 'lesson',
@@ -431,6 +435,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Index of 'Distributing high-quality protein consistently throughout the day, strategically combining complex carbohydrates around training times, and ensuring adequate intake of essential healthy fats.'
         duration: 1
+        completed: false
     },
 
     // --- Module 2: Core Training Principles (Detailed) ---
@@ -575,6 +580,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Principle of Progressive Overload
         duration: 1 // Duration set to 1 as per user instruction
+    completed: false
     },
 {
         type: 'lesson',
@@ -665,6 +671,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // 1-5 reps; ATP-PC System; Progressive Overload
         duration: 1 // Duration set to 1 as per user instruction
+    completed: false
     },
 {
         type: 'lesson',
@@ -793,6 +800,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Full Body Split; Prioritizing proper form and controlled movements
         duration: 1 // Duration set to 1 as per user instruction
+    completed: false
     },
 
     // --- Module 3: Cardiovascular Fitness ---
@@ -925,6 +933,7 @@ const courseContent = [
         ],
         correctAnswer: 1, // LISS, at an RPE of 4-6 (Moderate)
         duration: 1
+    completed: false
     },
 {
         type: 'lesson',
@@ -1075,6 +1084,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // 146-157 bpm (Calculation: MHR = 220-40=180. HRR = 180-65=115. 70%: (115*0.7)+65 = 145.5. 80%: (115*0.8)+65 = 157)
         duration: 1
+        completed: false
     },
 {
         type: 'lesson',
@@ -1240,6 +1250,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Introduce two short (15-20 min) HIIT sprint sessions at an RPE of 9-10 into their week, while maintaining two longer moderate runs.
         duration: 1
+         completed: false
     },
 
     // --- Module 4: Recovery & Mindset ---
@@ -1543,6 +1554,7 @@ const courseContent = [
         ],
         correctAnswer: 1, // They are showing clear signs of overtraining; they should prioritize 1-2 complete rest days and consistently aim for 7-9 hours of quality sleep nightly.
         duration: 1
+        completed: false
     },
 {
         type: 'lesson',
@@ -1699,6 +1711,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Chronic stress is likely elevating cortisol, impairing recovery, disrupting sleep, and promoting fat storage; they need to prioritize stress management techniques and improved sleep hygiene.
         duration: 1
+    completed: false
     },
 {
         type: 'lesson',
@@ -1769,6 +1782,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Establish a "habit stack" by laying out her running clothes before bed, committing to a 10-minute brisk walk immediately upon arriving home, and regularly visualizing herself successfully crossing the 10K finish line to build consistency and mental resilience.
         duration: 1
+        completed: false
     },
 
     // --- Module 5: Exercise Techniques and Modalities ---
@@ -1842,6 +1856,7 @@ const courseContent = [
         ],
         correctAnswer: 1, // Perform incline push-ups against a wall or elevated surface to decrease the resistance, focusing on proper form.
         duration: 1
+        completed: false
     },
     {
         type: 'lesson',
@@ -1915,6 +1930,7 @@ const courseContent = [
         ],
         correctAnswer: 1, // Holding a hamstring stretch for 20-30 seconds, because muscles are warm and pliable after exercise, making it an ideal time to improve flexibility.
         duration: 1
+        completed: false
     },
     {
         type: 'lesson',
@@ -2160,6 +2176,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // They are failing to maintain a neutral spine and properly brace their core during the hip hinge; they should focus on keeping their chest up and pushing their hips back while initiating the lift, ensuring the back remains flat.
         duration: 1
+        completed: false
     },
 {
         type: 'lesson',
@@ -2375,6 +2392,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Executing a single-arm push-up
         duration: 1
+        completed: false
     },
 {
         type: 'lesson',
@@ -2493,6 +2511,7 @@ const courseContent = [
         ],
         correctAnswer: 2, // Dynamic Stretching
         duration: 1
+      completed: false
     },
 
 
@@ -2705,7 +2724,7 @@ const INCORRECT_QUIZ_PENALTY = 5; // Points to deduct for each incorrect quiz an
 let currentSlideIndex = 0;
 let timerInterval;
 let timeLeft;
-let quizAttempted = false; // To prevent going back during a quiz
+let quizAttempted = false; // To prevent going back during a quiz (used for current active quiz)
 let quizScore = 0; // Track score for current quiz
 let finalTestScores = []; // To store results of each final test question
 
@@ -2734,9 +2753,10 @@ let finalTestQuestionsEl;
 let submitFinalTestBtn;
 let finalTestResultsEl;
 let certificationAreaEl;
-let certificateNameEl;
-let certificateCourseTitleEl;
-let certificateDateEl;
+// These might be unused if cert data is passed directly to generateCertificate
+// let certificateNameEl; // Removed as it's not used directly from DOM
+// let certificateCourseTitleEl; // Removed as it's not used directly from DOM
+// let certificateDateEl; // Removed as it's not used directly from DOM
 
 
 // --- All code that interacts with the DOM will be inside this listener ---
@@ -2774,10 +2794,6 @@ document.addEventListener('DOMContentLoaded', () => {
     submitFinalTestBtn = document.getElementById('submit-final-test-btn');
     finalTestResultsEl = document.getElementById('final-test-results');
     certificationAreaEl = document.getElementById('certification-area');
-    // These might be unused if cert data is passed directly to generateCertificate
-    // certificateNameEl = document.getElementById('certificate-name');
-    // certificateCourseTitleEl = document.getElementById('certificate-course-title');
-    // certificateDateEl = document.getElementById('certificate-date');
 
 
     // Add all event listeners here
@@ -2827,7 +2843,6 @@ function displaySlide() {
     finalTestContainerEl.classList.add('hidden');
     quizFeedbackEl.textContent = '';
     submitQuizBtn.classList.remove('hidden'); // Ensure quiz submit button is visible for new quizzes
-    // nextBtn.disabled = false; // This line will be managed per slide type below
 
     const currentItem = courseContent[currentSlideIndex];
     courseTitleEl.textContent = currentItem.title;
@@ -2842,11 +2857,12 @@ function displaySlide() {
         quizContainerEl.classList.remove('hidden');
         displayQuiz(currentItem);
         startTimer(currentItem.duration || 45); // Default quiz time if not specified, now 45s
-        backBtn.disabled = true; // Cannot go back during a quiz
-        quizAttempted = false; // Reset quiz attempt status
-
-        // --- FIX: Disable Next button when a quiz is displayed ---
+        
+        // --- Disable Next button when a quiz is displayed ---
         nextBtn.disabled = true; 
+
+        // Reset quiz attempt status when entering a quiz
+        quizAttempted = false; 
     } else if (currentItem.type === 'final_test_placeholder') {
         lessonContentEl.classList.add('hidden');
         quizContainerEl.classList.add('hidden');
@@ -2856,8 +2872,13 @@ function displaySlide() {
         nextBtn.disabled = true; // Cannot go forward from final test placeholder
     }
 
-    // Manage navigation button states (back button for other cases)
-    backBtn.disabled = currentSlideIndex === 0 || (currentItem.type === 'quiz' && !quizAttempted) || currentItem.type === 'final_test_placeholder';
+    // --- UPDATED: Manage Back button states ---
+    // Disable back if it's the first slide, the final test placeholder,
+    // or if it's a quiz that has been completed, or currently in an unattempted quiz.
+    backBtn.disabled = currentSlideIndex === 0 || 
+                       currentItem.type === 'final_test_placeholder' || 
+                       (currentItem.type === 'quiz' && currentItem.completed === true) || // Prevent going back to a completed quiz
+                       (currentItem.type === 'quiz' && !quizAttempted); // Prevent going back while quiz is active and unattempted
 }
 
 // --- UPDATED startTimer Function ---
@@ -2896,12 +2917,6 @@ function startTimer(duration) {
         }
         // For quizzes, the timer will continue past zero until submitted, allowing penalties to accumulate.
     }, 1000); // Update every second
-
-    // This block is now primarily handled by displaySlide function for initial states.
-    // However, if a lesson, ensure it's disabled.
-    // if (courseContent[currentSlideIndex].type === 'lesson') {
-    //     nextBtn.disabled = true;
-    // }
 }
 
 // --- UPDATED updateTimerDisplay Function ---
@@ -2935,9 +2950,9 @@ function displayQuiz(quizData) {
     quizFeedbackEl.textContent = '';
 }
 
-// --- UPDATED submitQuiz Function (includes overall score deduction) ---
+// --- UPDATED submitQuiz Function (includes overall score deduction and quiz completion marking) ---
 function submitQuiz() {
-    quizAttempted = true;
+    quizAttempted = true; // Mark quiz as attempted
     clearInterval(timerInterval); // Stop timer
 
     const selectedOption = document.querySelector('input[name="quizOption"]:checked');
@@ -2968,6 +2983,9 @@ function submitQuiz() {
             totalCourseScore = 0;
         }
 
+        // --- NEW: Mark the current quiz as completed ---
+        currentQuiz.completed = true; 
+
         // Display detailed feedback for the user for this specific quiz
         let currentQuizScoreForDisplay = (correct ? 1 : 0) - penaltyPoints; // Score for this specific quiz display
         if (currentQuizScoreForDisplay < 0) currentQuizScoreForDisplay = 0;
@@ -2983,10 +3001,17 @@ function submitQuiz() {
     } else { // This 'else' is now correctly associated with 'if (selectedOption)'
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
-        quizAttempted = false; // Keep quizAttempted false if no answer selected to allow re-submission
-        // Re-enable timer if not selected or give more time etc.
+        // If no option selected, quizAttempted remains false, allowing re-submission or time to run out
+        // The back button will remain disabled as per the logic in displaySlide for unattempted quizzes
+        
         if (timeLeft <= 0) { // If time ran out and no selection
             nextBtn.disabled = false; // Still allow to move on, but no answer recorded
+            // If time runs out and no selection, still mark as attempted to prevent going back
+            quizAttempted = true; // Consider it attempted if time ran out without selection
+            currentQuiz.completed = true; // And mark as completed to prevent going back
+            totalCourseScore -= penaltyPoints; // Still apply time penalty
+            if (totalCourseScore < 0) totalCourseScore = 0; // Ensure score doesn't go below zero
+            quizFeedbackEl.textContent += ` Time expired! No answer selected. Current Course Score: ${totalCourseScore}.`;
         } else {
             startTimer(timeLeft); // Resume timer if user needs to select
         }
