@@ -1,3 +1,6 @@
+let finalScore = 100; // You can start with a base score, e.g., 100, or 0 and add points for correct answers.
+const PENALTY_PER_INCORRECT_QUIZ = 5; // Define how many points to subtract for each wrong quiz answer
+
 // --- Your Course Content Array ---
 // This array holds all your lessons, quizzes, and placeholders.
 // Please ensure this 'courseContent' array is your most up-to-date one
@@ -2927,6 +2930,7 @@ function displayQuiz(quizData) {
 
 // --- UPDATED submitQuiz Function ---
 // --- CORRECTED submitQuiz Function ---
+// --- UPDATED submitQuiz Function ---
 function submitQuiz() {
     quizAttempted = true;
     clearInterval(timerInterval); // Stop timer
@@ -2935,30 +2939,43 @@ function submitQuiz() {
     const currentQuiz = courseContent[currentSlideIndex];
 
     let correct = false;
-    // The 'else' for 'no option selected' must be directly tied to this 'if'
+    let feedbackMessage = '';
+
     if (selectedOption) {
-        if (parseInt(selectedOption.value) === currentQuiz.correctAnswer) {
+        const selectedAnswerValue = parseInt(selectedOption.value);
+
+        if (selectedAnswerValue === currentQuiz.correctAnswer) {
             correct = true;
-            quizFeedbackEl.textContent = 'Correct! ';
+            feedbackMessage = 'Correct! ';
             quizFeedbackEl.style.color = 'green';
         } else {
-            quizFeedbackEl.textContent = `Incorrect. The correct answer was: ${currentQuiz.options[currentQuiz.correctAnswer]}. `;
+            feedbackMessage = `Incorrect. The correct answer was: ${currentQuiz.options[currentQuiz.correctAnswer]}. `;
             quizFeedbackEl.style.color = 'red';
+            // DEDUCT POINTS FROM OVERALL SCORE FOR INCORRECT ANSWER
+            totalCourseScore -= INCORRECT_QUIZ_PENALTY;
         }
 
-        // Calculate final score for this quiz (1 point for correct, minus penalties)
-        let currentQuizScore = correct ? 1 : 0;
-        currentQuizScore -= penaltyPoints;
+        // Apply time penalties to the overall score
+        totalCourseScore -= penaltyPoints; // Assuming penaltyPoints is already calculated from the timer
 
-        // Ensure score doesn't go below zero for a single quiz
-        if (currentQuizScore < 0) {
-            currentQuizScore = 0;
+        // Ensure overall score doesn't go below zero (optional, depends on how you want to handle negative scores)
+        if (totalCourseScore < 0) {
+            totalCourseScore = 0;
         }
 
-        quizFeedbackEl.textContent += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScore} point(s)).`;
+        // Display detailed feedback for the user for this specific quiz
+        let currentQuizScoreForDisplay = (correct ? 1 : 0) - penaltyPoints; // Score for this specific quiz display
+        if (currentQuizScoreForDisplay < 0) currentQuizScoreForDisplay = 0;
+
+        feedbackMessage += `(Time Penalty: ${penaltyPoints} points. Your score for this quiz: ${currentQuizScoreForDisplay} point(s)).`;
+        quizFeedbackEl.textContent = feedbackMessage;
+
+        // Optionally, display the current overall score to the user for transparency
+        // quizFeedbackEl.textContent += ` Your current overall course score: ${totalCourseScore}.`;
 
         submitQuizBtn.classList.add('hidden'); // Hide submit button after attempt
         nextBtn.disabled = false; // Allow user to move to next slide
+
     } else { // This 'else' is now correctly associated with 'if (selectedOption)'
         quizFeedbackEl.textContent = 'Please select an answer.';
         quizFeedbackEl.style.color = 'orange';
