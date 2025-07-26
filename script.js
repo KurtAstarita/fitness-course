@@ -2519,7 +2519,7 @@ const courseContent = [
     {
         type: 'final_test_placeholder',
         title: 'Final Assessment - 30 minutes',
-        duration: 2700
+        duration: 1800
     }
 ];
 
