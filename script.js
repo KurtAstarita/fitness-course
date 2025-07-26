@@ -22,7 +22,7 @@ const courseContent = [
             <p>Prepare to transform not just your physique, but also your energy levels, mental clarity, and overall quality of life. Let's begin building a healthier, more capable you!</p>
             <img src="https://kurtastarita.github.io/400x200?text=Fitness+Intro" alt="Fitness Introduction">
         `,
-        duration: 15
+        duration: 1
     },
     {
         type: 'lesson',
@@ -65,7 +65,7 @@ const courseContent = [
             </ul>
             <p>There's no single "perfect" ratio for everyone, as individual needs vary based on activity level, body composition, and dietary preferences. Tools like a macro calculator can provide a starting point, but listening to your body's response is essential.</p>
         `,
-        duration: 2 // Adjust duration as needed
+        duration: 1 // Adjust duration as needed
     },
     {
         type: 'lesson',
@@ -83,7 +83,7 @@ const courseContent = [
             </ul>
             <p>Understanding how each macronutrient contributes to your athletic endeavors allows for strategic fueling that can enhance performance, speed up recovery, and optimize adaptations from your training.</p>
         `,
-        duration: 2 // Adjust duration as needed
+        duration: 1 // Adjust duration as needed
     },
     {
         type: 'quiz',
