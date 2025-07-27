@@ -24,7 +24,7 @@ html, body {
     /* align-items: center; */    /* REMOVED */
     
     text-align: left; /* IMPORTANT: Align text to the left within the page */
-    padding: 20px; /* Increased padding around the entire cover page content */
+    padding: 0px; /* Increased padding around the entire cover page content */
     box-sizing: border-box;
     z-index: 1000; /* Ensure it's on top */
     color: #333;
