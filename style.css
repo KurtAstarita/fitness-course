@@ -165,7 +165,7 @@ html, body {
 .course-container { /* #app-container has this class */
     padding: 20px;
     max-width: 800px;
-    margin: 20px auto; /* Centered with top/bottom margin */
+    margin: 0px auto; /* Centered with top/bottom margin */
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
